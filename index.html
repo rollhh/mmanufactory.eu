@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-BZXYH7S8QH"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+ gtag('config', 'G-BZXYH7S8QH');
+</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mmanufactory.eu – mēbeles pēc individuāla pasūtījuma, interjera dizaina izstrāde</title>
+  <meta name="description" content="Virtuves iekārtas, iebūvējamie skapji, garderobes un citas mēbeles pēc individuāla pasūtījuma Rīgā un visā Latvijā. Dizains, ražošana un uzstādīšana." />
+  <link rel="canonical" href="https://mmanufactory.eu/" />
+  <meta name="keywords" content="mēbeles pēc pasūtījuma, virtuves iekārtas, iebūvējamie skapji, mēbeļu ražošana" />
+  <meta property="og:title" content="Mmanufactory.eu" />
+  <meta property="og:description" content="Mēbeles pēc individuāla pasūtījuma, projekta un dizaina." />
+  <meta property="og:image" content="https://imgur.com/F5Vm5qx.jpg" />
+  <link rel="icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet" />
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  <style>
+    .marquee-wrapper {
+      position: relative;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      cursor: grab;
+    }
+    .marquee-wrapper::-webkit-scrollbar { display: none; }
+
+    .marquee-content {
+      display: flex;
+      animation: scroll-left 30s linear infinite;
+      will-change: transform;
+    }
+    .marquee-content img {
+      width: auto;
+      height: 360px;
+      margin-right: 1rem;
+      flex-shrink: 0;
+      object-fit: cover;
+      user-select: none;
+      pointer-events: none;
+    }
+    @keyframes scroll-left {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 50;
+      inset: 0;
+      background-color: rgba(0,0,0,0.6);
+      overflow-y: auto;
+    }
+    .modal-content {
+      background-color: #fff;
+      margin: 5% auto;
+      padding: 2rem;
+      width: 95%;
+      max-width: 800px;
+      border-radius: 0.75rem;
+      max-height: 85vh;
+      overflow-y: auto;
+    }
+
+    #menuButton {
+      position: relative;
+      z-index: 60;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 24px;
+      width: 32px;
+    }
+    #menuButton span {
+      display: block;
+      height: 2px;
+      width: 100%;
+      background-color: #ffffff !important;
+      opacity: 1 !important;
+      border-radius: 2px;
+    }
+
+    #sideMenu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 16rem;
+      max-width: 85vw;
+      background-color: #000;
+      color: #fff;
+      padding: 1.5rem;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+      z-index: 50;
+      overflow-y: auto;
+    }
+    #sideMenu.open { transform: translateX(0); }
+    #closeMenu {
+      font-size: 2rem;
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+      margin-bottom: 1.5rem;
+    }
+    #sideMenu ul { list-style: none; padding: 0; margin: 0; }
+    #sideMenu li { margin-bottom: 1.25rem; }
+    #sideMenu a {
+      color: white; text-decoration: none; font-size: 1.125rem; transition: color 0.2s;
+    }
+    #sideMenu a:hover { text-decoration: underline; }
+
+    #overlay {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(0,0,0,0.5);
+      z-index: 40;
+      display: none;
+    }
+    #overlay.show { display: block; }
+
+    #cookieConsent {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: #000;
+      color: #fff;
+      padding: 1rem;
+      z-index: 100;
+      display: none;
+      border-top: 1px solid #333;
+    }
+    .cookie-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    @media (min-width: 640px) {
+      .cookie-content {
+        flex-direction: row;
+      }
+    }
+    .cookie-content p {
+      margin: 0;
+      text-align: center;
+    }
+    @media (min-width: 640px) {
+      .cookie-content p {
+        text-align: left;
+      }
+    }
+    .cookie-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .btn-cookie-accept {
+      background-color: #fff;
+      color: #000;
+      padding: 0.5rem 1.5rem;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .btn-cookie-accept:hover {
+      background-color: #e5e5e5;
+    }
+    .btn-cookie-decline {
+      background-color: transparent;
+      color: #fff;
+      padding: 0.5rem 1.5rem;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      border: 1px solid #fff;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-cookie-decline:hover {
+      background-color: #fff;
+      color: #000;
+    }
+
+    #scrollToTop {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      background-color: #000;
+      color: #fff;
+      width: 3rem;
+      height: 3rem;
+      border-radius: 9999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      transition: all 0.2s;
+      opacity: 0;
+      visibility: hidden;
+      z-index: 45;
+      font-size: 1.5rem;
+    }
+    #scrollToTop.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+    #scrollToTop:hover {
+      background-color: #1a1a1a;
+      transform: scale(1.1);
+    }
+
+    .btn-loading {
+      position: relative;
+      color: transparent !important;
+      pointer-events: none;
+    }
+    .btn-loading::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border: 2px solid white;
+      border-radius: 50%;
+      border-top-color: transparent;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    @media (min-width: 768px) {
+      .marquee-content img { height: 300px; }
+    }
+    body, html { overflow-x: hidden; }
+  </style>
+</head>
+
+<body class="bg-white text-black font-sans overflow-x-hidden">
+  <header class="flex justify-between items-center p-4 sm:p-6 bg-black text-white border-b border-white relative z-50">
+    <div class="flex items-center">
+      <button type="button" id="menuButton" aria-label="Open menu" class="sm:mr-4 mr-2">
+        <span></span><span></span><span></span>
+      </button>
+      <img src="https://imgur.com/F5Vm5qx.jpg" alt="Logo" class="h-12 sm:h-14" loading="lazy" />
+    </div>
+
+    <div class="flex items-center gap-3">
+      <a href="https://www.tiktok.com/@mmanufactory.eu" target="_blank" rel="noopener" aria-label="TikTok" class="hover:opacity-80 transition">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Tiktok_icon.svg" alt="TikTok" class="h-8 w-8">
+      </a>
+      <a href="https://www.instagram.com/mmanufactory.eu/" target="_blank" rel="noopener" aria-label="Instagram" class="hover:opacity-80 transition">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram" class="h-8 w-8" loading="lazy" />
+      </a>
+      <a href="https://t.me/rollhh" target="_blank" rel="noopener" aria-label="Telegram" class="hover:opacity-80 transition">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram" class="h-8 w-8" loading="lazy" />
+      </a>
+      <a href="https://wa.me/37129914716" target="_blank" rel="noopener" aria-label="WhatsApp" class="hover:opacity-80 transition">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" class="h-8 w-8" loading="lazy" />
+      </a>
+    </div>
+
+    <nav id="sideMenu" aria-label="Site Navigation">
+      <button type="button" id="closeMenu" aria-label="Close menu">&times;</button>
+      <ul>
+        <li><a href="tel:+37129914716">Kontakti</a></li>
+        <li><a href="#gallery">Galerija</a></li>
+        <li><a href="#sikdatnu">Sīkdatņu politika</a></li>
+      </ul>
+    </nav>
+    <div id="overlay"></div>
+  </header>
+
+  <main class="px-4 sm:px-6">
+    <!-- Кнопки калькулятора СВЕРХУ (первые) -->
+    <div class="mt-6 flex flex-wrap justify-center gap-4 text-center" data-aos="zoom-in">
+      <a href="https://forms.zohopublic.eu/mmanufactoryeu/form/Virtuvesiekrtascenasnoteikana/formperma/S_DDd3YIfbQQWfKk9UsQD0WRcHZY9pvqfC-StpX5gls" target="_blank" rel="noopener" class="bg-black text-white px-4 sm:px-6 py-3 rounded-xl font-semibold hover:bg-gray-800 transition min-w-[220px] shadow-md">Virtuves iekārtas cenas kalkulators</a>
+      <a href="https://forms.zohopublic.eu/mmanufactoryeu/form/Iebvjamskapjacenasnoteikana/formperma/gxLmxk5vkaaHGOhrAZeJnGJQIdNwyogv-_G9n8a4xqE" target="_blank" rel="noopener" class="bg-black text-white px-4 sm:px-6 py-3 rounded-xl font-semibold hover:bg-gray-800 transition min-w-[220px] shadow-md">Skapja cenas kalkulators</a>
+    </div>
+
+    <section id="gallery" class="mt-8" data-aos="fade-up">
+      <div class="marquee-wrapper" id="marqueeWrapper">
+        <div class="marquee-content" id="marqueeContent">
+          <img src="https://i.imgur.com/w4fFH2K.jpeg" alt="16" draggable="false" loading="lazy" />
+          <img src="https://i.imgur.com/nRt8e8d.jpeg" alt="15" draggable="false" loading="lazy" />
+          <img src="https://i.imgur.com/89GkbML.jpeg" alt="14" draggable="false" loading="lazy" />
+          <img src="https://i.imgur.com/AQjTSB4.jpeg" alt="13" draggable="false" loading="lazy" />
+          <img src="https://imgur.com/HicVE0R.jpg" alt="12" draggable="false" loading="lazy" />
+          <img src="https://imgur.com/m2kmNUf.jpg" alt="11" draggable="false" loading="lazy" />
+          <img src="https://imgur.com/uXWjnIl.jpg" alt="10" draggable="false" loading="lazy" />
+          <img src="https://imgur.com/ezjpcpm.jpg" alt="9" draggable="false" loading="lazy" />
+          <img src="https://imgur.com/ayB9Kfe.jpg" alt="8" draggable="false" loading="lazy" />
+          <img src="https://imgur.com/1ha1Z6p.jpg" alt="7" draggable="false" loading="lazy" />
+          <img src="https://imgur.com/EqsFF1O.jpg" alt="6" draggable="false" loading="lazy" />
+          <img src="https://imgur.com/vPa9BA9.jpg" alt="5" draggable="false" loading="lazy" />
+          <img src="https://imgur.com/p93ndgt.jpg" alt="4" draggable="false" loading="lazy" />
+          <img src="https://imgur.com/9BlJzcV.jpg" alt="3" draggable="false" loading="lazy" />
+          <img src="https://imgur.com/Ri7Sbo0.jpg" alt="2" draggable="false" loading="lazy" />
+          <img src="https://imgur.com/DIoe5Kw.jpg" alt="1" draggable="false" loading="lazy" />
+        </div>
+      </div>
+    </section>
+
+    <section class="mt-16 max-w-6xl mx-auto" data-aos="fade-up">
+      <h2 class="text-2xl sm:text-3xl font-bold text-center mb-6">Process</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 px-2 sm:px-0">
+        <div class="bg-gray-100 text-black p-4 sm:p-6 rounded-xl" data-aos="fade-up" data-aos-delay="100"><h3 class="font-bold mb-2 text-center">1. Pieteikums</h3><p>Lūdzu, aizpildiet pieteikumu! Pēc informācijas ievākšanas un apstrādes mēs sazināsimies ar Jums!</p></div>
+        <div class="bg-gray-100 text-black p-4 sm:p-6 rounded-xl" data-aos="fade-up" data-aos-delay="200"><h3 class="font-bold mb-2 text-center">2. Mērījumi</h3><p>Telpas mērījumu veikšana. Objektā tiek apspriesta mēbeļu konfigurācija, izkārtojums, materiāli un visas nianses.</p></div>
+        <div class="bg-gray-100 text-black p-4 sm:p-6 rounded-xl" data-aos="fade-up" data-aos-delay="300"><h3 class="font-bold mb-2 text-center">3. Digitāls projekts</h3><p>Tiek izgatavots digitāls projekts, kurš tiek saskaņots ar klientu.</p></div>
+        <div class="bg-gray-100 text-black p-4 sm:p-6 rounded-xl" data-aos="fade-up" data-aos-delay="400"><h3 class="font-bold mb-2 text-center">4. Vienošanās</h3><p>Mēbeļu uzstādīšanas termiņš: 30 darba dienas.</p></div>
+        <div class="bg-gray-100 text-black p-4 sm:p-6 rounded-xl" data-aos="fade-up" data-aos-delay="500"><h3 class="font-bold mb-2 text-center">5. Ražošana</h3><p>Ražošanas process saskaņā ar projektu.</p></div>
+        <div class="bg-gray-100 text-black p-4 sm:p-6 rounded-xl" data-aos="fade-up" data-aos-delay="600"><h3 class="font-bold mb-2 text-center">6. Montāža</h3><p>Mēbeļu montāža objektā.</p></div>
+      </div>
+    </section>
+
+    <!-- ВТОРЫЕ КНОПКИ - ровно под процессами -->
+    <div class="mt-12 flex flex-wrap justify-center gap-4 text-center px-2 sm:px-0" data-aos="zoom-in">
+      <a href="https://forms.zohopublic.eu/mmanufactoryeu/form/Virtuvesiekrtascenasnoteikana/formperma/S_DDd3YIfbQQWfKk9UsQD0WRcHZY9pvqfC-StpX5gls" target="_blank" rel="noopener" class="bg-black text-white px-4 sm:px-6 py-3 rounded-xl font-semibold hover:bg-gray-800 transition min-w-[140px]">Virtuves iekārtas cenas kalkulators</a>
+      <a href="https://forms.zohopublic.eu/mmanufactoryeu/form/Iebvjamskapjacenasnoteikana/formperma/gxLmxk5vkaaHGOhrAZeJnGJQIdNwyogv-_G9n8a4xqE" target="_blank" rel="noopener" class="bg-black text-white px-4 sm:px-6 py-3 rounded-xl font-semibold hover:bg-gray-800 transition min-w-[140px]">Skapja cenas kalkulators</a>
+    </div>
+
+    <!-- ИСПРАВЛЕННАЯ СЕКЦИЯ: теперь h-screen вместо h-[70vh] sm:h-screen -->
+    <section class="relative h-screen flex items-center justify-center mt-16 px-4 sm:px-0" data-aos="fade">
+      <img src="https://imgur.com/zePD3qc.jpg" alt="hero" class="absolute w-full h-full object-cover opacity-40" loading="lazy" />
+      <div class="relative text-center z-10 max-w-2xl">
+        <h1 class="text-3xl sm:text-5xl font-bold mb-6 text-black">Virtuves iekārtas, iebūvējamie skapji, garderobes un citas mēbeles pēc individuāla pasūtījuma. Interjera dizaina izstrāde un projektēšana.</h1>
+       <p class="mt-6 text-black text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">Mūsdienīgi risinājumi un kvalitatīvs izpildījums. Pilns cikls: no mērījuma un projekta izstrādes līdz ražošanai un montāžai objektā!</p>
+      </div>
+    </section>
+
+    <div class="mt-12 text-center flex flex-wrap justify-center gap-4 px-2 sm:px-0" data-aos="fade-up">
+      <a href="https://www.tiktok.com/@mmanufactory.eu" target="_blank" rel="noopener" class="bg-black px-5 py-3 rounded-xl hover:bg-gray-800 transition flex items-center justify-center min-w-[48px] min-h-[48px]">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Tiktok_icon.svg" alt="TikTok" class="h-8 w-8">
+      </a>
+      <a href="https://www.instagram.com/mmanufactory.eu/" target="_blank" rel="noopener" class="bg-black px-5 py-3 rounded-xl hover:bg-gray-800 transition flex items-center justify-center min-w-[48px] min-h-[48px]">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram" class="h-8 w-8" loading="lazy" />
+      </a>
+      <a href="https://t.me/rollhh" target="_blank" rel="noopener" class="bg-black px-5 py-3 rounded-xl hover:bg-gray-800 transition flex items-center justify-center min-w-[48px] min-h-[48px]">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram" class="h-8 w-8" loading="lazy" />
+      </a>
+      <a href="https://wa.me/37129914716" target="_blank" rel="noopener" class="bg-black px-5 py-3 rounded-xl hover:bg-gray-800 transition flex items-center justify-center min-w-[48px] min-h-[48px]">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" class="h-8 w-8" loading="lazy" />
+      </a>
+    </div>
+
+    <section id="sikdatnu" class="max-w-4xl mx-auto mt-20 px-4 sm:px-6 text-sm text-gray-700">
+      <h2 class="text-xl font-bold mb-4">
+        <button type="button" onclick="openPolicy()" class="underline hover:text-gray-800 transition">Sīkdatņu politika</button>
+      </h2>
+    </section>
+  </main>
+
+  <footer class="mt-20 p-6 text-center border-t border-gray-300 text-sm text-black">
+    © 2026 Mmanufactory.eu Visas tiesības aizsargātas.
+  </footer>
+
+  <div id="leadModal" class="modal">
+    <div class="modal-content">
+      <span onclick="closeModal()" class="float-right cursor-pointer text-gray-600 font-bold text-2xl">&times;</span>
+      <h2 class="text-xl font-semibold mb-4">Pieteikuma forma</h2>
+      <form id="leadForm">
+        <input type="text" name="name" placeholder="Jūsu vārds" class="w-full p-2 mb-4 border rounded" required />
+        <input type="tel" name="phone" id="phoneInput" placeholder="Telefona numurs" class="w-full p-2 mb-4 border rounded" required />
+        <textarea name="message" placeholder="Komentārs" class="w-full p-2 mb-4 border rounded" rows="3"></textarea>
+        <button type="submit" id="submitBtn" class="bg-black text-white px-4 py-2 rounded hover:bg-gray-800 w-full font-semibold">Nosūtīt</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="policyModal" class="modal">
+    <div class="modal-content relative">
+      <button type="button" onclick="closePolicy()" class="absolute top-3 right-4 cursor-pointer text-gray-600 font-bold text-2xl" aria-label="Close">&times;</button>
+      <h2 class="text-xl font-bold mb-4">Sīkdatņu politika</h2>
+      <div class="text-sm text-gray-700 space-y-4 text-left">
+        <p>Tīmekļa vietnē <strong>mmanufactory.eu</strong> tiek vākti dati par Vietnes apmeklētājiem, tādējādi gūstot iespēju izvērtēt, cik noderīga ir Vietne, un kā to varētu uzlabot.</p>
+        <p>Pārzinis, kas Vietnē vāc datus par Vietnes apmeklētājiem, turpmāk – Pārzinis.</p>
+        <p>Pārziņa e-pasts <a href="mailto:mmanufactory.eu@gmail.com" class="underline">mmanufactory.eu@gmail.com</a>, tālrunis +371 29914716.</p>
+        <p>Pārzinis pilnveido Vietni, ar mērķi, uzlabot tās lietošanu, tāpēc Pārzinim ir jāzina, kāda informācija ir svarīga Vietnes apmeklētājiem, cik bieži viņi šo Vietni apmeklē, kādu ierīci un pārlūkprogrammu viņi izmanto, no kāda reģiona nāk apmeklētāji, un kādu saturu lasa.</p>
+        <p>Pārzinis izmanto sistēmu Google Analytics, kas ļauj Pārzinim analizēt, kā apmeklētāji izmanto Vietni. Par to, kā darbojas Google Analytics pamatprincipi, iespējams uzzināt šeit: <a class="underline" href="https://support.google.com/analytics/answer/1012034?hl=lten&ref_topic=6157800" target="_blank" rel="noopener">https://support.google.com/analytics/answer/1012034?hl=lten&ref_topic=6157800</a>. Pārzinis izmanto savāktos datus savās tiesiskajās interesēs, lai uzlabotu izpratni par Vietnes apmeklētāju vajadzībām un uzlabotu pieejamību Pārziņa publiskotajai informācijai. Apmeklētājs jebkurā laikā var pārtraukt datu vākšanu Google Analytics, kā tas ir aprakstīts šeit: <a class="underline" href="https://tools.google.com/dlpage/gaoptout/" target="_blank" rel="noopener">https://tools.google.com/dlpage/gaoptout/</a>.</p>
+        <p>Serveris, kurā izvietota Vietne, var reģistrēt apmeklētāja nosūtītos pieprasījumus (izmantotā ierīce, pārlūkprogramma, IP adrese, piekļuves laiks). Šie dati tiek izmantoti tikai tehniskajiem nolūkiem: lai nodrošinātu Vietnes pienācīgu funkcionēšanu un drošību un izmeklētu iespējamos drošības incidentus. Tādu datu vākšanas pamats ir Pārziņa tiesiskā interese nodrošināt Vietnes tehnisku pieejamību.</p>
+        <p>Sīkdatnes ir nelieli faili, kurus, katru reizi, kad apmeklētājs apmeklē Vietni, pārlūkprogramma saglabā apmeklētāja datorā tādā apmērā, kā norādīts apmeklētāja datora pārlūkprogrammas iestatījumos. Atsevišķas sīkdatnes tiek izmantotas, lai atlasītu un piemērotu apmeklētājam piedāvājamo informāciju un reklāmas, pamatojoties uz saturu, ko apmeklētājs aplūkojis agrāk, un tādējādi veidotu apmeklētājiem Vietnes lietošanu vienkāršu, ērtu un individuāli piemērotu. Papildu informāciju par sīkdatnēm, kā arī to dzēšanu un pārvaldīšanu, var iegūt mājaslapā <a class="underline" href="https://www.aboutcookies.org" target="_blank" rel="noopener">www.aboutcookies.org</a>.</p>
+        <p>Vietne izmanto sīkdatnes, lai vāktu lietotāja IP adreses un pārlūkošanas informāciju un ļautu Vietnei atcerēties apmeklētāja izvēli. Sīkdatnes ļauj Pārzinim sekot līdzi Vietnes datu plūsmai un lietotāju mijiedarbībai ar Vietni – Pārzinis izmanto šos datus, lai analizētu apmeklētāju uzvedību un uzlabotu Vietni. Sīkdatņu izmantošanas tiesiskais pamats ir Pārziņa leģitīmā interese nodrošināt Vietnes funkcionalitāti.</p>
+        <p>Apmeklētājs var kontrolēt un/vai dzēst sīkdatnes pēc savas izvēles. Plašāka informācija pieejama šeit <a class="underline" href="https://www.aboutcookies.org" target="_blank" rel="noopener">www.aboutcookies.org</a>. Apmeklētājs var izdzēst visas sīkdatnes, kuras ir viņa datorā, un lielāko daļu pārlūkprogrammu var iestatīt tā, lai tiktu bloķēta sīkdatņu ievietošana datorā. Taču tādā gadījumā apmeklētājam manuāli būs jāpielāgo iestatījumi ikreiz, kad tiks apmeklēta Vietne, turklāt pastāv iespējamība, ka daži pakalpojumi un funkcijas nedarbosies.</p>
+        <p>Statistikas datiem par Vietnes apmeklētājiem var piekļūt Pārziņa darbinieki, kuri ir atbildīgi par tādu datu analīzi.</p>
+        <p>Ja nav noteikts citādi, sīkdatnes tiek glabātas, kamēr tiek izpildīta darbība, kādam nolūkam tās vāktas, un pēc tam tās tiek dzēstas.</p>
+        <p>Pārzinis apliecina, ka sīkdatnes un statistikas informācija tiks apkopota, apstrādāta un glabāta saskaņā ar Eiropas Savienības normatīvo aktu prasībām.</p>
+        <p>Sazinoties ar Pārzini par augstāk norādīto e-pastu, lietotājs var pieprasīt piekļūt saviem personas datiem, pieprasīt labot personas datus, pieprasīt dzēst personas datus, kā arī atsaukt piekrišanu personas datu apstrādei.</p>
+        <p>Apmeklētājs var atteikties no sīkdatnēm pārlūkprogrammas izvēlnē vai <a class="underline" href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener">https://tools.google.com/dlpage/gaoptout</a>.</p>
+        <p>Pārzinis patur tiesības jebkurā brīdī mainīt šos noteikumus. Vietnes apmeklētāja pienākums ir patstāvīgi pārbaudīt Vietnes saturu, lai iepazītos ar noteikumu izmaiņām.</p>
+        <h3 class="text-base font-semibold mt-6">Personas datu apstrādes politika</h3>
+        <p>Mēs apstrādāsim Jūsu personas datus sekojošiem mērķiem:</p>
+        <p><strong>Cenas aprēķināšanai.</strong> Šim nolūkam mums varētu būt nepieciešami vismaz sekojoši personas dati: klienta vārds, uzvārds, tālruņa numurs, e-pasta adrese, objekta adrese.</p>
+        <p><strong>Līgumā noteikto saistību izpildei un nodrošināšanai.</strong> Šim nolūkam mums varētu būt nepieciešami vismaz sekojoši personas dati: klienta vārds, uzvārds, tālruņa numurs, e-pasta adrese, klienta personas kods, objekta adrese u.c. dati pēc nepieciešamības.</p>
+        <p><strong>Mārketinga aktivitāšu nodrošināšanai.</strong> Šī nolūka ietvaros mēs varētu Jums nosūtīt komerciālos paziņojumus, nosūtīt ielūgumus uz pasākumiem, apsveikt jubilejās, veidot specializētas reklāmas interneta vietnēs un sociālajos kanālos, nodrošināt Jūsu dalību mūsu organizētās loterijās un/vai izlozēs, kā arī publicēt materiālus no mūsu organizētiem publiskiem pasākumiem. Šim nolūkam mums varētu būt nepieciešami vismaz sekojoši personas dati: Klienta vārds, uzvārds, telefona numurs, e-pasta adrese, interneta vidē veikto darbību atspoguļojums, atsevišķos gadījumos personas attēls fotogrāfijās un video ierakstos.</p>
+        <p>Mēs veicam attiecīgus pasākumus, lai apstrādātu Jūsu personas datus atbilstoši piemērojamiem tiesību aktiem un nodrošinātu, ka Jūsu personas datiem nepiekļūst trešās personas, kurām nav attiecīga tiesiskā pamata Jūsu personas datu apstrādei.</p>
+        <p><strong>Jūsu personas datiem, pēc nepieciešamības, varētu piekļūt:</strong></p>
+        <ul class="list-disc pl-6 space-y-2">
+          <li>mūsu darbinieki vai tieši pilnvarotās personas, kuriem tas nepieciešams darba pienākumu izpildei;</li>
+          <li>personas datu apstrādātāji atbilstoši to sniegtajiem pakalpojumiem un tikai nepieciešamā apjomā, piemēram, digitālā mārketinga aģentūra;</li>
+          <li>valsts un pašvaldības iestādes tiesību aktos noteiktos gadījumos, piemēram, tiesībsargājošās iestādes, pašvaldības, nodokļu pārvaldes, zvērināti tiesu izpildītāji, tiesas, uzraudzības iestādes;</li>
+        </ul>
+        <p>Jūsu personas dati tiek glabāti tik ilgi, cik to glabāšana ir nepieciešama atbilstoši attiecīgiem personas datu apstrādes nolūkiem. Izvērtējot personas datu glabāšanas ilgumu, mēs ņemam vērā līgumsaistību izpildes aspektus, kā arī mūsu leģitīmās intereses. Ja Jūsu personas dati noteiktajiem nolūkiem vairs nav nepieciešami, mēs tos dzēsīsim vai iznīcinām.</p>
+        <p><strong>Personas datu glabāšanas termiņi:</strong></p>
+        <ul class="list-disc pl-6 space-y-2">
+          <li>personas datus, kas nepieciešami līgumsaistību izpildei – līdz garantijas perioda beigām, kas ir divi gadi;</li>
+          <li>personas datus, kas iegūti cenas piedāvājuma izstrādei – vienu gadu pēc pēdējā kontakta brīža;</li>
+        </ul>
+        <p class="mt-4"><strong>Kontaktpersona:</strong> Maksims Makuševs, 300195-10025, +371 29914716</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="cookieConsent">
+    <div class="cookie-content">
+      <p>Mēs izmantojam sīkdatnes, lai uzlabotu jūsu pieredzi mūsu vietnē.</p>
+      <div class="cookie-buttons">
+        <button type="button" class="btn-cookie-accept" onclick="acceptCookies()">Piekrist</button>
+        <button type="button" class="btn-cookie-decline" onclick="declineCookies()">Noraidīt</button>
+      </div>
+    </div>
+  </div>
+
+  <button type="button" id="scrollToTop" aria-label="Uz augšu">↑</button>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 800, once: true });
+
+    function openModal() {
+      document.getElementById('leadModal').style.display = 'block';
+    }
+    function closeModal() {
+      document.getElementById('leadModal').style.display = 'none';
+    }
+
+    function openPolicy() {
+      document.getElementById('policyModal').style.display = 'block';
+    }
+    function closePolicy() {
+      document.getElementById('policyModal').style.display = 'none';
+    }
+
+    window.addEventListener('click', function (event) {
+      const modal = document.getElementById('leadModal');
+      const pmodal = document.getElementById('policyModal');
+      if (event.target === modal) modal.style.display = 'none';
+      if (event.target === pmodal) pmodal.style.display = 'none';
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const menuButton = document.getElementById('menuButton');
+      const sideMenu = document.getElementById('sideMenu');
+      const closeMenu = document.getElementById('closeMenu');
+      const overlay = document.getElementById('overlay');
+
+      function openMenu() {
+        sideMenu.classList.add('open');
+        overlay.classList.add('show');
+      }
+      function closeMenuFunc() {
+        sideMenu.classList.remove('open');
+        overlay.classList.remove('show');
+      }
+      menuButton.addEventListener('click', openMenu);
+      closeMenu.addEventListener('click', closeMenuFunc);
+      overlay.addEventListener('click', closeMenuFunc);
+
+      const marqueeWrapper = document.getElementById('marqueeWrapper');
+      const marqueeContent = document.getElementById('marqueeContent');
+      if (!marqueeContent.dataset.duplicated) {
+        const clone = marqueeContent.cloneNode(true);
+        while (clone.firstElementChild) {
+          marqueeContent.appendChild(clone.firstElementChild);
+        }
+        marqueeContent.dataset.duplicated = 'true';
+      }
+
+      let isDown = false, startX = 0, scrollLeft = 0;
+
+      function pauseAnim() { marqueeContent.style.animationPlayState = 'paused'; }
+      function resumeAnim() { marqueeContent.style.animationPlayState = 'running'; }
+
+      marqueeWrapper.addEventListener('mousedown', (e) => {
+        isDown = true;
+        marqueeWrapper.style.cursor = 'grabbing';
+        startX = e.pageX - marqueeWrapper.offsetLeft;
+        scrollLeft = marqueeWrapper.scrollLeft;
+        pauseAnim();
+      });
+      marqueeWrapper.addEventListener('mouseleave', () => {
+        isDown = false;
+        marqueeWrapper.style.cursor = 'grab';
+        resumeAnim();
+      });
+      marqueeWrapper.addEventListener('mouseup', () => {
+        isDown = false;
+        marqueeWrapper.style.cursor = 'grab';
+        resumeAnim();
+      });
+      marqueeWrapper.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - marqueeWrapper.offsetLeft;
+        const walk = (x - startX);
+        marqueeWrapper.scrollLeft = scrollLeft - walk;
+      });
+
+      marqueeWrapper.addEventListener('touchstart', (e) => {
+        isDown = true;
+        startX = e.touches[0].pageX;
+        scrollLeft = marqueeWrapper.scrollLeft;
+        pauseAnim();
+      }, { passive: true });
+      marqueeWrapper.addEventListener('touchend', () => {
+        isDown = false;
+        resumeAnim();
+      });
+      marqueeWrapper.addEventListener('touchmove', (e) => {
+        if (!isDown) return;
+        const x = e.touches[0].pageX;
+        const walk = (x - startX);
+        marqueeWrapper.scrollLeft = scrollLeft - walk;
+      }, { passive: true });
+
+      const phoneInput = document.getElementById('phoneInput');
+      if (phoneInput) {
+        phoneInput.addEventListener('input', function(e) {
+          let x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,3})/);
+          if (x) {
+            e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
+          }
+        });
+      }
+
+      const leadForm = document.getElementById('leadForm');
+      const submitBtn = document.getElementById('submitBtn');
+      if (leadForm) {
+        leadForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          submitBtn.classList.add('btn-loading');
+          setTimeout(() => {
+            submitBtn.classList.remove('btn-loading');
+            alert('Paldies! Jūsu pieteikums ir nosūtīts.');
+            closeModal();
+            leadForm.reset();
+          }, 1500);
+        });
+      }
+
+      const scrollBtn = document.getElementById('scrollToTop');
+      window.addEventListener('scroll', function() {
+        if (window.scrollY > 500) {
+          scrollBtn.classList.add('visible');
+        } else {
+          scrollBtn.classList.remove('visible');
+        }
+      });
+      scrollBtn.addEventListener('click', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      if (!localStorage.getItem('cookieConsent')) {
+        document.getElementById('cookieConsent').style.display = 'block';
+      }
+    });
+
+    function acceptCookies() {
+      localStorage.setItem('cookieConsent', 'accepted');
+      document.getElementById('cookieConsent').style.display = 'none';
+    }
+    function declineCookies() {
+      localStorage.setItem('cookieConsent', 'declined');
+      document.getElementById('cookieConsent').style.display = 'none';
+    }
+  </script>
+</body>
+</html>
