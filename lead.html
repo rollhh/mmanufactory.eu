@@ -13,13 +13,13 @@
 
 <h1 class="text-2xl font-bold text-center">Saņemt piedāvājumu</h1>
 
-<textarea name="request" placeholder="Kas Jūs interesē?" class="w-full p-3 border rounded" required></textarea>
+<textarea name="request" placeholder="Kādu mēbeļu izgatavošana Jūs interesē?" class="w-full p-3 border rounded" required></textarea>
 
 <input type="file" id="fileInput" accept="image/*" class="w-full p-2 border rounded" required />
 
-<textarea name="contact" placeholder="Jūsu kontakts" class="w-full p-3 border rounded" required></textarea>
+<textarea name="contact" placeholder="Jūsu telefona nr." class="w-full p-3 border rounded" required></textarea>
 
-<button type="submit" class="w-full bg-black text-white py-3 rounded font-semibold">
+<button type="submit" id="submitBtn" class="w-full bg-black text-white py-3 rounded font-semibold">
 Nosūtīt
 </button>
 
@@ -29,46 +29,72 @@ Nosūtīt
 document.getElementById('leadForm').addEventListener('submit', async function(e){
   e.preventDefault();
 
+  const btn = document.getElementById('submitBtn');
+  btn.innerText = "Отправка...";
+  btn.disabled = true;
+
   const request = this.request.value;
   const contact = this.contact.value;
   const file = document.getElementById('fileInput').files[0];
 
   if (!file) {
     alert("Загрузи фото");
+    btn.innerText = "Nosūtīt";
+    btn.disabled = false;
     return;
   }
 
-  // 1. Загрузка в Cloudinary
-  const formData = new FormData();
-  formData.append("file", file);
-  formData.append("upload_preset", "gji47psc");
+  try {
+    // 1. Upload в Cloudinary
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "gji47psc");
 
-  const uploadRes = await fetch("https://api.cloudinary.com/v1_1/dvnkgcxr/image/upload", {
-    method: "POST",
-    body: formData
-  });
+    const uploadRes = await fetch("https://api.cloudinary.com/v1_1/dvnkgcxr/image/upload", {
+      method: "POST",
+      body: formData
+    });
 
-  const uploadData = await uploadRes.json();
-  const imageUrl = uploadData.secure_url;
+    const uploadData = await uploadRes.json();
 
-  // 2. Отправка в Telegram
-  await fetch("https://api.telegram.org/bot8614666986:AAG32Bul8pWOyK652Kr_XdcSUpB5JJH86Lo/sendMessage", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      chat_id: "-5164464613",
-      text:
-        "НОВЫЙ ЛИД\n\n" +
-        "Запрос:\n" + request + "\n\n" +
-        "Фото:\n" + imageUrl + "\n\n" +
-        "Контакт:\n" + contact
-    })
-  });
+    if (!uploadData.secure_url) {
+      throw new Error("Cloudinary error");
+    }
 
-  alert("Заявка отправлена");
-  this.reset();
+    const imageUrl = uploadData.secure_url;
+
+    // 2. Telegram
+    const telegramRes = await fetch("https://api.telegram.org/bot8614666986:AAG4m08eVjXXCXYJBuxDQj5PKIOy9ExOhgs/sendMessage", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        chat_id: "-5164464613",
+        text:
+          "🔥 НОВЫЙ ЛИД\n\n" +
+          "📌 Запрос:\n" + request + "\n\n" +
+          "🖼 Фото:\n" + imageUrl + "\n\n" +
+          "📞 Контакт:\n" + contact
+      })
+    });
+
+    const tgData = await telegramRes.json();
+
+    if (!tgData.ok) {
+      throw new Error("Telegram error");
+    }
+
+    alert("Заявка отправлена ✅");
+    this.reset();
+
+  } catch (err) {
+    console.error(err);
+    alert("Ошибка отправки ❌");
+  }
+
+  btn.innerText = "Nosūtīt";
+  btn.disabled = false;
 });
 </script>
 
