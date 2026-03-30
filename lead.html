@@ -50,7 +50,7 @@ document.getElementById('leadForm').addEventListener('submit', async function(e)
     formData.append("file", file);
     formData.append("upload_preset", "gji47psc");
 
-    const uploadRes = await fetch("https://api.cloudinary.com/v1_1/dvnkgcxr/image/upload", {
+    const uploadRes = await fetch("https://api.cloudinary.com/v1_1/dvnkgcxr/upload", {
       method: "POST",
       body: formData
     });
