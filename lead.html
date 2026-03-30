@@ -23,13 +23,13 @@ document.getElementById('leadForm').addEventListener('submit', async function(e)
         "📞 " + contact
       );
 
-      tgRes = await fetch("https://api.telegram.org/bot8614666986:AAG4m08eVjXXCXYJBuxDQj5PKIOy9ExOhgs/sendPhoto", {
+      tgRes = await fetch("https://api.telegram.org/bot8614666986:AAE_i4cqdB8yv_ixOZ9BTOfeup4whbn0vug/sendPhoto", {
         method: "POST",
         body: formData
       });
 
     } else {
-      tgRes = await fetch("https://api.telegram.org/bot8614666986:AAG4m08eVjXXCXYJBuxDQj5PKIOy9ExOhgs/sendMessage", {
+      tgRes = await fetch("https://api.telegram.org/bot8614666986:AAE_i4cqdB8yv_ixOZ9BTOfeup4whbn0vug/sendMessage", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
