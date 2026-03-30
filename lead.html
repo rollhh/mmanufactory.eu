@@ -1,30 +1,3 @@
-<!DOCTYPE html>
-<html lang="lv">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pieteikums</title>
-<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-</head>
-
-<body class="bg-white text-black flex items-center justify-center min-h-screen">
-
-<form id="leadForm" class="w-full max-w-lg p-6 border rounded-xl shadow-lg space-y-4">
-
-<h1 class="text-2xl font-bold text-center">Saņemt piedāvājumu</h1>
-
-<textarea name="request" placeholder="Kas Jūs interesē?" class="w-full p-3 border rounded" required></textarea>
-
-<input type="file" id="fileInput" accept="image/*" class="w-full p-2 border rounded" />
-
-<textarea name="contact" placeholder="Jūsu kontakts" class="w-full p-3 border rounded" required></textarea>
-
-<button type="submit" id="submitBtn" class="w-full bg-black text-white py-3 rounded font-semibold">
-Nosūtīt
-</button>
-
-</form>
-
 <script>
 document.getElementById('leadForm').addEventListener('submit', async function(e){
   e.preventDefault();
@@ -39,6 +12,8 @@ document.getElementById('leadForm').addEventListener('submit', async function(e)
 
   try {
 
+    let tgRes;
+
     if (file) {
       const formData = new FormData();
       formData.append("chat_id", "-5164464613");
@@ -48,13 +23,13 @@ document.getElementById('leadForm').addEventListener('submit', async function(e)
         "📞 " + contact
       );
 
-      await fetch("https://api.telegram.org/bot8614666986:AAG4m08eVjXXCXYJBuxDQj5PKIOy9ExOhgs/sendPhoto", {
+      tgRes = await fetch("https://api.telegram.org/bot8614666986:AAG4m08eVjXXCXYJBuxDQj5PKIOy9ExOhgs/sendPhoto", {
         method: "POST",
         body: formData
       });
 
     } else {
-      await fetch("https://api.telegram.org/bot8614666986:AAG4m08eVjXXCXYJBuxDQj5PKIOy9ExOhgs/sendMessage", {
+      tgRes = await fetch("https://api.telegram.org/bot8614666986:AAG4m08eVjXXCXYJBuxDQj5PKIOy9ExOhgs/sendMessage", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -68,18 +43,21 @@ document.getElementById('leadForm').addEventListener('submit', async function(e)
       });
     }
 
-    alert("Paldies! ✅ Mēs sazināsimies tuvākajā laika!");
+    const data = await tgRes.json();
+
+    if (!data.ok) {
+      throw new Error("Telegram error: " + JSON.stringify(data));
+    }
+
+    alert("Paldies! ✅ Mēs sazināsimies tuvākajā laikā!");
     this.reset();
 
   } catch (err) {
-    alert("Kļūda ❌");
     console.error(err);
+    alert("Kļūda ❌");
   }
 
   btn.innerText = "Nosūtīt";
   btn.disabled = false;
 });
 </script>
-
-</body>
-</html>
