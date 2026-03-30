@@ -17,7 +17,7 @@
 
 <input type="file" id="fileInput" accept="image/*" class="w-full p-2 border rounded" />
 
-<textarea name="contact" placeholder="Jūsu kontakts" class="w-full p-3 border rounded" required></textarea>
+<textarea name="contact" placeholder="Jūsu telefona nr." class="w-full p-3 border rounded" required></textarea>
 
 <button type="submit" id="submitBtn" class="w-full bg-black text-white py-3 rounded font-semibold">
 Nosūtīt
@@ -30,7 +30,7 @@ document.getElementById('leadForm').addEventListener('submit', async function(e)
   e.preventDefault();
 
   const btn = document.getElementById('submitBtn');
-  btn.innerText = "Отправка...";
+  btn.innerText = "Sending...";
   btn.disabled = true;
 
   const request = this.request.value;
@@ -45,9 +45,8 @@ document.getElementById('leadForm').addEventListener('submit', async function(e)
       formData.append("chat_id", "-5164464613");
       formData.append("photo", file);
       formData.append("caption",
-        "🔥 НОВЫЙ ЛИД\n\n" +
-        "📌 Запрос:\n" + request + "\n\n" +
-        "📞 Контакт:\n" + contact
+        "📌\n" + request + "\n\n" +
+        "📞\n" + contact
       );
 
       await fetch("https://api.telegram.org/bot8614666986:AAG4m08eVjXXCXYJBuxDQj5PKIOy9ExOhgs/sendPhoto", {
@@ -65,19 +64,18 @@ document.getElementById('leadForm').addEventListener('submit', async function(e)
         body: JSON.stringify({
           chat_id: "-5164464613",
           text:
-            "🔥 НОВЫЙ ЛИД\n\n" +
-            "📌 Запрос:\n" + request + "\n\n" +
-            "📞 Контакт:\n" + contact
+            "📌\n" + request + "\n\n" +
+            "📞\n" + contact
         })
       });
     }
 
-    alert("Заявка отправлена ✅");
+    alert("Paldies par pietekumu ✅ Mēs sazināsimies tuvākajā laika!");
     this.reset();
 
   } catch (err) {
     console.error(err);
-    alert("Ошибка ❌");
+    alert("Error ❌");
   }
 
   btn.innerText = "Nosūtīt";
