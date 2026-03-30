@@ -13,11 +13,11 @@
 
 <h1 class="text-2xl font-bold text-center">Saņemt piedāvājumu</h1>
 
-<textarea name="request" placeholder="Kādu mēbeļu izgatavošana Jūs interesē?" class="w-full p-3 border rounded" required></textarea>
+<textarea name="request" placeholder="Kas Jūs interesē?" class="w-full p-3 border rounded" required></textarea>
 
 <input type="file" id="fileInput" accept="image/*" class="w-full p-2 border rounded" required />
 
-<textarea name="contact" placeholder="Jūsu telefona nr." class="w-full p-3 border rounded" required></textarea>
+<textarea name="contact" placeholder="Jūsu kontakts" class="w-full p-3 border rounded" required></textarea>
 
 <button type="submit" id="submitBtn" class="w-full bg-black text-white py-3 rounded font-semibold">
 Nosūtīt
@@ -45,7 +45,7 @@ document.getElementById('leadForm').addEventListener('submit', async function(e)
   }
 
   try {
-    // 1. Upload в Cloudinary
+    // === CLOUDINARY ===
     const formData = new FormData();
     formData.append("file", file);
     formData.append("upload_preset", "gji47psc");
@@ -58,13 +58,14 @@ document.getElementById('leadForm').addEventListener('submit', async function(e)
     const uploadData = await uploadRes.json();
 
     if (!uploadData.secure_url) {
+      alert("Ошибка загрузки фото");
       throw new Error("Cloudinary error");
     }
 
     const imageUrl = uploadData.secure_url;
 
-    // 2. Telegram
-    const telegramRes = await fetch("https://api.telegram.org/bot8614666986:AAG4m08eVjXXCXYJBuxDQj5PKIOy9ExOhgs/sendMessage", {
+    // === TELEGRAM ===
+    const tgRes = await fetch("https://api.telegram.org/bot8614666986:AAG4m08eVjXXCXYJBuxDQj5PKIOy9ExOhgs/sendMessage", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -79,9 +80,10 @@ document.getElementById('leadForm').addEventListener('submit', async function(e)
       })
     });
 
-    const tgData = await telegramRes.json();
+    const tgData = await tgRes.json();
 
     if (!tgData.ok) {
+      alert("Ошибка Telegram");
       throw new Error("Telegram error");
     }
 
@@ -89,8 +91,8 @@ document.getElementById('leadForm').addEventListener('submit', async function(e)
     this.reset();
 
   } catch (err) {
+    alert("Ошибка ❌");
     console.error(err);
-    alert("Ошибка отправки ❌");
   }
 
   btn.innerText = "Nosūtīt";
