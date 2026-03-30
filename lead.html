@@ -79,6 +79,9 @@ document.getElementById('leadForm').addEventListener('submit', async function(e)
 
     alert("Paldies! ✅ Mēs sazināsimies tuvākajā laikā!");
     this.reset();
+    setTimeout(() => {
+  window.location.href = "/";
+}, 2500);
 
   } catch (err) {
     console.error(err);
