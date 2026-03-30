@@ -17,7 +17,7 @@
 
 <input type="file" id="fileInput" accept="image/*" class="w-full p-2 border rounded" />
 
-<textarea name="contact" placeholder="Jūsu telefona nr." class="w-full p-3 border rounded" required></textarea>
+<textarea name="contact" placeholder="Jūsu kontakts" class="w-full p-3 border rounded" required></textarea>
 
 <button type="submit" id="submitBtn" class="w-full bg-black text-white py-3 rounded font-semibold">
 Nosūtīt
@@ -30,7 +30,7 @@ document.getElementById('leadForm').addEventListener('submit', async function(e)
   e.preventDefault();
 
   const btn = document.getElementById('submitBtn');
-  btn.innerText = "Sending...";
+  btn.innerText = "Nosūtīšana...";
   btn.disabled = true;
 
   const request = this.request.value;
@@ -39,14 +39,13 @@ document.getElementById('leadForm').addEventListener('submit', async function(e)
 
   try {
 
-    // ЕСЛИ ЕСТЬ ФОТО → отправляем фото
     if (file) {
       const formData = new FormData();
       formData.append("chat_id", "-5164464613");
       formData.append("photo", file);
       formData.append("caption",
-        "📌\n" + request + "\n\n" +
-        "📞\n" + contact
+        "📌 " + request + "\n\n" +
+        "📞 " + contact
       );
 
       await fetch("https://api.telegram.org/bot8614666986:AAG4m08eVjXXCXYJBuxDQj5PKIOy9ExOhgs/sendPhoto", {
@@ -55,7 +54,6 @@ document.getElementById('leadForm').addEventListener('submit', async function(e)
       });
 
     } else {
-      // ЕСЛИ БЕЗ ФОТО → просто текст
       await fetch("https://api.telegram.org/bot8614666986:AAG4m08eVjXXCXYJBuxDQj5PKIOy9ExOhgs/sendMessage", {
         method: "POST",
         headers: {
@@ -64,18 +62,18 @@ document.getElementById('leadForm').addEventListener('submit', async function(e)
         body: JSON.stringify({
           chat_id: "-5164464613",
           text:
-            "📌\n" + request + "\n\n" +
-            "📞\n" + contact
+            "📌 " + request + "\n\n" +
+            "📞 " + contact
         })
       });
     }
 
-    alert("Paldies par pietekumu ✅ Mēs sazināsimies tuvākajā laika!");
+    alert("Paldies! ✅ Mēs sazināsimies tuvākajā laika!");
     this.reset();
 
   } catch (err) {
+    alert("Kļūda ❌");
     console.error(err);
-    alert("Error ❌");
   }
 
   btn.innerText = "Nosūtīt";
