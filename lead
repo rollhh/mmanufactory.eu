@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pieteikums</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-white text-black flex items-center justify-center min-h-screen">
+
+<form id="leadForm" class="w-full max-w-lg p-6 border rounded-xl shadow-lg space-y-4">
+
+<h1 class="text-2xl font-bold text-center">Saņemt piedāvājumu</h1>
+
+<textarea name="request" placeholder="Kas Jūs interesē?" class="w-full p-3 border rounded" required></textarea>
+
+<input type="file" id="fileInput" accept="image/*" class="w-full p-2 border rounded" required />
+
+<textarea name="contact" placeholder="Jūsu kontakts" class="w-full p-3 border rounded" required></textarea>
+
+<button type="submit" class="w-full bg-black text-white py-3 rounded font-semibold">
+Nosūtīt
+</button>
+
+</form>
+
+<script>
+document.getElementById('leadForm').addEventListener('submit', async function(e){
+  e.preventDefault();
+
+  const request = this.request.value;
+  const contact = this.contact.value;
+  const file = document.getElementById('fileInput').files[0];
+
+  if (!file) {
+    alert("Загрузи фото");
+    return;
+  }
+
+  // 1. Загрузка в Cloudinary
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("upload_preset", "gji47psc");
+
+  const uploadRes = await fetch("https://api.cloudinary.com/v1_1/dvnkgcxr/image/upload", {
+    method: "POST",
+    body: formData
+  });
+
+  const uploadData = await uploadRes.json();
+  const imageUrl = uploadData.secure_url;
+
+  // 2. Отправка в Telegram
+  await fetch("https://api.telegram.org/bot8614666986:AAG32Bul8pWOyK652Kr_XdcSUpB5JJH86Lo/sendMessage", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      chat_id: "-5164464613",
+      text:
+        "НОВЫЙ ЛИД\n\n" +
+        "Запрос:\n" + request + "\n\n" +
+        "Фото:\n" + imageUrl + "\n\n" +
+        "Контакт:\n" + contact
+    })
+  });
+
+  alert("Заявка отправлена");
+  this.reset();
+});
+</script>
+
+</body>
+</html>
