@@ -35,6 +35,15 @@ Nosūtīt
 </form>
 
 <script>
+function gtag_report_conversion() {
+  gtag('event', 'conversion', {
+    'send_to': 'AW-18008605575/OB0lCJjHy5ccEIeHlotD',
+    'value': 1.0,
+    'currency': 'EUR'
+  });
+}
+
+
 document.getElementById('leadForm').addEventListener('submit', async function(e){
   e.preventDefault();
 
@@ -85,6 +94,8 @@ document.getElementById('leadForm').addEventListener('submit', async function(e)
     if (!data.ok) {
       throw new Error(JSON.stringify(data));
     }
+
+    gtag_report_conversion();
 
     alert("Paldies! ✅ Mēs sazināsimies tuvākajā laikā!");
     this.reset();
