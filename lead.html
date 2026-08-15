@@ -63,6 +63,14 @@ function gtag_report_conversion() {
   });
 }
 
+function fileToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
 
 document.getElementById('leadForm').addEventListener('submit', async function(e){
   e.preventDefault();
@@ -76,56 +84,41 @@ document.getElementById('leadForm').addEventListener('submit', async function(e)
   const file = document.getElementById('fileInput').files[0];
 
   try {
+    let photo = null;
 
-    let response;
-
-    // ЕСЛИ ЕСТЬ ФОТО
     if (file) {
-      const formData = new FormData();
-      formData.append("chat_id", "-5164464613");
-      formData.append("photo", file);
-      formData.append("caption",
-        "📌 " + request + "\n\n" +
-        "📞 " + contact
-      );
-
-      response = await fetch("https://api.telegram.org/bot8614666986:AAE_i4cqdB8yv_ixOZ9BTOfeup4whbn0vug/sendPhoto", {
-        method: "POST",
-        body: formData
-      });
-
-    } else {
-      response = await fetch("https://api.telegram.org/bot8614666986:AAE_i4cqdB8yv_ixOZ9BTOfeup4whbn0vug/sendMessage", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          chat_id: "-5164464613",
-          text:
-            "📌 " + request + "\n\n" +
-            "📞 " + contact
-        })
-      });
+      if (file.size > 4000000) {
+        alert("Attēls ir pārāk liels (maks. 4 MB)");
+        btn.innerText = "Nosūtīt";
+        btn.disabled = false;
+        return;
+      }
+      photo = await fileToBase64(file);
     }
+
+    const response = await fetch("/api/lead", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ request, contact, photo })
+    });
 
     const data = await response.json();
 
     if (!data.ok) {
-      throw new Error(JSON.stringify(data));
+      throw new Error("send failed");
     }
 
     gtag_report_conversion();
 
-if (typeof fbq === 'function') {
-  fbq('track', 'Lead');
-}
+    if (typeof fbq === 'function') {
+      fbq('track', 'Lead');
+    }
 
-alert("Paldies! ✅ Mēs sazināsimies tuvākajā laikā!");
+    alert("Paldies! ✅ Mēs sazināsimies tuvākajā laikā!");
     this.reset();
     setTimeout(() => {
-  window.location.href = "https://mmanufactory.eu/";
-}, 2000);
+      window.location.href = "https://mmanufactory.eu/";
+    }, 2000);
 
   } catch (err) {
     console.error(err);
