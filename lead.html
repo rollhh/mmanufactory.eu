@@ -62,6 +62,8 @@ Nosūtīt
 </form>
 
 <script>
+let selectedFiles = [];
+
 function gtag_report_conversion() {
   gtag('event', 'conversion', {
     'send_to': 'AW-18008605575/OB0lCJjHy5ccEIeHlotD',
@@ -96,6 +98,50 @@ function compressImage(file) {
   });
 }
 
+function renderPreview() {
+  const box = document.getElementById('preview');
+  const info = document.getElementById('fileCount');
+  box.innerHTML = '';
+
+  selectedFiles.forEach((file, i) => {
+    const wrap = document.createElement('div');
+    wrap.className = 'relative';
+
+    const img = document.createElement('img');
+    img.src = URL.createObjectURL(file);
+    img.className = 'w-full h-24 object-cover rounded border';
+
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.innerText = '×';
+    btn.className = 'absolute top-1 right-1 bg-black text-white rounded-full w-6 h-6 leading-none text-lg';
+    btn.onclick = () => {
+      selectedFiles.splice(i, 1);
+      renderPreview();
+    };
+
+    wrap.appendChild(img);
+    wrap.appendChild(btn);
+    box.appendChild(wrap);
+  });
+
+  info.innerText = selectedFiles.length
+    ? 'Pievienoti attēli: ' + selectedFiles.length + ' / 10'
+    : '';
+}
+
+document.getElementById('fileInput').addEventListener('change', function(){
+  for (const f of Array.from(this.files)) {
+    if (selectedFiles.length >= 10) {
+      alert("Maksimums 10 attēli");
+      break;
+    }
+    selectedFiles.push(f);
+  }
+  this.value = '';
+  renderPreview();
+});
+
 document.getElementById('leadForm').addEventListener('submit', async function(e){
   e.preventDefault();
 
@@ -105,18 +151,10 @@ document.getElementById('leadForm').addEventListener('submit', async function(e)
 
   const request = this.request.value;
   const contact = this.contact.value;
-  const files = Array.from(document.getElementById('fileInput').files);
 
   try {
-    if (files.length > 10) {
-      alert("Maksimums 10 attēli");
-      btn.innerText = "Nosūtīt";
-      btn.disabled = false;
-      return;
-    }
-
     const photos = [];
-    for (const f of files) {
+    for (const f of selectedFiles) {
       photos.push(await compressImage(f));
     }
 
@@ -140,6 +178,8 @@ document.getElementById('leadForm').addEventListener('submit', async function(e)
 
     alert("Paldies! ✅ Mēs sazināsimies tuvākajā laikā!");
     this.reset();
+    selectedFiles = [];
+    renderPreview();
     setTimeout(() => {
       window.location.href = "https://mmanufactory.eu/";
     }, 2000);
