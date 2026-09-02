@@ -44,7 +44,14 @@
 
 <textarea name="request" placeholder="Kādas mēbeles Jūs interesē? Ja nepieciešams, zemāk pievienojiet attēlu." class="w-full p-3 border rounded" required></textarea>
 
-<<input type="file" id="fileInput" accept="image/*" multiple ... />" class="w-full p-2 border rounded" />
+<div class="w-full">
+  <input type="file" id="fileInput" accept="image/*" multiple class="hidden" />
+  <label for="fileInput" class="block w-full p-3 border border-dashed border-gray-400 rounded text-center cursor-pointer text-gray-600 hover:bg-gray-50">
+    + Pievienot attēlus
+  </label>
+  <div id="preview" class="grid grid-cols-3 gap-2 mt-2"></div>
+  <p id="fileCount" class="text-xs text-gray-500 mt-1"></p>
+</div>
 
 <textarea name="contact" placeholder="Jūsu vārds un telefona nr. saziņai. Kurā pilsētā atrodas objekts?" class="w-full p-3 border rounded" required></textarea>
 
