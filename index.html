@@ -1,35 +1,7 @@
 <!DOCTYPE html>
 <html lang="lv">
 <head>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-BZXYH7S8QH"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-BZXYH7S8QH');
-  gtag('config', 'AW-18008605575');
-</script>
-  <!-- Meta Pixel Code -->
-<script>
-  !function(f,b,e,v,n,t,s)
-  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-  n.queue=[];t=b.createElement(e);t.async=!0;
-  t.src=v;s=b.getElementsByTagName(e)[0];
-  s.parentNode.insertBefore(t,s)}(window, document,'script',
-  'https://connect.facebook.net/en_US/fbevents.js');
-
-  fbq('init', '787011006090664');
-  fbq('track', 'PageView');
-</script>
-
-<noscript>
-  <img height="1" width="1" style="display:none"
-  src="https://www.facebook.com/tr?id=787011006090664&ev=PageView&noscript=1"/>
-</noscript>
-<!-- End Meta Pixel Code -->
+  <script src="/consent.js"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Mmanufactory.eu – mēbeles pēc individuāla pasūtījuma, interjera dizaina izstrāde</title>
@@ -257,28 +229,6 @@
       transform: scale(1.1);
     }
 
-    .btn-loading {
-      position: relative;
-      color: transparent !important;
-      pointer-events: none;
-    }
-    .btn-loading::after {
-      content: '';
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      border: 2px solid white;
-      border-radius: 50%;
-      border-top-color: transparent;
-      animation: spin 0.8s linear infinite;
-    }
-    @keyframes spin {
-      to { transform: translate(-50%, -50%) rotate(360deg); }
-    }
-
     @media (min-width: 768px) {
       .marquee-content img { height: 300px; }
     }
@@ -488,6 +438,8 @@
     <section id="sikdatnu" class="max-w-4xl mx-auto mt-20 px-4 sm:px-6 text-sm text-gray-700">
       <h2 class="text-xl font-bold mb-4">
         <button type="button" onclick="openPolicy()" class="underline hover:text-gray-800 transition">Sīkdatņu politika</button>
+        <span class="mx-2">·</span>
+        <button type="button" onclick="openCookieSettings()" class="underline hover:text-gray-800 transition">Sīkdatņu iestatījumi</button>
       </h2>
     </section>
   </main>
@@ -496,65 +448,27 @@
     © 2026 Mmanufactory.eu Visas tiesības aizsargātas.
   </footer>
 
-  <div id="leadModal" class="modal">
-    <div class="modal-content">
-      <span onclick="closeModal()" class="float-right cursor-pointer text-gray-600 font-bold text-2xl">&times;</span>
-      <h2 class="text-xl font-semibold mb-4">Pieteikuma forma</h2>
-      <form id="leadForm">
-        <input type="text" name="name" placeholder="Jūsu vārds" class="w-full p-2 mb-4 border rounded" required />
-        <input type="tel" name="phone" id="phoneInput" placeholder="Telefona numurs" class="w-full p-2 mb-4 border rounded" required />
-        <textarea name="message" placeholder="Komentārs" class="w-full p-2 mb-4 border rounded" rows="3"></textarea>
-        <button type="submit" id="submitBtn" class="bg-black text-white px-4 py-2 rounded hover:bg-gray-800 w-full font-semibold">Nosūtīt</button>
-      </form>
-    </div>
-  </div>
-
   <div id="policyModal" class="modal">
     <div class="modal-content relative">
-      <button type="button" onclick="closePolicy()" class="absolute top-3 right-4 cursor-pointer text-gray-600 font-bold text-2xl" aria-label="Close">&times;</button>
-      <h2 class="text-xl font-bold mb-4">Sīkdatņu politika</h2>
+      <button type="button" onclick="closePolicy()" class="absolute top-3 right-4 cursor-pointer text-gray-600 font-bold text-2xl" aria-label="Aizvērt">&times;</button>
+      <h2 class="text-xl font-bold mb-4">Sīkdatņu un privātuma politika</h2>
       <div class="text-sm text-gray-700 space-y-4 text-left">
-        <p>Tīmekļa vietnē <strong>mmanufactory.eu</strong> tiek vākti dati par Vietnes apmeklētājiem, tādējādi gūstot iespēju izvērtēt, cik noderīga ir Vietne, un kā to varētu uzlabot.</p>
-        <p>Pārzinis, kas Vietnē vāc datus par Vietnes apmeklētājiem, turpmāk – Pārzinis.</p>
-        <p>Pārziņa e-pasts <a href="mailto:mmanufactory.eu@gmail.com" class="underline">mmanufactory.eu@gmail.com</a>, tālrunis +371 29914716.</p>
-        <p>Pārzinis pilnveido Vietni, ar mērķi, uzlabot tās lietošanu, tāpēc Pārzinim ir jāzina, kāda informācija ir svarīga Vietnes apmeklētājiem, cik bieži viņi šo Vietni apmeklē, kādu ierīci un pārlūkprogrammu viņi izmanto, no kāda reģiona nāk apmeklētāji, un kādu saturu lasa.</p>
-        <p>Pārzinis izmanto sistēmu Google Analytics, kas ļauj Pārzinim analizēt, kā apmeklētāji izmanto Vietni. Par to, kā darbojas Google Analytics pamatprincipi, iespējams uzzināt šeit: <a class="underline" href="https://support.google.com/analytics/answer/1012034?hl=lten&ref_topic=6157800" target="_blank" rel="noopener">https://support.google.com/analytics/answer/1012034?hl=lten&ref_topic=6157800</a>. Pārzinis izmanto savāktos datus savās tiesiskajās interesēs, lai uzlabotu izpratni par Vietnes apmeklētāju vajadzībām un uzlabotu pieejamību Pārziņa publiskotajai informācijai. Apmeklētājs jebkurā laikā var pārtraukt datu vākšanu Google Analytics, kā tas ir aprakstīts šeit: <a class="underline" href="https://tools.google.com/dlpage/gaoptout/" target="_blank" rel="noopener">https://tools.google.com/dlpage/gaoptout/</a>.</p>
-        <p>Serveris, kurā izvietota Vietne, var reģistrēt apmeklētāja nosūtītos pieprasījumus (izmantotā ierīce, pārlūkprogramma, IP adrese, piekļuves laiks). Šie dati tiek izmantoti tikai tehniskajiem nolūkiem: lai nodrošinātu Vietnes pienācīgu funkcionēšanu un drošību un izmeklētu iespējamos drošības incidentus. Tādu datu vākšanas pamats ir Pārziņa tiesiskā interese nodrošināt Vietnes tehnisku pieejamību.</p>
-        <p>Sīkdatnes ir nelieli faili, kurus, katru reizi, kad apmeklētājs apmeklē Vietni, pārlūkprogramma saglabā apmeklētāja datorā tādā apmērā, kā norādīts apmeklētāja datora pārlūkprogrammas iestatījumos. Atsevišķas sīkdatnes tiek izmantotas, lai atlasītu un piemērotu apmeklētājam piedāvājamo informāciju un reklāmas, pamatojoties uz saturu, ko apmeklētājs aplūkojis agrāk, un tādējādi veidotu apmeklētājiem Vietnes lietošanu vienkāršu, ērtu un individuāli piemērotu. Papildu informāciju par sīkdatnēm, kā arī to dzēšanu un pārvaldīšanu, var iegūt mājaslapā <a class="underline" href="https://www.aboutcookies.org" target="_blank" rel="noopener">www.aboutcookies.org</a>.</p>
-        <p>Vietne izmanto sīkdatnes, lai vāktu lietotāja IP adreses un pārlūkošanas informāciju un ļautu Vietnei atcerēties apmeklētāja izvēli. Sīkdatnes ļauj Pārzinim sekot līdzi Vietnes datu plūsmai un lietotāju mijiedarbībai ar Vietni – Pārzinis izmanto šos datus, lai analizētu apmeklētāju uzvedību un uzlabotu Vietni. Sīkdatņu izmantošanas tiesiskais pamats ir Pārziņa leģitīmā interese nodrošināt Vietnes funkcionalitāti.</p>
-        <p>Apmeklētājs var kontrolēt un/vai dzēst sīkdatnes pēc savas izvēles. Plašāka informācija pieejama šeit <a class="underline" href="https://www.aboutcookies.org" target="_blank" rel="noopener">www.aboutcookies.org</a>. Apmeklētājs var izdzēst visas sīkdatnes, kuras ir viņa datorā, un lielāko daļu pārlūkprogrammu var iestatīt tā, lai tiktu bloķēta sīkdatņu ievietošana datorā. Taču tādā gadījumā apmeklētājam manuāli būs jāpielāgo iestatījumi ikreiz, kad tiks apmeklēta Vietne, turklāt pastāv iespējamība, ka daži pakalpojumi un funkcijas nedarbosies.</p>
-        <p>Statistikas datiem par Vietnes apmeklētājiem var piekļūt Pārziņa darbinieki, kuri ir atbildīgi par tādu datu analīzi.</p>
-        <p>Ja nav noteikts citādi, sīkdatnes tiek glabātas, kamēr tiek izpildīta darbība, kādam nolūkam tās vāktas, un pēc tam tās tiek dzēstas.</p>
-        <p>Pārzinis apliecina, ka sīkdatnes un statistikas informācija tiks apkopota, apstrādāta un glabāta saskaņā ar Eiropas Savienības normatīvo aktu prasībām.</p>
-        <p>Sazinoties ar Pārzini par augstāk norādīto e-pastu, lietotājs var pieprasīt piekļūt saviem personas datiem, pieprasīt labot personas datus, pieprasīt dzēst personas datus, kā arī atsaukt piekrišanu personas datu apstrādei.</p>
-        <p>Apmeklētājs var atteikties no sīkdatnēm pārlūkprogrammas izvēlnē vai <a class="underline" href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener">https://tools.google.com/dlpage/gaoptout</a>.</p>
-        <p>Pārzinis patur tiesības jebkurā brīdī mainīt šos noteikumus. Vietnes apmeklētāja pienākums ir patstāvīgi pārbaudīt Vietnes saturu, lai iepazītos ar noteikumu izmaiņām.</p>
-        <h3 class="text-base font-semibold mt-6">Personas datu apstrādes politika</h3>
-        <p>Mēs apstrādāsim Jūsu personas datus sekojošiem mērķiem:</p>
-        <p><strong>Cenas aprēķināšanai.</strong> Šim nolūkam mums varētu būt nepieciešami vismaz sekojoši personas dati: klienta vārds, uzvārds, tālruņa numurs, e-pasta adrese, objekta adrese.</p>
-        <p><strong>Līgumā noteikto saistību izpildei un nodrošināšanai.</strong> Šim nolūkam mums varētu būt nepieciešami vismaz sekojoši personas dati: klienta vārds, uzvārds, tālruņa numurs, e-pasta adrese, klienta personas kods, objekta adrese u.c. dati pēc nepieciešamības.</p>
-        <p><strong>Mārketinga aktivitāšu nodrošināšanai.</strong> Šī nolūka ietvaros mēs varētu Jums nosūtīt komerciālos paziņojumus, nosūtīt ielūgumus uz pasākumiem, apsveikt jubilejās, veidot specializētas reklāmas interneta vietnēs un sociālajos kanālos, nodrošināt Jūsu dalību mūsu organizētās loterijās un/vai izlozēs, kā arī publicēt materiālus no mūsu organizētiem publiskiem pasākumiem. Šim nolūkam mums varētu būt nepieciešami vismaz sekojoši personas dati: Klienta vārds, uzvārds, telefona numurs, e-pasta adrese, interneta vidē veikto darbību atspoguļojums, atsevišķos gadījumos personas attēls fotogrāfijās un video ierakstos.</p>
-        <p>Mēs veicam attiecīgus pasākumus, lai apstrādātu Jūsu personas datus atbilstoši piemērojamiem tiesību aktiem un nodrošinātu, ka Jūsu personas datiem nepiekļūst trešās personas, kurām nav attiecīga tiesiskā pamata Jūsu personas datu apstrādei.</p>
-        <p><strong>Jūsu personas datiem, pēc nepieciešamības, varētu piekļūt:</strong></p>
-        <ul class="list-disc pl-6 space-y-2">
-          <li>mūsu darbinieki vai tieši pilnvarotās personas, kuriem tas nepieciešams darba pienākumu izpildei;</li>
-          <li>personas datu apstrādātāji atbilstoši to sniegtajiem pakalpojumiem un tikai nepieciešamā apjomā, piemēram, digitālā mārketinga aģentūra;</li>
-          <li>valsts un pašvaldības iestādes tiesību aktos noteiktos gadījumos, piemēram, tiesībsargājošās iestādes, pašvaldības, nodokļu pārvaldes, zvērināti tiesu izpildītāji, tiesas, uzraudzības iestādes;</li>
-        </ul>
-        <p>Jūsu personas dati tiek glabāti tik ilgi, cik to glabāšana ir nepieciešama atbilstoši attiecīgiem personas datu apstrādes nolūkiem. Izvērtējot personas datu glabāšanas ilgumu, mēs ņemam vērā līgumsaistību izpildes aspektus, kā arī mūsu leģitīmās intereses. Ja Jūsu personas dati noteiktajiem nolūkiem vairs nav nepieciešami, mēs tos dzēsīsim vai iznīcinām.</p>
-        <p><strong>Personas datu glabāšanas termiņi:</strong></p>
-        <ul class="list-disc pl-6 space-y-2">
-          <li>personas datus, kas nepieciešami līgumsaistību izpildei – līdz garantijas perioda beigām, kas ir divi gadi;</li>
-          <li>personas datus, kas iegūti cenas piedāvājuma izstrādei – vienu gadu pēc pēdējā kontakta brīža;</li>
-        </ul>
-        <p class="mt-4"><strong>Kontaktpersona:</strong> Maksims Makuševs, 300195-10025, +371 29914716</p>
+        <p>Tīmekļvietni <strong>mmanufactory.eu</strong> pārvalda <strong>Manufactory</strong>. Jautājumiem par datu apstrādi: <a href="mailto:mmanufactory.eu@gmail.com" class="underline">mmanufactory.eu@gmail.com</a>, tālrunis <a href="tel:+37129914716" class="underline">+371 29914716</a>.</p>
+        <p><strong>Nepieciešamā krātuve:</strong> vietne pārlūkprogrammas lokālajā krātuvē saglabā tikai jūsu sīkdatņu izvēli, lai to nebūtu jānorāda atkārtoti. Vietnes pamatfunkcijas, tostarp pieteikuma nosūtīšana, darbojas arī bez piekrišanas analītikai un reklāmai.</p>
+        <p><strong>Analītikas un reklāmas rīki:</strong> tikai pēc jūsu piekrišanas vietne aktivizē Google Analytics, Google Ads un Meta Pixel, lai analizētu apmeklējumu un reklāmu rezultātus. Šie pakalpojumi var izmantot sīkdatnes un apstrādāt pārlūkošanas datus atbilstoši Google un Meta noteikumiem. Pirms piekrišanas šie rīki netiek ielādēti.</p>
+        <p><strong>Piekrišanas izvēle:</strong> jūs varat piekrist vai noraidīt neobligātās sīkdatnes, kā arī vēlāk mainīt savu izvēli, izmantojot saiti <em>Sīkdatņu iestatījumi</em> šīs vietnes apakšdaļā. Piekrišanas atsaukšana aptur turpmāku analītikas un reklāmas izsekošanu šajā vietnē.</p>
+        <p><strong>Tehniskie dati:</strong> mitināšanas pakalpojuma sniedzējs var apstrādāt pieprasījumu tehniskos datus (piemēram, IP adresi un piekļuves laiku), kas nepieciešami vietnes darbībai un drošībai.</p>
+        <h3 class="text-base font-semibold mt-6">Personas datu apstrāde</h3>
+        <p>Ja aizpildāt pieteikuma formu, mēs apstrādājam jūsu norādīto mēbeļu pieprasījumu, kontaktinformāciju un brīvprātīgi pievienotās fotogrāfijas, lai sazinātos ar jums un sagatavotu piedāvājumu. Pieteikumi tiek nosūtīti mums ar Telegram pakalpojuma starpniecību.</p>
+        <p>Pieteikuma dati tiek glabāti tik ilgi, cik nepieciešams saziņai, piedāvājuma sagatavošanai un iespējamo līgumsaistību izpildei, ievērojot piemērojamos tiesību aktus.</p>
+        <p>Jūs varat lūgt piekļuvi saviem personas datiem, to labošanu vai dzēšanu, kā arī saņemt informāciju par apstrādi, rakstot uz <a href="mailto:mmanufactory.eu@gmail.com" class="underline">mmanufactory.eu@gmail.com</a>.</p>
       </div>
     </div>
   </div>
 
-  <div id="cookieConsent">
+  <div id="cookieConsent" role="region" aria-label="Sīkdatņu izvēle">
     <div class="cookie-content">
-      <p>Mēs izmantojam sīkdatnes, lai uzlabotu jūsu pieredzi mūsu vietnē.</p>
+      <p>Analītikas un reklāmas sīkdatnes (Google un Meta) izmantojam tikai ar jūsu piekrišanu. Izvēli var mainīt jebkurā laikā.</p>
       <div class="cookie-buttons">
         <button type="button" class="btn-cookie-accept" onclick="acceptCookies()">Piekrist</button>
         <button type="button" class="btn-cookie-decline" onclick="declineCookies()">Noraidīt</button>
@@ -568,13 +482,6 @@
   <script>
     AOS.init({ duration: 800, once: true });
 
-    function openModal() {
-      document.getElementById('leadModal').style.display = 'block';
-    }
-    function closeModal() {
-      document.getElementById('leadModal').style.display = 'none';
-    }
-
     function openPolicy() {
       document.getElementById('policyModal').style.display = 'block';
     }
@@ -583,9 +490,7 @@
     }
 
     window.addEventListener('click', function (event) {
-      const modal = document.getElementById('leadModal');
       const pmodal = document.getElementById('policyModal');
-      if (event.target === modal) modal.style.display = 'none';
       if (event.target === pmodal) pmodal.style.display = 'none';
     });
 
@@ -664,31 +569,6 @@
         marqueeWrapper.scrollLeft = scrollLeft - walk;
       }, { passive: true });
 
-      const phoneInput = document.getElementById('phoneInput');
-      if (phoneInput) {
-        phoneInput.addEventListener('input', function(e) {
-          let x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,3})/);
-          if (x) {
-            e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
-          }
-        });
-      }
-
-      const leadForm = document.getElementById('leadForm');
-      const submitBtn = document.getElementById('submitBtn');
-      if (leadForm) {
-        leadForm.addEventListener('submit', function(e) {
-          e.preventDefault();
-          submitBtn.classList.add('btn-loading');
-          setTimeout(() => {
-            submitBtn.classList.remove('btn-loading');
-            alert('Paldies! Jūsu pieteikums ir nosūtīts.');
-            closeModal();
-            leadForm.reset();
-          }, 1500);
-        });
-      }
-
       const scrollBtn = document.getElementById('scrollToTop');
       window.addEventListener('scroll', function() {
         if (window.scrollY > 500) {
@@ -701,19 +581,7 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
       });
 
-      if (!localStorage.getItem('cookieConsent')) {
-        document.getElementById('cookieConsent').style.display = 'block';
-      }
-    });
 
-    function acceptCookies() {
-      localStorage.setItem('cookieConsent', 'accepted');
-      document.getElementById('cookieConsent').style.display = 'none';
-    }
-    function declineCookies() {
-      localStorage.setItem('cookieConsent', 'declined');
-      document.getElementById('cookieConsent').style.display = 'none';
-    }
   </script>
 </body>
 </html>

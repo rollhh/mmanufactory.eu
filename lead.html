@@ -1,39 +1,45 @@
 <!DOCTYPE html>
 <html lang="lv">
 <head>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-BZXYH7S8QH"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-BZXYH7S8QH');
-  gtag('config', 'AW-18008605575');
-</script>
-<!-- Meta Pixel Code -->
-<script>
-  !function(f,b,e,v,n,t,s)
-  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-  n.queue=[];t=b.createElement(e);t.async=!0;
-  t.src=v;s=b.getElementsByTagName(e)[0];
-  s.parentNode.insertBefore(t,s)}(window, document,'script',
-  'https://connect.facebook.net/en_US/fbevents.js');
-
-  fbq('init', '787011006090664');
-  fbq('track', 'PageView');
-</script>
-
-<noscript>
-  <img height="1" width="1" style="display:none"
-  src="https://www.facebook.com/tr?id=787011006090664&ev=PageView&noscript=1"/>
-</noscript>
-<!-- End Meta Pixel Code -->
+<script src="/consent.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pieteikums konsultācijai</title>
 <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<style>
+  #cookieConsent {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: #000;
+    color: #fff;
+    border-top: 1px solid #333;
+    padding: 1rem;
+  }
+  #cookieConsent .cookie-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  #cookieConsent .cookie-buttons { display: flex; gap: 0.75rem; }
+  #cookieConsent .cookie-buttons button {
+    border-radius: 0.5rem;
+    padding: 0.5rem 1.25rem;
+    font-weight: 600;
+  }
+  #cookieConsent .btn-cookie-accept { background: white; color: black; }
+  #cookieConsent .btn-cookie-decline { border: 1px solid white; color: white; }
+  @media (min-width: 640px) {
+    #cookieConsent .cookie-content { flex-direction: row; }
+  }
+</style>
 </head>
 
 <body class="bg-white text-black flex items-center justify-center min-h-screen">
@@ -59,12 +65,26 @@
 Nosūtīt
 </button>
 
+<p class="text-xs text-center text-gray-600">
+  <button type="button" onclick="openCookieSettings()" class="underline">Sīkdatņu iestatījumi</button>
+  &nbsp;·&nbsp; <a href="/#sikdatnu" class="underline">Sīkdatņu un privātuma politika</a>
+</p>
 </form>
+<div id="cookieConsent" role="region" aria-label="Sīkdatņu izvēle">
+  <div class="cookie-content">
+    <p>Analītikas un reklāmas sīkdatnes (Google un Meta) izmantojam tikai ar jūsu piekrišanu. Izvēli var mainīt jebkurā laikā.</p>
+    <div class="cookie-buttons">
+      <button type="button" class="btn-cookie-accept" onclick="acceptCookies()">Piekrist</button>
+      <button type="button" class="btn-cookie-decline" onclick="declineCookies()">Noraidīt</button>
+    </div>
+  </div>
+</div>
 
 <script>
 let selectedFiles = [];
 
 function gtag_report_conversion() {
+  if (!window.ManufactoryConsent || !window.ManufactoryConsent.hasConsent()) return;
   gtag('event', 'conversion', {
     'send_to': 'AW-18008605575/OB0lCJjHy5ccEIeHlotD',
     'value': 1.0,
@@ -170,10 +190,11 @@ document.getElementById('leadForm').addEventListener('submit', async function(e)
       throw new Error("send failed");
     }
 
-    gtag_report_conversion();
-
-    if (typeof fbq === 'function') {
-      fbq('track', 'Lead');
+    if (window.ManufactoryConsent && window.ManufactoryConsent.hasConsent()) {
+      gtag_report_conversion();
+      if (typeof fbq === 'function') {
+        fbq('track', 'Lead');
+      }
     }
 
     alert("Paldies! ✅ Mēs sazināsimies tuvākajā laikā!");
