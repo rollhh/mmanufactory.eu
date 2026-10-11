@@ -35,6 +35,9 @@
       animation: scroll-left 30s linear infinite;
       will-change: transform;
     }
+    @media (max-width: 767px) {
+      .marquee-content { animation-duration: 24s; }
+    }
     .marquee-content img {
       width: auto;
       height: 360px;
