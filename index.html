@@ -45,11 +45,81 @@
       flex-shrink: 0;
       object-fit: cover;
       user-select: none;
-      pointer-events: none;
+      pointer-events: auto;
+      cursor: zoom-in;
     }
+    .marquee-content img:focus-visible { outline: 3px solid #000; outline-offset: -3px; }
     @keyframes scroll-left {
       0%   { transform: translateX(0); }
       100% { transform: translateX(-50%); }
+    }
+
+    /* Full-screen portfolio photo viewer */
+    #galleryLightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      height: 100vh;
+      height: 100dvh;
+      z-index: 200;
+      background: rgba(0,0,0,.96);
+      color: white;
+      box-sizing: border-box;
+      padding: 78px 12px 70px;
+      align-items: center;
+      justify-content: center;
+      overscroll-behavior: contain;
+    }
+    #galleryLightbox.open { display: flex; }
+    #galleryLightboxImage {
+      display: block;
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+    .gallery-lightbox-button {
+      position: absolute;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      border: 1px solid rgba(255,255,255,.3);
+      border-radius: 50%;
+      background: rgba(30,30,30,.86);
+      color: white;
+      font-size: 32px;
+      line-height: 1;
+      cursor: pointer;
+    }
+    .gallery-lightbox-button:hover { background: #444; }
+    .gallery-lightbox-button:focus-visible { outline: 3px solid white; outline-offset: 3px; }
+    #galleryLightboxClose {
+      top: max(16px, env(safe-area-inset-top));
+      right: 16px;
+      font-size: 36px;
+    }
+    #galleryLightboxPrev { top: 50%; left: 8px; transform: translateY(-50%); }
+    #galleryLightboxNext { top: 50%; right: 8px; transform: translateY(-50%); }
+    #galleryLightboxCount {
+      position: absolute;
+      bottom: max(18px, env(safe-area-inset-bottom));
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 15px;
+      letter-spacing: .08em;
+      color: rgba(255,255,255,.9);
+      white-space: nowrap;
+    }
+    @media (min-width: 768px) {
+      #galleryLightbox { padding: 80px 76px 74px; }
+      #galleryLightboxPrev { left: 18px; }
+      #galleryLightboxNext { right: 18px; }
     }
 
     .modal {
@@ -471,6 +541,14 @@
     © 2026 Mmanufactory.eu Visas tiesības aizsargātas.
   </footer>
 
+  <div id="galleryLightbox" role="dialog" aria-modal="true" aria-label="Galerijas fotoattēlu apskate" aria-hidden="true">
+    <button type="button" id="galleryLightboxClose" class="gallery-lightbox-button" aria-label="Aizvērt galeriju" title="Aizvērt">×</button>
+    <button type="button" id="galleryLightboxPrev" class="gallery-lightbox-button" aria-label="Iepriekšējais attēls" title="Iepriekšējais">‹</button>
+    <img id="galleryLightboxImage" alt="" draggable="false" />
+    <button type="button" id="galleryLightboxNext" class="gallery-lightbox-button" aria-label="Nākamais attēls" title="Nākamais">›</button>
+    <span id="galleryLightboxCount" role="status" aria-live="polite"></span>
+  </div>
+
   <div id="policyModal" class="modal">
     <div class="modal-content relative">
       <button type="button" onclick="closePolicy()" class="absolute top-3 right-4 cursor-pointer text-gray-600 font-bold text-2xl" aria-label="Aizvērt">&times;</button>
@@ -538,6 +616,7 @@
 
       const marqueeWrapper = document.getElementById('marqueeWrapper');
       const marqueeContent = document.getElementById('marqueeContent');
+      const galleryPhotos = Array.from(marqueeContent.querySelectorAll('img'));
       if (!marqueeContent.dataset.duplicated) {
         const clone = marqueeContent.cloneNode(true);
         while (clone.firstElementChild) {
@@ -592,6 +671,136 @@
         const walk = (x - startX);
         marqueeWrapper.scrollLeft = scrollLeft - walk;
       }, { passive: true });
+
+      // A copied carousel photo opens the corresponding original picture.
+      marqueeContent.querySelectorAll('img').forEach((img, i) => {
+        img.dataset.photoIndex = String(i % galleryPhotos.length);
+        if (i < galleryPhotos.length) {
+          img.tabIndex = 0;
+          img.setAttribute('role', 'button');
+          img.setAttribute('aria-label', 'Atvērt attēlu: ' + img.alt);
+        } else {
+          img.setAttribute('aria-hidden', 'true');
+          img.tabIndex = -1;
+        }
+      });
+
+      const lightbox = document.getElementById('galleryLightbox');
+      const lightboxImage = document.getElementById('galleryLightboxImage');
+      const lightboxCount = document.getElementById('galleryLightboxCount');
+      const lightboxClose = document.getElementById('galleryLightboxClose');
+      const lightboxPrev = document.getElementById('galleryLightboxPrev');
+      const lightboxNext = document.getElementById('galleryLightboxNext');
+      let currentPhoto = 0;
+      let focusBeforeViewer = null;
+      let scrollBeforeViewer = 0;
+      let swipeStart = null;
+      let pressStartX = 0;
+      let pressStartY = 0;
+      let galleryDragged = false;
+
+      marqueeWrapper.addEventListener('pointerdown', (e) => {
+        pressStartX = e.clientX;
+        pressStartY = e.clientY;
+        galleryDragged = false;
+      });
+      marqueeWrapper.addEventListener('pointermove', (e) => {
+        if (e.buttons === 1 || e.pointerType === 'touch') {
+          if (Math.abs(e.clientX - pressStartX) > 10 || Math.abs(e.clientY - pressStartY) > 10) {
+            galleryDragged = true;
+          }
+        }
+      });
+
+      function showGalleryPhoto(index) {
+        currentPhoto = (index + galleryPhotos.length) % galleryPhotos.length;
+        const photo = galleryPhotos[currentPhoto];
+        lightboxImage.src = photo.currentSrc || photo.src;
+        lightboxImage.alt = photo.alt;
+        lightboxCount.textContent = (currentPhoto + 1) + ' / ' + galleryPhotos.length;
+      }
+
+      function openGalleryPhoto(index) {
+        if (!galleryPhotos.length) return;
+        focusBeforeViewer = document.activeElement;
+        scrollBeforeViewer = window.scrollY;
+        showGalleryPhoto(index);
+        lightbox.classList.add('open');
+        lightbox.setAttribute('aria-hidden', 'false');
+        document.body.style.position = 'fixed';
+        document.body.style.top = '-' + scrollBeforeViewer + 'px';
+        document.body.style.width = '100%';
+        pauseAnim();
+        lightboxClose.focus({ preventScroll: true });
+      }
+
+      function closeGalleryPhoto() {
+        if (!lightbox.classList.contains('open')) return;
+        lightbox.classList.remove('open');
+        lightbox.setAttribute('aria-hidden', 'true');
+        lightboxImage.removeAttribute('src');
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+        window.scrollTo(0, scrollBeforeViewer);
+        resumeAnim();
+        if (focusBeforeViewer && focusBeforeViewer.isConnected && focusBeforeViewer.focus) {
+          focusBeforeViewer.focus({ preventScroll: true });
+        }
+      }
+
+      marqueeContent.addEventListener('click', (e) => {
+        const img = e.target.closest('img[data-photo-index]');
+        if (!img) return;
+        if (galleryDragged) return;
+        openGalleryPhoto(Number(img.dataset.photoIndex));
+      });
+      marqueeContent.addEventListener('keydown', (e) => {
+        if ((e.key === 'Enter' || e.key === ' ') && e.target.matches('img[data-photo-index]')) {
+          e.preventDefault();
+          openGalleryPhoto(Number(e.target.dataset.photoIndex));
+        }
+      });
+
+      lightboxClose.addEventListener('click', closeGalleryPhoto);
+      lightboxPrev.addEventListener('click', () => showGalleryPhoto(currentPhoto - 1));
+      lightboxNext.addEventListener('click', () => showGalleryPhoto(currentPhoto + 1));
+      lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) closeGalleryPhoto();
+      });
+      document.addEventListener('keydown', (e) => {
+        if (!lightbox.classList.contains('open')) return;
+        if (e.key === 'Escape') { e.preventDefault(); closeGalleryPhoto(); }
+        if (e.key === 'ArrowLeft') { e.preventDefault(); showGalleryPhoto(currentPhoto - 1); }
+        if (e.key === 'ArrowRight') { e.preventDefault(); showGalleryPhoto(currentPhoto + 1); }
+        if (e.key === 'Tab') {
+          const controls = [lightboxClose, lightboxPrev, lightboxNext];
+          const current = controls.indexOf(document.activeElement);
+          if (e.shiftKey && current <= 0) {
+            e.preventDefault();
+            lightboxNext.focus();
+          } else if (!e.shiftKey && current === controls.length - 1) {
+            e.preventDefault();
+            lightboxClose.focus();
+          }
+        }
+      });
+
+      lightbox.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 1) {
+          swipeStart = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        }
+      }, { passive: true });
+      lightbox.addEventListener('touchend', (e) => {
+        if (!swipeStart || !e.changedTouches.length) return;
+        const dx = e.changedTouches[0].clientX - swipeStart.x;
+        const dy = e.changedTouches[0].clientY - swipeStart.y;
+        swipeStart = null;
+        if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.2) {
+          showGalleryPhoto(currentPhoto + (dx < 0 ? 1 : -1));
+        }
+      }, { passive: true });
+      lightbox.addEventListener('touchcancel', () => { swipeStart = null; });
 
       const scrollBtn = document.getElementById('scrollToTop');
       window.addEventListener('scroll', function() {
