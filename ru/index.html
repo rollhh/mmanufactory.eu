@@ -161,8 +161,10 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      height: 24px;
-      width: 32px;
+      height: 36px;
+      width: 36px;
+      justify-content: center;
+      gap: 4px;
     }
     #menuButton span {
       display: block;
@@ -171,13 +173,18 @@
       background-color: #ffffff !important;
       opacity: 1 !important;
       border-radius: 2px;
+      transition: transform .22s ease, opacity .22s ease;
     }
+    #menuButton.open span:first-child { transform: translateY(6px) rotate(45deg); }
+    #menuButton.open span:nth-child(2) { opacity: 0 !important; }
+    #menuButton.open span:last-child { transform: translateY(-6px) rotate(-45deg); }
 
     #sideMenu {
       position: fixed;
-      top: 0;
+      top: var(--menu-top, 104px);
       left: 0;
-      height: 100vh;
+      height: calc(100vh - var(--menu-top, 104px));
+      height: calc(100dvh - var(--menu-top, 104px));
       width: 16rem;
       max-width: 85vw;
       background-color: #000;
@@ -189,14 +196,6 @@
       overflow-y: auto;
     }
     #sideMenu.open { transform: translateX(0); }
-    #closeMenu {
-      font-size: 2rem;
-      background: none;
-      border: none;
-      color: white;
-      cursor: pointer;
-      margin-bottom: 1.5rem;
-    }
     #sideMenu ul { list-style: none; padding: 0; margin: 0; }
     #sideMenu li { margin-bottom: 1.25rem; }
     #sideMenu a {
@@ -206,7 +205,7 @@
 
     #overlay {
       position: fixed;
-      inset: 0;
+      inset: var(--menu-top, 104px) 0 0;
       background-color: rgba(0,0,0,0.5);
       z-index: 40;
       display: none;
@@ -394,7 +393,7 @@
 <body class="text-black font-sans overflow-x-hidden" style="background-color: #EAE8E2;">
   <header class="site-header flex justify-between items-center p-4 sm:p-6 bg-black text-white border-b border-white relative z-50">
     <div class="flex items-center">
-      <button type="button" id="menuButton" aria-label="Открыть меню" class="sm:mr-4 mr-2">
+      <button type="button" id="menuButton" aria-label="Открыть меню" aria-expanded="false" aria-controls="sideMenu" class="sm:mr-4 mr-2">
         <span></span><span></span><span></span>
       </button>
       <a href="/ru/" aria-label="На главную" title="На главную" class="inline-flex items-center" style="line-height:0;"><img src="https://mmanufactory.eu/android-chrome-512x512.png" alt="Mmanufactory.eu logo" class="header-logo" style="filter: invert(1);" loading="eager" /></a>
@@ -425,7 +424,6 @@
     </div>
 
     <nav id="sideMenu" aria-label="Навигация по сайту">
-      <button type="button" id="closeMenu" aria-label="Закрыть меню">&times;</button>
       <ul>
         <li><a href="/ru/contacts/">Контакты</a></li>
         <li><a href="#gallery">Галерея</a></li>
@@ -670,20 +668,25 @@
     document.addEventListener('DOMContentLoaded', () => {
       const menuButton = document.getElementById('menuButton');
       const sideMenu = document.getElementById('sideMenu');
-      const closeMenu = document.getElementById('closeMenu');
       const overlay = document.getElementById('overlay');
+      const header = document.querySelector('.site-header');
 
-      function openMenu() {
-        sideMenu.classList.add('open');
-        overlay.classList.add('show');
+      function updateMenuPosition() {
+        document.documentElement.style.setProperty('--menu-top', Math.max(0, header.getBoundingClientRect().bottom) + 'px');
       }
-      function closeMenuFunc() {
-        sideMenu.classList.remove('open');
-        overlay.classList.remove('show');
+      function toggleMenu(open) {
+        if (open) updateMenuPosition();
+        sideMenu.classList.toggle('open', open);
+        overlay.classList.toggle('show', open);
+        menuButton.classList.toggle('open', open);
+        menuButton.setAttribute('aria-expanded', String(open));
+        menuButton.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
       }
-      menuButton.addEventListener('click', openMenu);
-      closeMenu.addEventListener('click', closeMenuFunc);
-      overlay.addEventListener('click', closeMenuFunc);
+      menuButton.addEventListener('click', () => toggleMenu(!sideMenu.classList.contains('open')));
+      overlay.addEventListener('click', () => toggleMenu(false));
+      sideMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => toggleMenu(false)));
+      document.addEventListener('keydown', event => { if (event.key === 'Escape') toggleMenu(false); });
+      window.addEventListener('resize', () => { if (sideMenu.classList.contains('open')) updateMenuPosition(); });
 
       const marqueeWrapper = document.getElementById('marqueeWrapper');
       const marqueeContent = document.getElementById('marqueeContent');

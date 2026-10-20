@@ -24,12 +24,15 @@
     body { margin: 0; background: #EAE8E2; color: #111827; font-family: Arial, Helvetica, sans-serif; }
     a { color: inherit; }
     button { font: inherit; }
-    .site-header { position: relative; z-index: 20; display: grid; grid-template-columns: auto minmax(48px,1fr) auto; align-items: center; gap: 6px; padding: 16px 12px; background: #000; color: #fff; }
+    .site-header { position: relative; z-index: 70; display: grid; grid-template-columns: auto minmax(48px,1fr) auto; align-items: center; gap: 6px; padding: 16px 12px; background: #000; color: #fff; }
     .header-left, .social-links { display: flex; align-items: center; }
     .header-left { gap: 8px; }
     .header-logo { display: block; height: 72px; width: auto; filter: invert(1); }
-    .menu-button { display: flex; flex-direction: column; justify-content: space-between; width: 32px; height: 24px; padding: 8px; border: 0; background: transparent; cursor: pointer; }
-    .menu-button span { height: 2px; width: 100%; background: white; border-radius: 2px; }
+    .menu-button { display: flex; flex-direction: column; justify-content: center; gap: 4px; width: 36px; height: 36px; padding: 8px; border: 0; background: transparent; cursor: pointer; }
+    .menu-button span { height: 2px; width: 100%; background: white; border-radius: 2px; transition: transform .22s ease, opacity .22s ease; }
+    .menu-button.open span:first-child { transform: translateY(6px) rotate(45deg); }
+    .menu-button.open span:nth-child(2) { opacity: 0; }
+    .menu-button.open span:last-child { transform: translateY(-6px) rotate(-45deg); }
     .social-links { justify-self: end; gap: 4px; }
     .social-icon { display: block; width: 40px; height: 40px; object-fit: contain; }
     .language-picker { position: relative; justify-self: end; margin-right: 18px; }
@@ -41,14 +44,13 @@
     .language-options a { display: block; padding: 9px 12px; border-radius: 6px; font-size: 14px; font-weight: 600; text-align: center; text-decoration: none; }
     .language-options a:hover, .language-options a[aria-current="page"] { background: #eeeae4; }
     :focus-visible { outline: 2px solid #555; outline-offset: 3px; }
-    .side-menu { position: fixed; top: 0; left: 0; height: 100vh; width: 256px; max-width: 85vw; padding: 24px; background: #000; color: #fff; transform: translateX(-100%); transition: transform .3s ease; z-index: 60; }
+    .side-menu { position: fixed; top: var(--menu-top, 104px); left: 0; height: calc(100vh - var(--menu-top, 104px)); height: calc(100dvh - var(--menu-top, 104px)); width: 256px; max-width: 85vw; padding: 24px; background: #000; color: #fff; transform: translateX(-100%); transition: transform .3s ease; z-index: 60; overflow-y: auto; }
     .side-menu.open { transform: translateX(0); }
-    .side-menu button { display: block; border: 0; background: transparent; color: white; font-size: 32px; cursor: pointer; margin-bottom: 24px; }
-    .side-menu ul { padding: 0; margin: 0; list-style: none; }
+        .side-menu ul { padding: 0; margin: 0; list-style: none; }
     .side-menu li { margin-bottom: 20px; }
     .side-menu a { color: white; font-size: 18px; text-decoration: none; }
     .side-menu a:hover, .side-menu a[aria-current="page"] { text-decoration: underline; }
-    .overlay { position: fixed; inset: 0; display: none; z-index: 55; background: rgba(0,0,0,.5); }
+    .overlay { position: fixed; inset: var(--menu-top, 104px) 0 0; display: none; z-index: 55; background: rgba(0,0,0,.5); }
     .overlay.show { display: block; }
     main { max-width: 1140px; margin: 0 auto; padding: 30px 20px 42px; }
     .intro { text-align: center; max-width: 680px; margin: 0 auto 22px; }
@@ -102,7 +104,6 @@
         <a href="https://t.me/rollhh" target="_blank" rel="noopener noreferrer" aria-label="Telegram"><img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram" class="social-icon" width="40" height="40"></a>
         <a href="https://wa.me/37129914716" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" class="social-icon" width="40" height="40"></a></div>
     <nav id="sideMenu" class="side-menu" aria-label="Контакты">
-      <button type="button" id="closeMenu" aria-label="Закрыть меню">×</button>
       <ul>
         <li><a href="/ru/">Главная</a></li>
         <li><a href="/ru/#gallery">Галерея</a></li>
@@ -154,16 +155,23 @@
       const menuButton = document.getElementById('menuButton');
       const sideMenu = document.getElementById('sideMenu');
       const overlay = document.getElementById('overlay');
-      const closeMenu = document.getElementById('closeMenu');
+      const header = document.querySelector('.site-header');
+      function updateMenuPosition() {
+        document.documentElement.style.setProperty('--menu-top', Math.max(0, header.getBoundingClientRect().bottom) + 'px');
+      }
       function toggleMenu(open) {
+        if (open) updateMenuPosition();
         sideMenu.classList.toggle('open', open);
         overlay.classList.toggle('show', open);
+        menuButton.classList.toggle('open', open);
         menuButton.setAttribute('aria-expanded', String(open));
+        menuButton.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
       }
-      menuButton.addEventListener('click', () => toggleMenu(true));
-      closeMenu.addEventListener('click', () => toggleMenu(false));
+      menuButton.addEventListener('click', () => toggleMenu(!sideMenu.classList.contains('open')));
       overlay.addEventListener('click', () => toggleMenu(false));
+      sideMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => toggleMenu(false)));
       document.addEventListener('keydown', (event) => { if (event.key === 'Escape') toggleMenu(false); });
+      window.addEventListener('resize', () => { if (sideMenu.classList.contains('open')) updateMenuPosition(); });
     })();
   </script>
 </body>
