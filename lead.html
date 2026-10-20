@@ -2,9 +2,12 @@
 <html lang="lv">
 <head>
 <script src="/consent.js"></script>
+<script src="/language-switch.js" defer></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pieteikums konsultācijai</title>
+<title>Pieteikums konsultācijai | Manufactory</title>
+<link rel="canonical" href="https://mmanufactory.eu/lead.html">
+<meta name="robots" content="noindex,follow">
 <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 <style>
   #cookieConsent {
@@ -39,16 +42,71 @@
   @media (min-width: 640px) {
     #cookieConsent .cookie-content { flex-direction: row; }
   }
+
+    /* One compact, keyboard-accessible language selector for all languages. */
+    .site-header { padding-left: 12px; padding-right: 12px; }
+    .site-header .social-links { gap: 4px; }
+    .language-picker { position: relative; flex: 0 0 auto; font-family: inherit; }
+    .language-picker > summary {
+      display: inline-flex; align-items: center; justify-content: center; gap: 3px;
+      min-height: 40px; padding: 0 6px; list-style: none; cursor: pointer;
+      border: 1px solid rgba(255,255,255,.45); border-radius: 8px;
+      color: white; font-weight: 600; font-size: 13px;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .language-picker > summary::-webkit-details-marker { display: none; }
+    .language-picker .language-options {
+      position: absolute; top: calc(100% + 8px); right: 0;
+      min-width: 78px; padding: 4px; border-radius: 10px;
+      border: 1px solid #ddd; background: #fff; color: #111;
+      box-shadow: 0 8px 22px rgba(0,0,0,.18); z-index: 90;
+    }
+    .language-picker .language-options a {
+      display: block; text-align: center; padding: 9px 12px;
+      border-radius: 6px; font-weight: 600; font-size: 14px; color: #111;
+    }
+    .language-picker .language-options a:hover,
+    .language-picker .language-options a[aria-current="page"] { background: #eeeae4; }
+    .language-picker > summary:focus-visible,
+    .language-picker .language-options a:focus-visible { outline: 2px solid #888; outline-offset: 2px; }
+    .site-header .social-icon { width: 40px; height: 40px; }
+    @media (max-width: 374px) {
+      .site-header { padding-left: 8px; padding-right: 8px; }
+      .site-header .social-icon { width: 32px; height: 32px; }
+      .site-header .header-logo { height: 64px; }
+      .language-picker > summary { font-size: 12px; padding: 0 4px; min-height: 36px; }
+    }
+    @media (min-width: 640px) {
+      .site-header { padding-left: 24px; padding-right: 24px; }
+      .site-header .social-links { gap: 8px; }
+    }
+
+    .lead-lang-bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 14px; }
+    .lead-lang-bar a.back-home { text-decoration: underline; font-size: 14px; }
+    .lead-lang-bar .language-picker > summary { border: 1px solid #aaa; color: #111; min-width: 45px; }
+    .lead-lang-bar .language-options { background: white; }
+    .lead-lang-bar .language-picker .language-options a { text-decoration: none; }
 </style>
 </head>
 
 <body class="bg-white text-black flex items-center justify-center min-h-screen">
 
-<form id="leadForm" class="w-full max-w-lg p-6 border rounded-xl shadow-lg space-y-4">
+<form id="leadForm" class="w-full max-w-lg p-6 border rounded-xl shadow-lg space-y-4" data-form-language="lv">
+<div class="lead-lang-bar">
+  <a class="back-home" href="/">← Uz sākumu</a>
+  <details class="language-picker">
+        <summary aria-label="Izvēlēties valodu">LV <span aria-hidden="true">⌄</span></summary>
+        <div class="language-options">
+          <a href="/lead.html" data-switch-language="lv" aria-current="page">LV</a>
+          <a href="/en/lead/" data-switch-language="en">EN</a>
+          <a href="/ru/lead/" data-switch-language="ru">RU</a>
+        </div>
+      </details>
+</div>
 
 <h1 class="text-2xl font-bold text-center">Pieteikums konsultācijai</h1>
 
-<textarea name="request" placeholder="Kādas mēbeles Jūs interesē? Ja nepieciešams, zemāk pievienojiet attēlu." class="w-full p-3 border rounded" required></textarea>
+<textarea name="request" placeholder="Kādas mēbeles Jūs interesē? Ja nepieciešams, zemāk pievienojiet attēlu." aria-label="Kādas mēbeles Jūs interesē? Ja nepieciešams, zemāk pievienojiet attēlu." class="w-full p-3 border rounded" required></textarea>
 
 <div class="w-full">
   <input type="file" id="fileInput" accept="image/*" multiple class="hidden" />
@@ -59,7 +117,7 @@
   <p id="fileCount" class="text-xs text-gray-500 mt-1"></p>
 </div>
 
-<textarea name="contact" placeholder="Jūsu vārds un telefona nr. saziņai. Kurā pilsētā atrodas objekts?" class="w-full p-3 border rounded" required></textarea>
+<textarea name="contact" placeholder="Jūsu vārds un telefona nr. saziņai. Kurā pilsētā atrodas objekts?" aria-label="Jūsu vārds un telefona nr. saziņai. Kurā pilsētā atrodas objekts?" class="w-full p-3 border rounded" required></textarea>
 
 <button type="submit" id="submitBtn" class="w-full bg-black text-white py-3 rounded font-semibold">
 Nosūtīt
@@ -181,7 +239,7 @@ document.getElementById('leadForm').addEventListener('submit', async function(e)
     const response = await fetch("/api/lead", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ request, contact, photos })
+      body: JSON.stringify({ request, contact, photos, language: 'lv' })
     });
 
     const data = await response.json();
@@ -202,7 +260,7 @@ document.getElementById('leadForm').addEventListener('submit', async function(e)
     selectedFiles = [];
     renderPreview();
     setTimeout(() => {
-      window.location.href = "https://mmanufactory.eu/";
+      window.location.href = "/";
     }, 2000);
 
   } catch (err) {

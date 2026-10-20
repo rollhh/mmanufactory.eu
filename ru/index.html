@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <script src="/consent.js"></script>
+  <script src="/language-switch.js" defer></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Manufactory | Мебель на заказ в Риге и по всей Латвии</title>
+  <meta name="description" content="Кухни, встроенные шкафы, гардеробные и мебель по индивидуальному заказу в Риге и по всей Латвии. Проектирование, производство и монтаж." />
+  <link rel="canonical" href="https://mmanufactory.eu/ru/" />
+  <link rel="alternate" hreflang="lv" href="https://mmanufactory.eu/" />
+  <link rel="alternate" hreflang="en" href="https://mmanufactory.eu/en/" />
+  <link rel="alternate" hreflang="ru" href="https://mmanufactory.eu/ru/" />
+  <link rel="alternate" hreflang="x-default" href="https://mmanufactory.eu/" />
+  <meta name="keywords" content="мебель на заказ Рига, кухни на заказ Латвия, встроенные шкафы Рига, производство мебели" />
+  <meta property="og:title" content="Mmanufactory.eu" />
+  <meta property="og:description" content="Кухни, встроенные шкафы и индивидуальная мебель в Риге и по всей Латвии." />
+  <meta property="og:image" content="https://mmanufactory.eu/android-chrome-512x512.png" />
+  <link rel="icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet" />
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  <style>
+    .marquee-wrapper {
+      position: relative;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      cursor: grab;
+    }
+    .marquee-wrapper::-webkit-scrollbar { display: none; }
+
+    .marquee-content {
+      display: flex;
+      animation: scroll-left 30s linear infinite;
+      will-change: transform;
+    }
+    @media (max-width: 767px) {
+      .marquee-content { animation-duration: 10s; }
+    }
+    .marquee-content img {
+      width: auto;
+      height: 360px;
+      margin-right: 1rem;
+      flex-shrink: 0;
+      object-fit: cover;
+      user-select: none;
+      pointer-events: auto;
+      cursor: zoom-in;
+    }
+    .marquee-content img:focus-visible { outline: 3px solid #000; outline-offset: -3px; }
+    @keyframes scroll-left {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* Full-screen portfolio photo viewer */
+    #galleryLightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      height: 100vh;
+      height: 100dvh;
+      z-index: 200;
+      background: rgba(0,0,0,.96);
+      color: white;
+      box-sizing: border-box;
+      padding: 78px 12px 70px;
+      align-items: center;
+      justify-content: center;
+      overscroll-behavior: contain;
+    }
+    #galleryLightbox.open { display: flex; }
+    #galleryLightboxImage {
+      display: block;
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+    .gallery-lightbox-button {
+      position: absolute;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      border: 1px solid rgba(255,255,255,.3);
+      border-radius: 50%;
+      background: rgba(30,30,30,.86);
+      color: white;
+      font-size: 32px;
+      line-height: 1;
+      cursor: pointer;
+    }
+    .gallery-lightbox-button:hover { background: #444; }
+    .gallery-lightbox-button:focus-visible { outline: 3px solid white; outline-offset: 3px; }
+    #galleryLightboxClose {
+      top: max(16px, env(safe-area-inset-top));
+      right: 16px;
+      font-size: 36px;
+    }
+    #galleryLightboxPrev { top: 50%; left: 8px; transform: translateY(-50%); }
+    #galleryLightboxNext { top: 50%; right: 8px; transform: translateY(-50%); }
+    #galleryLightboxCount {
+      position: absolute;
+      bottom: max(18px, env(safe-area-inset-bottom));
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 15px;
+      letter-spacing: .08em;
+      color: rgba(255,255,255,.9);
+      white-space: nowrap;
+    }
+    @media (min-width: 768px) {
+      #galleryLightbox { padding: 80px 76px 74px; }
+      #galleryLightboxPrev { left: 18px; }
+      #galleryLightboxNext { right: 18px; }
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 50;
+      inset: 0;
+      background-color: rgba(0,0,0,0.6);
+      overflow-y: auto;
+    }
+    .modal-content {
+      background-color: #fff;
+      margin: 5% auto;
+      padding: 2rem;
+      width: 95%;
+      max-width: 800px;
+      border-radius: 0.75rem;
+      max-height: 85vh;
+      overflow-y: auto;
+    }
+
+    .header-logo { height: 72px; width: auto; }
+    @media (min-width: 640px) {
+      .header-logo { height: 88px; }
+    }
+
+    #menuButton {
+      position: relative;
+      z-index: 60;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 24px;
+      width: 32px;
+    }
+    #menuButton span {
+      display: block;
+      height: 2px;
+      width: 100%;
+      background-color: #ffffff !important;
+      opacity: 1 !important;
+      border-radius: 2px;
+    }
+
+    #sideMenu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 16rem;
+      max-width: 85vw;
+      background-color: #000;
+      color: #fff;
+      padding: 1.5rem;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+      z-index: 50;
+      overflow-y: auto;
+    }
+    #sideMenu.open { transform: translateX(0); }
+    #closeMenu {
+      font-size: 2rem;
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+      margin-bottom: 1.5rem;
+    }
+    #sideMenu ul { list-style: none; padding: 0; margin: 0; }
+    #sideMenu li { margin-bottom: 1.25rem; }
+    #sideMenu a {
+      color: white; text-decoration: none; font-size: 1.125rem; transition: color 0.2s;
+    }
+    #sideMenu a:hover { text-decoration: underline; }
+
+    #overlay {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(0,0,0,0.5);
+      z-index: 40;
+      display: none;
+    }
+    #overlay.show { display: block; }
+
+    #cookieConsent {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: #000;
+      color: #fff;
+      padding: 1rem;
+      z-index: 100;
+      display: none;
+      border-top: 1px solid #333;
+    }
+    .cookie-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    @media (min-width: 640px) {
+      .cookie-content {
+        flex-direction: row;
+      }
+    }
+    .cookie-content p {
+      margin: 0;
+      text-align: center;
+    }
+    @media (min-width: 640px) {
+      .cookie-content p {
+        text-align: left;
+      }
+    }
+    .cookie-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .btn-cookie-accept {
+      background-color: #fff;
+      color: #000;
+      padding: 0.5rem 1.5rem;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .btn-cookie-accept:hover {
+      background-color: #e5e5e5;
+    }
+    .btn-cookie-decline {
+      background-color: transparent;
+      color: #fff;
+      padding: 0.5rem 1.5rem;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      border: 1px solid #fff;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-cookie-decline:hover {
+      background-color: #fff;
+      color: #000;
+    }
+
+    #scrollToTop {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      background-color: #000;
+      color: #fff;
+      width: 3rem;
+      height: 3rem;
+      border-radius: 9999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      transition: all 0.2s;
+      opacity: 0;
+      visibility: hidden;
+      z-index: 45;
+      font-size: 1.5rem;
+    }
+    #scrollToTop.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+    #scrollToTop:hover {
+      background-color: #1a1a1a;
+      transform: scale(1.1);
+    }
+
+    @media (min-width: 768px) {
+      .marquee-content img { height: 300px; }
+    }
+    body, html { overflow-x: hidden; }
+    @keyframes cta-vibrate {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  20% { transform: scale(1.03) rotate(-1deg); }
+  40% { transform: scale(1.03) rotate(1deg); }
+  60% { transform: scale(1.05) rotate(-1deg); }
+  80% { transform: scale(1.03) rotate(1deg); }
+}
+
+.cta-pulse {
+  animation: cta-vibrate 2.5s ease-in-out infinite;
+}
+
+.cta-pulse:hover {
+  animation-play-state: paused;
+}
+
+    /* One compact, keyboard-accessible language selector for all languages. */
+    .site-header { padding-left: 12px; padding-right: 12px; }
+    .site-header .social-links { gap: 4px; }
+    .language-picker { position: relative; flex: 0 0 auto; font-family: inherit; }
+    .language-picker > summary {
+      display: inline-flex; align-items: center; justify-content: center; gap: 3px;
+      min-height: 40px; padding: 0 6px; list-style: none; cursor: pointer;
+      border: 1px solid rgba(255,255,255,.45); border-radius: 8px;
+      color: white; font-weight: 600; font-size: 13px;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .language-picker > summary::-webkit-details-marker { display: none; }
+    .language-picker .language-options {
+      position: absolute; top: calc(100% + 8px); right: 0;
+      min-width: 78px; padding: 4px; border-radius: 10px;
+      border: 1px solid #ddd; background: #fff; color: #111;
+      box-shadow: 0 8px 22px rgba(0,0,0,.18); z-index: 90;
+    }
+    .language-picker .language-options a {
+      display: block; text-align: center; padding: 9px 12px;
+      border-radius: 6px; font-weight: 600; font-size: 14px; color: #111;
+    }
+    .language-picker .language-options a:hover,
+    .language-picker .language-options a[aria-current="page"] { background: #eeeae4; }
+    .language-picker > summary:focus-visible,
+    .language-picker .language-options a:focus-visible { outline: 2px solid #888; outline-offset: 2px; }
+    .site-header .social-icon { width: 40px; height: 40px; }
+    @media (max-width: 374px) {
+      .site-header { padding-left: 8px; padding-right: 8px; }
+      .site-header .social-icon { width: 32px; height: 32px; }
+      .site-header .header-logo { height: 64px; }
+      .language-picker > summary { font-size: 12px; padding: 0 4px; min-height: 36px; }
+    }
+    @media (min-width: 640px) {
+      .site-header { padding-left: 24px; padding-right: 24px; }
+      .site-header .social-links { gap: 8px; }
+    }
+  </style>
+</head>
+
+<body class="text-black font-sans overflow-x-hidden" style="background-color: #EAE8E2;">
+  <header class="site-header flex justify-between items-center p-4 sm:p-6 bg-black text-white border-b border-white relative z-50">
+    <div class="flex items-center">
+      <button type="button" id="menuButton" aria-label="Открыть меню" class="sm:mr-4 mr-2">
+        <span></span><span></span><span></span>
+      </button>
+      <img src="https://mmanufactory.eu/android-chrome-512x512.png" alt="Mmanufactory.eu logo" class="header-logo" style="filter: invert(1);" loading="eager" />
+    </div>
+
+    <div class="social-links flex items-center gap-2">
+      <a href="https://www.tiktok.com/@mmanufactory.eu" target="_blank" rel="noopener" aria-label="TikTok" class="hover:opacity-80 transition">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Tiktok_icon.svg" alt="TikTok" class="social-icon h-10 w-10">
+      </a>
+      <a href="https://www.instagram.com/mmanufactory.eu/" target="_blank" rel="noopener" aria-label="Instagram" class="hover:opacity-80 transition">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram" class="social-icon h-10 w-10" loading="lazy" />
+      </a>
+      <a href="https://t.me/rollhh" target="_blank" rel="noopener" aria-label="Telegram" class="hover:opacity-80 transition">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram" class="social-icon h-10 w-10" loading="lazy" />
+      </a>
+      <a href="https://wa.me/37129914716" target="_blank" rel="noopener" aria-label="WhatsApp" class="hover:opacity-80 transition">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" class="social-icon h-10 w-10" loading="lazy" />
+      </a>
+      <details class="language-picker">
+        <summary aria-label="Выбрать язык">RU <span aria-hidden="true">⌄</span></summary>
+        <div class="language-options">
+          <a href="/" data-switch-language="lv">LV</a>
+          <a href="/en/" data-switch-language="en">EN</a>
+          <a href="/ru/" data-switch-language="ru" aria-current="page">RU</a>
+        </div>
+      </details>
+    </div>
+
+    <nav id="sideMenu" aria-label="Навигация по сайту">
+      <button type="button" id="closeMenu" aria-label="Закрыть меню">&times;</button>
+      <ul>
+        <li><a href="tel:+37129914716">Контакты</a></li>
+        <li><a href="#gallery">Галерея</a></li>
+        <li><a href="#sikdatnu">Политика cookie</a></li>
+      </ul>
+    </nav>
+    <div id="overlay"></div>
+  </header>
+
+  <main class="px-4 sm:px-6">
+    
+<div class="text-center max-w-2xl mx-auto px-2 mt-4 mb-1">
+  <h1 class="text-2xl sm:text-4xl font-bold text-gray-900 leading-tight">
+    Мебель на заказ в Риге и по всей Латвии
+  </h1>
+  <p class="text-base sm:text-lg font-normal text-gray-800 leading-relaxed mt-1">
+    Кухни, встроенные шкафы, гардеробные и продуманные интерьерные решения.
+  </p>
+  <p class="text-base sm:text-lg font-semibold text-gray-900 mt-1">
+    От идеи до монтажа — за 30 рабочих дней.
+  </p>
+</div>
+    
+    <!-- Кнопки калькулятора СВЕРХУ (первые) -->
+    <div class="mt-6 flex flex-wrap justify-center gap-4 text-center" data-aos="zoom-in">
+      <a href="/ru/lead/" class="bg-black text-white border border-black px-7 py-4 rounded-xl font-bold hover:bg-gray-100 transition min-w-[220px] shadow-md cta-pulse">Оставить заявку за 1 минуту</a>
+    </div>
+
+    <section id="gallery" class="mt-8" data-aos="fade-up">
+      <div class="marquee-wrapper" id="marqueeWrapper">
+        <div class="marquee-content" id="marqueeContent">
+          <img src="https://i.imgur.com/3KHG131.jpeg" alt="Кухня на заказ в Риге: акриловые фасады, столешница HPL, декоративные рейки, стеклянная витрина, встроенная техника и трёхуровневая LED-подсветка" draggable="false" loading="eager" />
+          <img src="https://i.imgur.com/eDeTHaK.jpeg" alt="Кухня в Юрмале с фасадами под дерево, чёрными стеклянными витринами и встроенной LED-подсветкой" draggable="false" loading="eager" />
+          <img src="https://i.imgur.com/w2YfRG8.jpeg" alt="Современная кухня в Юрмале с фасадами Egger Cacella под дерево, чёрными витринами и островом" draggable="false" loading="lazy" />
+          <img src="https://i.imgur.com/AddjWaY.jpeg" alt="Кухонная мебель на заказ с выдвижными ящиками, петлями Blum и механизмами плавного закрывания BLUMOTION" draggable="false" loading="lazy" />
+          <img src="https://i.imgur.com/T3TR8bQ.jpeg" alt="Компактная кухня с бежевыми фасадами, стеклянной витриной и обеденным столом под мрамор" draggable="false" loading="lazy" />
+          <img src="https://i.imgur.com/JUBOxRZ.jpeg" alt="Верхние кухонные шкафы в Риге: акриловые фасады, витрина в чёрной раме, встроенная вытяжка и трёхуровневая LED-подсветка" draggable="false" loading="lazy" />
+          <img src="https://i.imgur.com/PE7PIlR.jpeg" alt="Мебель для ванной на заказ в Елгаве: тумба под раковину, открытые полки, выдвижная секция и зеркало с LED-подсветкой" draggable="false" loading="lazy" />
+          <img src="https://i.imgur.com/jzyEiWZ.jpeg" alt="Угловая кухня в Риге с акриловыми фасадами, столешницей HPL, встроенной мойкой и трёхуровневой LED-подсветкой" draggable="false" loading="lazy" />
+          <img src="https://i.imgur.com/sENgulg.jpeg" alt="Кухня на заказ со светлыми фасадами, высокими шкафами под дерево и чёрными открытыми нишами" draggable="false" loading="lazy" />
+          <img src="https://i.imgur.com/OLUrUJT.jpeg" alt="ТВ-зона гостиной в Огре с фасадами Egger под дерево, декоративной панелью, открытыми полками и ящиками Blum TIP-ON" draggable="false" loading="lazy" />
+          <img src="https://i.imgur.com/aO4uiyN.jpeg" alt="Мебель для ванной с тёмно-серыми ящиками, высоким шкафом под дерево, столешницей под камень и круглым зеркалом" draggable="false" loading="lazy" />
+          <img src="https://i.imgur.com/w4fFH2K.jpeg" alt="Верхние кухонные шкафы с открытыми дверцами, полками и встроенной LED-подсветкой рабочей зоны" draggable="false" loading="lazy" />
+          <img src="https://i.imgur.com/nRt8e8d.jpeg" alt="Встроенный шкаф на заказ с зеркальными дверями до потолка и длинными чёрными ручками" draggable="false" loading="lazy" />
+          <img src="https://i.imgur.com/89GkbML.jpeg" alt="Внутреннее оснащение кухонных шкафов: металлические сушилки для посуды, полки и LED-подсветка" draggable="false" loading="lazy" />
+          <img src="https://i.imgur.com/AQjTSB4.jpeg" alt="Мебель для прихожей на заказ: белый встроенный шкаф, вертикальные рейки, чёрные ручки и ниша для сиденья" draggable="false" loading="lazy" />
+          <img src="https://imgur.com/HicVE0R.jpg" alt="Встроенный гардероб со сдвижными дверями, подсвеченными полками, выдвижными металлическими корзинами и штангой" draggable="false" loading="lazy" />
+          <img src="https://imgur.com/uXWjnIl.jpg" alt="Угловая кухня с серыми фасадами, встроенной LED-подсветкой и фартуком под мрамор" draggable="false" loading="lazy" />
+          <img src="https://imgur.com/ezjpcpm.jpg" alt="Компактная кухня на заказ со светло-серыми фасадами, LED-подсветкой, встроенной техникой и удлинённой столешницей" draggable="false" loading="lazy" />
+          <img src="https://imgur.com/ayB9Kfe.jpg" alt="Угловая кухня со светлыми фасадами, столешницей и фартуком под камень и стеклянной витриной" draggable="false" loading="lazy" />
+          <img src="https://imgur.com/EqsFF1O.jpg" alt="Просторная угловая кухня со светлыми фасадами, тёмной столешницей, высокими шкафами и встроенной духовкой" draggable="false" loading="lazy" />
+          <img src="https://imgur.com/p93ndgt.jpg" alt="Угловая кухня на заказ с белыми фасадами, столешницей под дерево, LED-подсветкой и встроенной духовкой" draggable="false" loading="lazy" />
+          <img src="https://imgur.com/9BlJzcV.jpg" alt="Кухонная столешница и стеновая панель с выразительным мраморным рисунком и чёрной индукционной панелью" draggable="false" loading="lazy" />
+          <img src="https://imgur.com/Ri7Sbo0.jpg" alt="Нижние кухонные шкафы с открытыми ящиками, внутренним выдвижным ящиком и столешницей под камень" draggable="false" loading="lazy" />
+          <img src="https://imgur.com/DIoe5Kw.jpg" alt="Современная кухня с серыми фасадами, чёрным фартуком под мрамор, встроенной духовкой и верхними шкафами" draggable="false" loading="lazy" />
+          </div>
+      </div>
+    </section>
+
+    <section id="atsauksmes" class="mt-3 max-w-6xl mx-auto px-2 sm:px-0" aria-labelledby="atsauksmes-title">
+      <h2 id="atsauksmes-title" class="text-2xl sm:text-3xl font-bold text-center mb-0">Отзывы клиентов Google</h2>
+      <div class="-mt-4">
+        <div data-reviewgrid="3ec67ad0-8764-48f3-82ac-7d6b9f7d4664"></div>
+      </div>
+      <script src="https://reviewswidget.app/embed.js" async></script>
+      <p class="text-center mt-4 text-sm">
+        <a href="https://maps.app.goo.gl/hsJ2jmYDYM8ywueC8" target="_blank" rel="noopener noreferrer" class="underline hover:opacity-70 transition">Посмотреть все отзывы в Google</a>
+      </p>
+    </section>
+
+  <section class="mt-6 max-w-6xl mx-auto" data-aos="fade-up">
+  <h2 class="text-2xl sm:text-3xl font-bold text-center mb-6">Как проходит заказ</h2>
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 px-2 sm:px-0">
+
+    <div class="bg-gray-100 text-black p-5 rounded-xl flex items-center gap-4" data-aos="fade-up" data-aos-delay="100">
+      <svg class="flex-shrink-0" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+        <path d="M14 2v6h6"/><path d="M8 13h8"/><path d="M8 17h5"/>
+      </svg>
+      <div>
+        <h3 class="font-bold mb-1">1. Заявка</h3>
+        <p class="text-sm">Расскажите о своём проекте. Мы изучим информацию и свяжемся с вами, чтобы обсудить детали.</p>
+      </div>
+    </div>
+
+    <div class="bg-gray-100 text-black p-5 rounded-xl flex items-center gap-4" data-aos="fade-up" data-aos-delay="200">
+      <svg class="flex-shrink-0" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="8" cy="12" r="6"/><circle cx="8" cy="12" r="2"/>
+        <path d="M14 12h6v4h-6"/><path d="M16 16v-2"/><path d="M18 16v-2"/>
+      </svg>
+      <div>
+        <h3 class="font-bold mb-1">2. Замеры</h3>
+        <p class="text-sm">Проводим замеры помещения, обсуждаем планировку мебели, материалы, фурнитуру и все нюансы.</p>
+      </div>
+    </div>
+
+    <div class="bg-gray-100 text-black p-5 rounded-xl flex items-center gap-4" data-aos="fade-up" data-aos-delay="300">
+      <svg class="flex-shrink-0" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="4" width="20" height="13" rx="2"/>
+        <path d="M12 17v4"/><path d="M8 21h8"/>
+        <path d="M6 12l3-3 3 3 4-4"/>
+      </svg>
+      <div>
+        <h3 class="font-bold mb-1">3. Проект</h3>
+        <p class="text-sm">Разрабатываем цифровой проект и согласовываем его с вами.</p>
+      </div>
+    </div>
+
+    <div class="bg-gray-100 text-black p-5 rounded-xl flex items-center gap-4" data-aos="fade-up" data-aos-delay="400">
+      <svg class="flex-shrink-0" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="5" y="4" width="14" height="17" rx="2"/>
+        <rect x="9" y="2" width="6" height="4" rx="1"/>
+        <path d="M9 13l2 2 4-4"/>
+      </svg>
+      <div>
+        <h3 class="font-bold mb-1">4. Согласование</h3>
+        <p class="text-sm">Ориентировочный срок до монтажа мебели — 30 рабочих дней.</p>
+      </div>
+    </div>
+
+    <div class="bg-gray-100 text-black p-5 rounded-xl flex items-center gap-4" data-aos="fade-up" data-aos-delay="500">
+      <svg class="flex-shrink-0" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M2 20h20"/>
+        <path d="M4 20V10l5 3V10l5 3V7l5 3.5V20"/>
+        <path d="M17 7V4h2.5v4.5"/>
+        <path d="M8 20v-3h3v3"/>
+      </svg>
+      <div>
+        <h3 class="font-bold mb-1">5. Производство</h3>
+        <p class="text-sm">Изготавливаем мебель по согласованному проекту.</p>
+      </div>
+    </div>
+
+    <div class="bg-gray-100 text-black p-5 rounded-xl flex items-center gap-4" data-aos="fade-up" data-aos-delay="600">
+      <svg class="flex-shrink-0" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+      </svg>
+      <div>
+        <h3 class="font-bold mb-1">6. Монтаж</h3>
+        <p class="text-sm">Устанавливаем мебель на объекте.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+    <!-- ВТОРЫЕ КНОПКИ - ровно под процессами -->
+ <div class="mt-6 flex flex-wrap justify-center gap-4 text-center" data-aos="zoom-in">
+      <a href="/ru/lead/" class="bg-black text-white border border-black px-7 py-4 rounded-xl font-bold hover:bg-gray-100 transition min-w-[220px] shadow-md cta-pulse">Оставить заявку за 1 минуту</a>
+    </div>
+    <!-- ИСПРАВЛЕННАЯ СЕКЦИЯ: теперь h-screen вместо h-[70vh] sm:h-screen -->
+    <section class="relative h-screen flex items-center justify-center mt-6 px-4 sm:px-0" data-aos="fade">
+      <img src="https://imgur.com/zePD3qc.jpg" alt="Интерьер с мебелью на заказ" class="absolute w-full h-full object-cover opacity-40" loading="lazy" />
+      <div class="relative text-center z-10 max-w-2xl">
+        <h2 class="text-3xl sm:text-5xl font-bold mb-6 text-black">Кухни, встроенные шкафы, гардеробные и другая мебель на заказ. Дизайн интерьера и проектирование.</h2>
+       <p class="mt-6 text-black text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">Современные решения и качественное исполнение. Полный цикл: от замеров и проекта до производства и монтажа.</p>
+      </div>
+    </section>
+
+    <div class="mt-12 text-center flex flex-wrap justify-center gap-4 px-2 sm:px-0" data-aos="fade-up">
+      <a href="https://www.tiktok.com/@mmanufactory.eu" target="_blank" rel="noopener" class="bg-black px-5 py-3 rounded-xl hover:bg-gray-800 transition flex items-center justify-center min-w-[48px] min-h-[48px]">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Tiktok_icon.svg" alt="TikTok" class="h-8 w-8">
+      </a>
+      <a href="https://www.instagram.com/mmanufactory.eu/" target="_blank" rel="noopener" class="bg-black px-5 py-3 rounded-xl hover:bg-gray-800 transition flex items-center justify-center min-w-[48px] min-h-[48px]">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram" class="h-8 w-8" loading="lazy" />
+      </a>
+      <a href="https://t.me/rollhh" target="_blank" rel="noopener" class="bg-black px-5 py-3 rounded-xl hover:bg-gray-800 transition flex items-center justify-center min-w-[48px] min-h-[48px]">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram" class="h-8 w-8" loading="lazy" />
+      </a>
+      <a href="https://wa.me/37129914716" target="_blank" rel="noopener" class="bg-black px-5 py-3 rounded-xl hover:bg-gray-800 transition flex items-center justify-center min-w-[48px] min-h-[48px]">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" class="h-8 w-8" loading="lazy" />
+      </a>
+    </div>
+
+    <section id="sikdatnu" class="max-w-4xl mx-auto mt-20 px-4 sm:px-6 text-sm text-gray-700">
+      <h2 class="text-xl font-bold mb-4">
+        <button type="button" onclick="openPolicy()" class="underline hover:text-gray-800 transition">Политика cookie</button>
+        <span class="mx-2">·</span>
+        <button type="button" onclick="openCookieSettings()" class="underline hover:text-gray-800 transition">Настройки cookie</button>
+      </h2>
+    </section>
+  </main>
+
+  <footer class="mt-20 p-6 text-center border-t border-gray-300 text-sm text-black">
+    © 2026 Mmanufactory.eu. Все права защищены.
+  </footer>
+
+  <div id="galleryLightbox" role="dialog" aria-modal="true" aria-label="Просмотр фотографий галереи" aria-hidden="true">
+    <button type="button" id="galleryLightboxClose" class="gallery-lightbox-button" aria-label="Закрыть галерею" title="Закрыть галерею">×</button>
+    <button type="button" id="galleryLightboxPrev" class="gallery-lightbox-button" aria-label="Предыдущее фото" title="Предыдущее фото">‹</button>
+    <img id="galleryLightboxImage" alt="" draggable="false" />
+    <button type="button" id="galleryLightboxNext" class="gallery-lightbox-button" aria-label="Следующее фото" title="Следующее фото">›</button>
+    <span id="galleryLightboxCount" role="status" aria-live="polite"></span>
+  </div>
+
+  <div id="policyModal" class="modal">
+    <div class="modal-content relative">
+      <button type="button" onclick="closePolicy()" class="absolute top-3 right-4 cursor-pointer text-gray-600 font-bold text-2xl" aria-label="Aizvērt">&times;</button>
+      <h2 class="text-xl font-bold mb-4">Политика cookie и конфиденциальности</h2>
+      <div class="text-sm text-gray-700 space-y-4 text-left">
+        <p>Сайтом <strong>mmanufactory.eu</strong> управляет <strong>Manufactory</strong>. По вопросам обработки персональных данных: <a href="mailto:mmanufactory.eu@gmail.com" class="underline">mmanufactory.eu@gmail.com</a>, телефон <a href="tel:+37129914716" class="underline">+371 29914716</a>.</p>
+        <p><strong>Необходимое хранение:</strong> Мы сохраняем выбор файлов cookie в локальном хранилище браузера, чтобы не спрашивать повторно. Основные функции сайта, включая отправку заявки, работают без согласия на аналитику и рекламу.</p>
+        <p><strong>Аналитика и реклама:</strong> Только с вашего согласия мы включаем Google Analytics, Google Ads и Meta Pixel для анализа посещений и рекламы. Эти сервисы могут использовать cookie и обрабатывать данные о посещении в соответствии со своими правилами. До согласия они не загружаются.</p>
+        <p><strong>Ваш выбор:</strong> Вы можете разрешить или отклонить необязательные cookie и изменить решение через ссылку <em>Настройки cookie</em> внизу сайта. Отзыв согласия прекращает последующее отслеживание аналитикой и рекламой на этом сайте.</p>
+        <p><strong>Технические данные:</strong> Хостинг-провайдер может обрабатывать технические данные запросов, включая IP-адрес и время доступа, для работы и безопасности сайта.</p>
+        <p><strong>Отзывы Google:</strong> Для показа отзывов мы используем внешний сервис Reviews Widget (reviewswidget.app). При отображении виджета браузер обращается к этому сервису, который может получать технические сведения, например IP-адрес.</p>
+        <h3 class="text-base font-semibold mt-6">Обработка персональных данных</h3>
+        <p>При отправке заявки мы обрабатываем ваше описание мебели, контактные данные и добровольно приложенные фотографии, чтобы связаться с вами и подготовить предложение. Заявки поступают нам через Telegram.</p>
+        <p>Данные заявки хранятся столько, сколько необходимо для общения, подготовки предложения и выполнения договорных и законных обязательств.</p>
+        <p>Вы можете запросить доступ к своим данным, их исправление или удаление, а также сведения об обработке по адресу <a href="mailto:mmanufactory.eu@gmail.com" class="underline">mmanufactory.eu@gmail.com</a>.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="cookieConsent" role="region" aria-label="Sīkdatņu izvēle">
+    <div class="cookie-content">
+      <p>Мы используем cookie Google и Meta для аналитики и рекламы только с вашего согласия. Вы всегда можете изменить свой выбор.</p>
+      <div class="cookie-buttons">
+        <button type="button" class="btn-cookie-accept" onclick="acceptCookies()">Принять</button>
+        <button type="button" class="btn-cookie-decline" onclick="declineCookies()">Отклонить</button>
+      </div>
+    </div>
+  </div>
+
+  <button type="button" id="scrollToTop" aria-label="Наверх">↑</button>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 800, once: true });
+
+    function openPolicy() {
+      document.getElementById('policyModal').style.display = 'block';
+    }
+    function closePolicy() {
+      document.getElementById('policyModal').style.display = 'none';
+    }
+
+    window.addEventListener('click', function (event) {
+      const pmodal = document.getElementById('policyModal');
+      if (event.target === pmodal) pmodal.style.display = 'none';
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const menuButton = document.getElementById('menuButton');
+      const sideMenu = document.getElementById('sideMenu');
+      const closeMenu = document.getElementById('closeMenu');
+      const overlay = document.getElementById('overlay');
+
+      function openMenu() {
+        sideMenu.classList.add('open');
+        overlay.classList.add('show');
+      }
+      function closeMenuFunc() {
+        sideMenu.classList.remove('open');
+        overlay.classList.remove('show');
+      }
+      menuButton.addEventListener('click', openMenu);
+      closeMenu.addEventListener('click', closeMenuFunc);
+      overlay.addEventListener('click', closeMenuFunc);
+
+      const marqueeWrapper = document.getElementById('marqueeWrapper');
+      const marqueeContent = document.getElementById('marqueeContent');
+      const galleryPhotos = Array.from(marqueeContent.querySelectorAll('img'));
+      if (!marqueeContent.dataset.duplicated) {
+        const clone = marqueeContent.cloneNode(true);
+        while (clone.firstElementChild) {
+          marqueeContent.appendChild(clone.firstElementChild);
+        }
+        marqueeContent.dataset.duplicated = 'true';
+      }
+
+      let isDown = false, startX = 0, scrollLeft = 0;
+
+      function pauseAnim() { marqueeContent.style.animationPlayState = 'paused'; }
+      function resumeAnim() { marqueeContent.style.animationPlayState = 'running'; }
+
+      marqueeWrapper.addEventListener('mousedown', (e) => {
+        isDown = true;
+        marqueeWrapper.style.cursor = 'grabbing';
+        startX = e.pageX - marqueeWrapper.offsetLeft;
+        scrollLeft = marqueeWrapper.scrollLeft;
+        pauseAnim();
+      });
+      marqueeWrapper.addEventListener('mouseleave', () => {
+        isDown = false;
+        marqueeWrapper.style.cursor = 'grab';
+        resumeAnim();
+      });
+      marqueeWrapper.addEventListener('mouseup', () => {
+        isDown = false;
+        marqueeWrapper.style.cursor = 'grab';
+        resumeAnim();
+      });
+      marqueeWrapper.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - marqueeWrapper.offsetLeft;
+        const walk = (x - startX);
+        marqueeWrapper.scrollLeft = scrollLeft - walk;
+      });
+
+      marqueeWrapper.addEventListener('touchstart', (e) => {
+        isDown = true;
+        startX = e.touches[0].pageX;
+        scrollLeft = marqueeWrapper.scrollLeft;
+        pauseAnim();
+      }, { passive: true });
+      marqueeWrapper.addEventListener('touchend', () => {
+        isDown = false;
+        resumeAnim();
+      });
+      marqueeWrapper.addEventListener('touchmove', (e) => {
+        if (!isDown) return;
+        const x = e.touches[0].pageX;
+        const walk = (x - startX);
+        marqueeWrapper.scrollLeft = scrollLeft - walk;
+      }, { passive: true });
+
+      // A copied carousel photo opens the corresponding original picture.
+      marqueeContent.querySelectorAll('img').forEach((img, i) => {
+        img.dataset.photoIndex = String(i % galleryPhotos.length);
+        if (i < galleryPhotos.length) {
+          img.tabIndex = 0;
+          img.setAttribute('role', 'button');
+          img.setAttribute('aria-label', 'Открыть фото: ' + img.alt);
+        } else {
+          img.setAttribute('aria-hidden', 'true');
+          img.tabIndex = -1;
+        }
+      });
+
+      const lightbox = document.getElementById('galleryLightbox');
+      const lightboxImage = document.getElementById('galleryLightboxImage');
+      const lightboxCount = document.getElementById('galleryLightboxCount');
+      const lightboxClose = document.getElementById('galleryLightboxClose');
+      const lightboxPrev = document.getElementById('galleryLightboxPrev');
+      const lightboxNext = document.getElementById('galleryLightboxNext');
+      let currentPhoto = 0;
+      let focusBeforeViewer = null;
+      let scrollBeforeViewer = 0;
+      let swipeStart = null;
+      let pressStartX = 0;
+      let pressStartY = 0;
+      let galleryDragged = false;
+
+      marqueeWrapper.addEventListener('pointerdown', (e) => {
+        pressStartX = e.clientX;
+        pressStartY = e.clientY;
+        galleryDragged = false;
+      });
+      marqueeWrapper.addEventListener('pointermove', (e) => {
+        if (e.buttons === 1 || e.pointerType === 'touch') {
+          if (Math.abs(e.clientX - pressStartX) > 10 || Math.abs(e.clientY - pressStartY) > 10) {
+            galleryDragged = true;
+          }
+        }
+      });
+
+      function showGalleryPhoto(index) {
+        currentPhoto = (index + galleryPhotos.length) % galleryPhotos.length;
+        const photo = galleryPhotos[currentPhoto];
+        lightboxImage.src = photo.currentSrc || photo.src;
+        lightboxImage.alt = photo.alt;
+        lightboxCount.textContent = (currentPhoto + 1) + ' / ' + galleryPhotos.length;
+      }
+
+      function openGalleryPhoto(index) {
+        if (!galleryPhotos.length) return;
+        focusBeforeViewer = document.activeElement;
+        scrollBeforeViewer = window.scrollY;
+        showGalleryPhoto(index);
+        lightbox.classList.add('open');
+        lightbox.setAttribute('aria-hidden', 'false');
+        document.body.style.position = 'fixed';
+        document.body.style.top = '-' + scrollBeforeViewer + 'px';
+        document.body.style.width = '100%';
+        pauseAnim();
+        lightboxClose.focus({ preventScroll: true });
+      }
+
+      function closeGalleryPhoto() {
+        if (!lightbox.classList.contains('open')) return;
+        lightbox.classList.remove('open');
+        lightbox.setAttribute('aria-hidden', 'true');
+        lightboxImage.removeAttribute('src');
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+        window.scrollTo(0, scrollBeforeViewer);
+        resumeAnim();
+        if (focusBeforeViewer && focusBeforeViewer.isConnected && focusBeforeViewer.focus) {
+          focusBeforeViewer.focus({ preventScroll: true });
+        }
+      }
+
+      marqueeContent.addEventListener('click', (e) => {
+        const img = e.target.closest('img[data-photo-index]');
+        if (!img) return;
+        if (galleryDragged) return;
+        openGalleryPhoto(Number(img.dataset.photoIndex));
+      });
+      marqueeContent.addEventListener('keydown', (e) => {
+        if ((e.key === 'Enter' || e.key === ' ') && e.target.matches('img[data-photo-index]')) {
+          e.preventDefault();
+          openGalleryPhoto(Number(e.target.dataset.photoIndex));
+        }
+      });
+
+      lightboxClose.addEventListener('click', closeGalleryPhoto);
+      lightboxPrev.addEventListener('click', () => showGalleryPhoto(currentPhoto - 1));
+      lightboxNext.addEventListener('click', () => showGalleryPhoto(currentPhoto + 1));
+      lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) closeGalleryPhoto();
+      });
+      document.addEventListener('keydown', (e) => {
+        if (!lightbox.classList.contains('open')) return;
+        if (e.key === 'Escape') { e.preventDefault(); closeGalleryPhoto(); }
+        if (e.key === 'ArrowLeft') { e.preventDefault(); showGalleryPhoto(currentPhoto - 1); }
+        if (e.key === 'ArrowRight') { e.preventDefault(); showGalleryPhoto(currentPhoto + 1); }
+        if (e.key === 'Tab') {
+          const controls = [lightboxClose, lightboxPrev, lightboxNext];
+          const current = controls.indexOf(document.activeElement);
+          if (e.shiftKey && current <= 0) {
+            e.preventDefault();
+            lightboxNext.focus();
+          } else if (!e.shiftKey && current === controls.length - 1) {
+            e.preventDefault();
+            lightboxClose.focus();
+          }
+        }
+      });
+
+      lightbox.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 1) {
+          swipeStart = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        }
+      }, { passive: true });
+      lightbox.addEventListener('touchend', (e) => {
+        if (!swipeStart || !e.changedTouches.length) return;
+        const dx = e.changedTouches[0].clientX - swipeStart.x;
+        const dy = e.changedTouches[0].clientY - swipeStart.y;
+        swipeStart = null;
+        if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.2) {
+          showGalleryPhoto(currentPhoto + (dx < 0 ? 1 : -1));
+        }
+      }, { passive: true });
+      lightbox.addEventListener('touchcancel', () => { swipeStart = null; });
+
+      const scrollBtn = document.getElementById('scrollToTop');
+      window.addEventListener('scroll', function() {
+        if (window.scrollY > 500) {
+          scrollBtn.classList.add('visible');
+        } else {
+          scrollBtn.classList.remove('visible');
+        }
+      });
+      scrollBtn.addEventListener('click', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    });
+
+  </script>
+</body>
+</html>

@@ -1,7 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- Add new canonical project and service URLs as they are published. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://mmanufactory.eu/</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://mmanufactory.eu/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://mmanufactory.eu/en/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://mmanufactory.eu/ru/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mmanufactory.eu/" />
+  </url>
+  <url>
+    <loc>https://mmanufactory.eu/en/</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://mmanufactory.eu/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://mmanufactory.eu/en/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://mmanufactory.eu/ru/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mmanufactory.eu/" />
+  </url>
+  <url>
+    <loc>https://mmanufactory.eu/ru/</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://mmanufactory.eu/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://mmanufactory.eu/en/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://mmanufactory.eu/ru/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mmanufactory.eu/" />
   </url>
 </urlset>

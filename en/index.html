@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="/consent.js"></script>
+  <script src="/language-switch.js" defer></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Manufactory | Custom furniture in Riga and Latvia</title>
+  <meta name="description" content="Custom kitchens, fitted wardrobes and made-to-measure furniture in Riga and across Latvia. Design, manufacturing and installation." />
+  <link rel="canonical" href="https://mmanufactory.eu/en/" />
+  <link rel="alternate" hreflang="lv" href="https://mmanufactory.eu/" />
+  <link rel="alternate" hreflang="en" href="https://mmanufactory.eu/en/" />
+  <link rel="alternate" hreflang="ru" href="https://mmanufactory.eu/ru/" />
+  <link rel="alternate" hreflang="x-default" href="https://mmanufactory.eu/" />
+  <meta name="keywords" content="custom furniture Riga, fitted wardrobes Latvia, bespoke kitchens Riga, furniture manufacture" />
+  <meta property="og:title" content="Mmanufactory.eu" />
+  <meta property="og:description" content="Custom kitchens, fitted wardrobes and furniture made to measure in Latvia." />
+  <meta property="og:image" content="https://mmanufactory.eu/android-chrome-512x512.png" />
+  <link rel="icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet" />
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  <style>
+    .marquee-wrapper {
+      position: relative;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      cursor: grab;
+    }
+    .marquee-wrapper::-webkit-scrollbar { display: none; }
+
+    .marquee-content {
+      display: flex;
+      animation: scroll-left 30s linear infinite;
+      will-change: transform;
+    }
+    @media (max-width: 767px) {
+      .marquee-content { animation-duration: 10s; }
+    }
+    .marquee-content img {
+      width: auto;
+      height: 360px;
+      margin-right: 1rem;
+      flex-shrink: 0;
+      object-fit: cover;
+      user-select: none;
+      pointer-events: auto;
+      cursor: zoom-in;
+    }
+    .marquee-content img:focus-visible { outline: 3px solid #000; outline-offset: -3px; }
+    @keyframes scroll-left {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* Full-screen portfolio photo viewer */
+    #galleryLightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      height: 100vh;
+      height: 100dvh;
+      z-index: 200;
+      background: rgba(0,0,0,.96);
+      color: white;
+      box-sizing: border-box;
+      padding: 78px 12px 70px;
+      align-items: center;
+      justify-content: center;
+      overscroll-behavior: contain;
+    }
+    #galleryLightbox.open { display: flex; }
+    #galleryLightboxImage {
+      display: block;
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+    .gallery-lightbox-button {
+      position: absolute;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      border: 1px solid rgba(255,255,255,.3);
+      border-radius: 50%;
+      background: rgba(30,30,30,.86);
+      color: white;
+      font-size: 32px;
+      line-height: 1;
+      cursor: pointer;
+    }
+    .gallery-lightbox-button:hover { background: #444; }
+    .gallery-lightbox-button:focus-visible { outline: 3px solid white; outline-offset: 3px; }
+    #galleryLightboxClose {
+      top: max(16px, env(safe-area-inset-top));
+      right: 16px;
+      font-size: 36px;
+    }
+    #galleryLightboxPrev { top: 50%; left: 8px; transform: translateY(-50%); }
+    #galleryLightboxNext { top: 50%; right: 8px; transform: translateY(-50%); }
+    #galleryLightboxCount {
+      position: absolute;
+      bottom: max(18px, env(safe-area-inset-bottom));
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 15px;
+      letter-spacing: .08em;
+      color: rgba(255,255,255,.9);
+      white-space: nowrap;
+    }
+    @media (min-width: 768px) {
+      #galleryLightbox { padding: 80px 76px 74px; }
+      #galleryLightboxPrev { left: 18px; }
+      #galleryLightboxNext { right: 18px; }
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 50;
+      inset: 0;
+      background-color: rgba(0,0,0,0.6);
+      overflow-y: auto;
+    }
+    .modal-content {
+      background-color: #fff;
+      margin: 5% auto;
+      padding: 2rem;
+      width: 95%;
+      max-width: 800px;
+      border-radius: 0.75rem;
+      max-height: 85vh;
+      overflow-y: auto;
+    }
+
+    .header-logo { height: 72px; width: auto; }
+    @media (min-width: 640px) {
+      .header-logo { height: 88px; }
+    }
+
+    #menuButton {
+      position: relative;
+      z-index: 60;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 24px;
+      width: 32px;
+    }
+    #menuButton span {
+      display: block;
+      height: 2px;
+      width: 100%;
+      background-color: #ffffff !important;
+      opacity: 1 !important;
+      border-radius: 2px;
+    }
+
+    #sideMenu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 16rem;
+      max-width: 85vw;
+      background-color: #000;
+      color: #fff;
+      padding: 1.5rem;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+      z-index: 50;
+      overflow-y: auto;
+    }
+    #sideMenu.open { transform: translateX(0); }
+    #closeMenu {
+      font-size: 2rem;
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+      margin-bottom: 1.5rem;
+    }
+    #sideMenu ul { list-style: none; padding: 0; margin: 0; }
+    #sideMenu li { margin-bottom: 1.25rem; }
+    #sideMenu a {
+      color: white; text-decoration: none; font-size: 1.125rem; transition: color 0.2s;
+    }
+    #sideMenu a:hover { text-decoration: underline; }
+
+    #overlay {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(0,0,0,0.5);
+      z-index: 40;
+      display: none;
+    }
+    #overlay.show { display: block; }
+
+    #cookieConsent {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: #000;
+      color: #fff;
+      padding: 1rem;
+      z-index: 100;
+      display: none;
+      border-top: 1px solid #333;
+    }
+    .cookie-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    @media (min-width: 640px) {
+      .cookie-content {
+        flex-direction: row;
+      }
+    }
+    .cookie-content p {
+      margin: 0;
+      text-align: center;
+    }
+    @media (min-width: 640px) {
+      .cookie-content p {
+        text-align: left;
+      }
+    }
+    .cookie-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .btn-cookie-accept {
+      background-color: #fff;
+      color: #000;
+      padding: 0.5rem 1.5rem;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .btn-cookie-accept:hover {
+      background-color: #e5e5e5;
+    }
+    .btn-cookie-decline {
+      background-color: transparent;
+      color: #fff;
+      padding: 0.5rem 1.5rem;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      border: 1px solid #fff;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-cookie-decline:hover {
+      background-color: #fff;
+      color: #000;
+    }
+
+    #scrollToTop {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      background-color: #000;
+      color: #fff;
+      width: 3rem;
+      height: 3rem;
+      border-radius: 9999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      transition: all 0.2s;
+      opacity: 0;
+      visibility: hidden;
+      z-index: 45;
+      font-size: 1.5rem;
+    }
+    #scrollToTop.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+    #scrollToTop:hover {
+      background-color: #1a1a1a;
+      transform: scale(1.1);
+    }
+
+    @media (min-width: 768px) {
+      .marquee-content img { height: 300px; }
+    }
+    body, html { overflow-x: hidden; }
+    @keyframes cta-vibrate {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  20% { transform: scale(1.03) rotate(-1deg); }
+  40% { transform: scale(1.03) rotate(1deg); }
+  60% { transform: scale(1.05) rotate(-1deg); }
+  80% { transform: scale(1.03) rotate(1deg); }
+}
+
+.cta-pulse {
+  animation: cta-vibrate 2.5s ease-in-out infinite;
+}
+
+.cta-pulse:hover {
+  animation-play-state: paused;
+}
+
+    /* One compact, keyboard-accessible language selector for all languages. */
+    .site-header { padding-left: 12px; padding-right: 12px; }
+    .site-header .social-links { gap: 4px; }
+    .language-picker { position: relative; flex: 0 0 auto; font-family: inherit; }
+    .language-picker > summary {
+      display: inline-flex; align-items: center; justify-content: center; gap: 3px;
+      min-height: 40px; padding: 0 6px; list-style: none; cursor: pointer;
+      border: 1px solid rgba(255,255,255,.45); border-radius: 8px;
+      color: white; font-weight: 600; font-size: 13px;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .language-picker > summary::-webkit-details-marker { display: none; }
+    .language-picker .language-options {
+      position: absolute; top: calc(100% + 8px); right: 0;
+      min-width: 78px; padding: 4px; border-radius: 10px;
+      border: 1px solid #ddd; background: #fff; color: #111;
+      box-shadow: 0 8px 22px rgba(0,0,0,.18); z-index: 90;
+    }
+    .language-picker .language-options a {
+      display: block; text-align: center; padding: 9px 12px;
+      border-radius: 6px; font-weight: 600; font-size: 14px; color: #111;
+    }
+    .language-picker .language-options a:hover,
+    .language-picker .language-options a[aria-current="page"] { background: #eeeae4; }
+    .language-picker > summary:focus-visible,
+    .language-picker .language-options a:focus-visible { outline: 2px solid #888; outline-offset: 2px; }
+    .site-header .social-icon { width: 40px; height: 40px; }
+    @media (max-width: 374px) {
+      .site-header { padding-left: 8px; padding-right: 8px; }
+      .site-header .social-icon { width: 32px; height: 32px; }
+      .site-header .header-logo { height: 64px; }
+      .language-picker > summary { font-size: 12px; padding: 0 4px; min-height: 36px; }
+    }
+    @media (min-width: 640px) {
+      .site-header { padding-left: 24px; padding-right: 24px; }
+      .site-header .social-links { gap: 8px; }
+    }
+  </style>
+</head>
+
+<body class="text-black font-sans overflow-x-hidden" style="background-color: #EAE8E2;">
+  <header class="site-header flex justify-between items-center p-4 sm:p-6 bg-black text-white border-b border-white relative z-50">
+    <div class="flex items-center">
+      <button type="button" id="menuButton" aria-label="Open menu" class="sm:mr-4 mr-2">
+        <span></span><span></span><span></span>
+      </button>
+      <img src="https://mmanufactory.eu/android-chrome-512x512.png" alt="Mmanufactory.eu logo" class="header-logo" style="filter: invert(1);" loading="eager" />
+    </div>
+
+    <div class="social-links flex items-center gap-2">
+      <a href="https://www.tiktok.com/@mmanufactory.eu" target="_blank" rel="noopener" aria-label="TikTok" class="hover:opacity-80 transition">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Tiktok_icon.svg" alt="TikTok" class="social-icon h-10 w-10">
+      </a>
+      <a href="https://www.instagram.com/mmanufactory.eu/" target="_blank" rel="noopener" aria-label="Instagram" class="hover:opacity-80 transition">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram" class="social-icon h-10 w-10" loading="lazy" />
+      </a>
+      <a href="https://t.me/rollhh" target="_blank" rel="noopener" aria-label="Telegram" class="hover:opacity-80 transition">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram" class="social-icon h-10 w-10" loading="lazy" />
+      </a>
+      <a href="https://wa.me/37129914716" target="_blank" rel="noopener" aria-label="WhatsApp" class="hover:opacity-80 transition">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" class="social-icon h-10 w-10" loading="lazy" />
+      </a>
+      <details class="language-picker">
+        <summary aria-label="Choose language">EN <span aria-hidden="true">⌄</span></summary>
+        <div class="language-options">
+          <a href="/" data-switch-language="lv">LV</a>
+          <a href="/en/" data-switch-language="en" aria-current="page">EN</a>
+          <a href="/ru/" data-switch-language="ru">RU</a>
+        </div>
+      </details>
+    </div>
+
+    <nav id="sideMenu" aria-label="Site navigation">
+      <button type="button" id="closeMenu" aria-label="Close menu">&times;</button>
+      <ul>
+        <li><a href="tel:+37129914716">Contacts</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#sikdatnu">Cookie policy</a></li>
+      </ul>
+    </nav>
+    <div id="overlay"></div>
+  </header>
+
+  <main class="px-4 sm:px-6">
+    
+<div class="text-center max-w-2xl mx-auto px-2 mt-4 mb-1">
+  <h1 class="text-2xl sm:text-4xl font-bold text-gray-900 leading-tight">
+    Custom furniture in Riga and across Latvia
+  </h1>
+  <p class="text-base sm:text-lg font-normal text-gray-800 leading-relaxed mt-1">
+    Kitchens, fitted wardrobes, walk-in closets and thoughtful interior solutions.
+  </p>
+  <p class="text-base sm:text-lg font-semibold text-gray-900 mt-1">
+    From idea to installation — within 30 working days.
+  </p>
+</div>
+    
+    <!-- Кнопки калькулятора СВЕРХУ (первые) -->
+    <div class="mt-6 flex flex-wrap justify-center gap-4 text-center" data-aos="zoom-in">
+      <a href="/en/lead/" class="bg-black text-white border border-black px-7 py-4 rounded-xl font-bold hover:bg-gray-100 transition min-w-[220px] shadow-md cta-pulse">Request a quote in 1 minute</a>
+    </div>
+
+    <section id="gallery" class="mt-8" data-aos="fade-up">
+      <div class="marquee-wrapper" id="marqueeWrapper">
+        <div class="marquee-content" id="marqueeContent">
+          <img src="https://i.imgur.com/3KHG131.jpeg" alt="Custom kitchen in Riga with acrylic fronts, HPL worktop, decorative slats, glass display cabinet, integrated appliances and three-tier LED lighting" draggable="false" loading="eager" />
+          <img src="https://i.imgur.com/eDeTHaK.jpeg" alt="Kitchen in Jurmala with wood-effect fronts, black glass display cabinets and built-in LED lighting" draggable="false" loading="eager" />
+          <img src="https://i.imgur.com/w2YfRG8.jpeg" alt="Modern kitchen in Jurmala with Egger Cacella wood-effect cabinetry, black glazed cabinets and a kitchen island" draggable="false" loading="lazy" />
+          <img src="https://i.imgur.com/AddjWaY.jpeg" alt="Custom kitchen cabinetry with pull-out drawers and Blum hinges and BLUMOTION soft-close drawer mechanisms" draggable="false" loading="lazy" />
+          <img src="https://i.imgur.com/T3TR8bQ.jpeg" alt="Compact kitchen with beige fronts, glass display cabinet and marble-effect dining table" draggable="false" loading="lazy" />
+          <img src="https://i.imgur.com/JUBOxRZ.jpeg" alt="Upper kitchen cabinets in Riga with acrylic fronts, black-framed glass display cabinet, built-in extractor and three-tier LED lighting" draggable="false" loading="lazy" />
+          <img src="https://i.imgur.com/PE7PIlR.jpeg" alt="Custom bathroom furniture in Jelgava with vanity unit, open shelves, pull-out storage and LED illuminated mirror" draggable="false" loading="lazy" />
+          <img src="https://i.imgur.com/jzyEiWZ.jpeg" alt="L-shaped kitchen in Riga with acrylic fronts, HPL worktop, integrated sink and three-tier LED lighting" draggable="false" loading="lazy" />
+          <img src="https://i.imgur.com/sENgulg.jpeg" alt="Custom kitchen with light cabinet fronts, tall wood-effect units and black open niches" draggable="false" loading="lazy" />
+          <img src="https://i.imgur.com/OLUrUJT.jpeg" alt="Living room TV wall in Ogre with Egger wood-effect fronts, decorative panel, open shelving and Blum TIP-ON drawers" draggable="false" loading="lazy" />
+          <img src="https://i.imgur.com/aO4uiyN.jpeg" alt="Bathroom cabinetry with dark grey vanity drawers, tall wood-effect cabinet, stone-look worktop and round mirror" draggable="false" loading="lazy" />
+          <img src="https://i.imgur.com/w4fFH2K.jpeg" alt="Open upper kitchen cabinets with shelving compartments and integrated LED lighting above the worktop" draggable="false" loading="lazy" />
+          <img src="https://i.imgur.com/nRt8e8d.jpeg" alt="Custom fitted wardrobe with floor-to-ceiling mirror doors and long black handles" draggable="false" loading="lazy" />
+          <img src="https://i.imgur.com/89GkbML.jpeg" alt="Kitchen cabinet interiors with metal dish racks, shelves and LED lighting" draggable="false" loading="lazy" />
+          <img src="https://i.imgur.com/AQjTSB4.jpeg" alt="Custom entryway furniture with built-in white wardrobe, vertical decorative slats, black handles and seating niche" draggable="false" loading="lazy" />
+          <img src="https://imgur.com/HicVE0R.jpg" alt="Built-in wardrobe with sliding doors, illuminated shelves, pull-out metal baskets and clothes rail" draggable="false" loading="lazy" />
+          <img src="https://imgur.com/uXWjnIl.jpg" alt="L-shaped kitchen with grey fronts, integrated LED lighting and marble-effect backsplash" draggable="false" loading="lazy" />
+          <img src="https://imgur.com/ezjpcpm.jpg" alt="Compact custom kitchen with light grey fronts, LED lighting, integrated appliances and extended worktop" draggable="false" loading="lazy" />
+          <img src="https://imgur.com/ayB9Kfe.jpg" alt="Corner kitchen with light fronts, stone-effect worktop and backsplash, and a glass display cabinet" draggable="false" loading="lazy" />
+          <img src="https://imgur.com/EqsFF1O.jpg" alt="Spacious L-shaped kitchen with light fronts, dark worktop, tall cabinets and built-in oven" draggable="false" loading="lazy" />
+          <img src="https://imgur.com/p93ndgt.jpg" alt="Custom L-shaped kitchen with white fronts, wood-effect worktop, LED lighting and built-in oven" draggable="false" loading="lazy" />
+          <img src="https://imgur.com/9BlJzcV.jpg" alt="Kitchen worktop and backsplash with bold marble pattern and black induction hob" draggable="false" loading="lazy" />
+          <img src="https://imgur.com/Ri7Sbo0.jpg" alt="Lower kitchen cabinets with open drawers, inner pull-out drawer and stone-effect countertop" draggable="false" loading="lazy" />
+          <img src="https://imgur.com/DIoe5Kw.jpg" alt="Contemporary kitchen with grey fronts, black marble-effect backsplash, built-in oven and upper cabinets" draggable="false" loading="lazy" />
+          </div>
+      </div>
+    </section>
+
+    <section id="atsauksmes" class="mt-3 max-w-6xl mx-auto px-2 sm:px-0" aria-labelledby="atsauksmes-title">
+      <h2 id="atsauksmes-title" class="text-2xl sm:text-3xl font-bold text-center mb-0">Google customer reviews</h2>
+      <div class="-mt-4">
+        <div data-reviewgrid="3ec67ad0-8764-48f3-82ac-7d6b9f7d4664"></div>
+      </div>
+      <script src="https://reviewswidget.app/embed.js" async></script>
+      <p class="text-center mt-4 text-sm">
+        <a href="https://maps.app.goo.gl/hsJ2jmYDYM8ywueC8" target="_blank" rel="noopener noreferrer" class="underline hover:opacity-70 transition">Read all reviews on Google</a>
+      </p>
+    </section>
+
+  <section class="mt-6 max-w-6xl mx-auto" data-aos="fade-up">
+  <h2 class="text-2xl sm:text-3xl font-bold text-center mb-6">How ordering works</h2>
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 px-2 sm:px-0">
+
+    <div class="bg-gray-100 text-black p-5 rounded-xl flex items-center gap-4" data-aos="fade-up" data-aos-delay="100">
+      <svg class="flex-shrink-0" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+        <path d="M14 2v6h6"/><path d="M8 13h8"/><path d="M8 17h5"/>
+      </svg>
+      <div>
+        <h3 class="font-bold mb-1">1. Enquiry</h3>
+        <p class="text-sm">Tell us about your project. We review your details and contact you to discuss the next steps.</p>
+      </div>
+    </div>
+
+    <div class="bg-gray-100 text-black p-5 rounded-xl flex items-center gap-4" data-aos="fade-up" data-aos-delay="200">
+      <svg class="flex-shrink-0" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="8" cy="12" r="6"/><circle cx="8" cy="12" r="2"/>
+        <path d="M14 12h6v4h-6"/><path d="M16 16v-2"/><path d="M18 16v-2"/>
+      </svg>
+      <div>
+        <h3 class="font-bold mb-1">2. Measurements</h3>
+        <p class="text-sm">We measure your space and discuss the layout, materials, fittings and important details on site.</p>
+      </div>
+    </div>
+
+    <div class="bg-gray-100 text-black p-5 rounded-xl flex items-center gap-4" data-aos="fade-up" data-aos-delay="300">
+      <svg class="flex-shrink-0" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="4" width="20" height="13" rx="2"/>
+        <path d="M12 17v4"/><path d="M8 21h8"/>
+        <path d="M6 12l3-3 3 3 4-4"/>
+      </svg>
+      <div>
+        <h3 class="font-bold mb-1">3. Digital design</h3>
+        <p class="text-sm">We prepare a digital design for your review and approval.</p>
+      </div>
+    </div>
+
+    <div class="bg-gray-100 text-black p-5 rounded-xl flex items-center gap-4" data-aos="fade-up" data-aos-delay="400">
+      <svg class="flex-shrink-0" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="5" y="4" width="14" height="17" rx="2"/>
+        <rect x="9" y="2" width="6" height="4" rx="1"/>
+        <path d="M9 13l2 2 4-4"/>
+      </svg>
+      <div>
+        <h3 class="font-bold mb-1">4. Agreement</h3>
+        <p class="text-sm">Target installation timeframe: 30 working days.</p>
+      </div>
+    </div>
+
+    <div class="bg-gray-100 text-black p-5 rounded-xl flex items-center gap-4" data-aos="fade-up" data-aos-delay="500">
+      <svg class="flex-shrink-0" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M2 20h20"/>
+        <path d="M4 20V10l5 3V10l5 3V7l5 3.5V20"/>
+        <path d="M17 7V4h2.5v4.5"/>
+        <path d="M8 20v-3h3v3"/>
+      </svg>
+      <div>
+        <h3 class="font-bold mb-1">5. Production</h3>
+        <p class="text-sm">Your furniture is produced according to the approved design.</p>
+      </div>
+    </div>
+
+    <div class="bg-gray-100 text-black p-5 rounded-xl flex items-center gap-4" data-aos="fade-up" data-aos-delay="600">
+      <svg class="flex-shrink-0" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+      </svg>
+      <div>
+        <h3 class="font-bold mb-1">6. Installation</h3>
+        <p class="text-sm">We install your furniture at your property.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+    <!-- ВТОРЫЕ КНОПКИ - ровно под процессами -->
+ <div class="mt-6 flex flex-wrap justify-center gap-4 text-center" data-aos="zoom-in">
+      <a href="/en/lead/" class="bg-black text-white border border-black px-7 py-4 rounded-xl font-bold hover:bg-gray-100 transition min-w-[220px] shadow-md cta-pulse">Request a quote in 1 minute</a>
+    </div>
+    <!-- ИСПРАВЛЕННАЯ СЕКЦИЯ: теперь h-screen вместо h-[70vh] sm:h-screen -->
+    <section class="relative h-screen flex items-center justify-center mt-6 px-4 sm:px-0" data-aos="fade">
+      <img src="https://imgur.com/zePD3qc.jpg" alt="Custom furniture interior" class="absolute w-full h-full object-cover opacity-40" loading="lazy" />
+      <div class="relative text-center z-10 max-w-2xl">
+        <h2 class="text-3xl sm:text-5xl font-bold mb-6 text-black">Custom kitchens, fitted wardrobes, walk-in closets and other made-to-measure furniture. Interior design and planning.</h2>
+       <p class="mt-6 text-black text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">Contemporary solutions and reliable workmanship. A full service, from measuring and design to manufacturing and installation.</p>
+      </div>
+    </section>
+
+    <div class="mt-12 text-center flex flex-wrap justify-center gap-4 px-2 sm:px-0" data-aos="fade-up">
+      <a href="https://www.tiktok.com/@mmanufactory.eu" target="_blank" rel="noopener" class="bg-black px-5 py-3 rounded-xl hover:bg-gray-800 transition flex items-center justify-center min-w-[48px] min-h-[48px]">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Tiktok_icon.svg" alt="TikTok" class="h-8 w-8">
+      </a>
+      <a href="https://www.instagram.com/mmanufactory.eu/" target="_blank" rel="noopener" class="bg-black px-5 py-3 rounded-xl hover:bg-gray-800 transition flex items-center justify-center min-w-[48px] min-h-[48px]">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram" class="h-8 w-8" loading="lazy" />
+      </a>
+      <a href="https://t.me/rollhh" target="_blank" rel="noopener" class="bg-black px-5 py-3 rounded-xl hover:bg-gray-800 transition flex items-center justify-center min-w-[48px] min-h-[48px]">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram" class="h-8 w-8" loading="lazy" />
+      </a>
+      <a href="https://wa.me/37129914716" target="_blank" rel="noopener" class="bg-black px-5 py-3 rounded-xl hover:bg-gray-800 transition flex items-center justify-center min-w-[48px] min-h-[48px]">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" class="h-8 w-8" loading="lazy" />
+      </a>
+    </div>
+
+    <section id="sikdatnu" class="max-w-4xl mx-auto mt-20 px-4 sm:px-6 text-sm text-gray-700">
+      <h2 class="text-xl font-bold mb-4">
+        <button type="button" onclick="openPolicy()" class="underline hover:text-gray-800 transition">Cookie policy</button>
+        <span class="mx-2">·</span>
+        <button type="button" onclick="openCookieSettings()" class="underline hover:text-gray-800 transition">Cookie settings</button>
+      </h2>
+    </section>
+  </main>
+
+  <footer class="mt-20 p-6 text-center border-t border-gray-300 text-sm text-black">
+    © 2026 Mmanufactory.eu. All rights reserved.
+  </footer>
+
+  <div id="galleryLightbox" role="dialog" aria-modal="true" aria-label="Gallery photo viewer" aria-hidden="true">
+    <button type="button" id="galleryLightboxClose" class="gallery-lightbox-button" aria-label="Close gallery" title="Close gallery">×</button>
+    <button type="button" id="galleryLightboxPrev" class="gallery-lightbox-button" aria-label="Previous photo" title="Previous photo">‹</button>
+    <img id="galleryLightboxImage" alt="" draggable="false" />
+    <button type="button" id="galleryLightboxNext" class="gallery-lightbox-button" aria-label="Next photo" title="Next photo">›</button>
+    <span id="galleryLightboxCount" role="status" aria-live="polite"></span>
+  </div>
+
+  <div id="policyModal" class="modal">
+    <div class="modal-content relative">
+      <button type="button" onclick="closePolicy()" class="absolute top-3 right-4 cursor-pointer text-gray-600 font-bold text-2xl" aria-label="Aizvērt">&times;</button>
+      <h2 class="text-xl font-bold mb-4">Cookies and privacy policy</h2>
+      <div class="text-sm text-gray-700 space-y-4 text-left">
+        <p>The website <strong>mmanufactory.eu</strong> is operated by <strong>Manufactory</strong>. For data protection questions, email <a href="mailto:mmanufactory.eu@gmail.com" class="underline">mmanufactory.eu@gmail.com</a> or call <a href="tel:+37129914716" class="underline">+371 29914716</a>.</p>
+        <p><strong>Essential storage:</strong> We store your cookie choice in your browser's local storage so you do not have to select it again. Core features, including submitting an enquiry, work without analytics or advertising consent.</p>
+        <p><strong>Analytics and advertising:</strong> Only with your consent do we enable Google Analytics, Google Ads and Meta Pixel to understand traffic and ad performance. These services may use cookies and process browsing data under their respective policies. They are not loaded before consent.</p>
+        <p><strong>Your choice:</strong> You can accept or decline optional cookies and change your choice at any time using the <em>Cookie settings</em> link at the bottom of this website. Withdrawing consent stops future analytics and ad tracking here.</p>
+        <p><strong>Technical data:</strong> Our hosting provider may process technical request data, such as IP addresses and access times, for the operation and security of this website.</p>
+        <p><strong>Google reviews:</strong> We display customer reviews using Reviews Widget (reviewswidget.app). Displaying reviews connects your browser to that external service, which may receive technical information such as your IP address.</p>
+        <h3 class="text-base font-semibold mt-6">Personal data processing</h3>
+        <p>When you submit an enquiry, we process the furniture request, contact details and any images you choose to attach so that we can contact you and prepare a quote. Enquiries are delivered to us via Telegram.</p>
+        <p>Enquiry information is retained for as long as necessary to communicate, prepare an offer and meet any contractual and legal obligations.</p>
+        <p>To request access, correction or deletion of your personal data, or information about its processing, email <a href="mailto:mmanufactory.eu@gmail.com" class="underline">mmanufactory.eu@gmail.com</a>.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="cookieConsent" role="region" aria-label="Sīkdatņu izvēle">
+    <div class="cookie-content">
+      <p>We only use Google and Meta analytics and advertising cookies with your consent. You can change your choice at any time.</p>
+      <div class="cookie-buttons">
+        <button type="button" class="btn-cookie-accept" onclick="acceptCookies()">Accept</button>
+        <button type="button" class="btn-cookie-decline" onclick="declineCookies()">Decline</button>
+      </div>
+    </div>
+  </div>
+
+  <button type="button" id="scrollToTop" aria-label="Back to top">↑</button>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 800, once: true });
+
+    function openPolicy() {
+      document.getElementById('policyModal').style.display = 'block';
+    }
+    function closePolicy() {
+      document.getElementById('policyModal').style.display = 'none';
+    }
+
+    window.addEventListener('click', function (event) {
+      const pmodal = document.getElementById('policyModal');
+      if (event.target === pmodal) pmodal.style.display = 'none';
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const menuButton = document.getElementById('menuButton');
+      const sideMenu = document.getElementById('sideMenu');
+      const closeMenu = document.getElementById('closeMenu');
+      const overlay = document.getElementById('overlay');
+
+      function openMenu() {
+        sideMenu.classList.add('open');
+        overlay.classList.add('show');
+      }
+      function closeMenuFunc() {
+        sideMenu.classList.remove('open');
+        overlay.classList.remove('show');
+      }
+      menuButton.addEventListener('click', openMenu);
+      closeMenu.addEventListener('click', closeMenuFunc);
+      overlay.addEventListener('click', closeMenuFunc);
+
+      const marqueeWrapper = document.getElementById('marqueeWrapper');
+      const marqueeContent = document.getElementById('marqueeContent');
+      const galleryPhotos = Array.from(marqueeContent.querySelectorAll('img'));
+      if (!marqueeContent.dataset.duplicated) {
+        const clone = marqueeContent.cloneNode(true);
+        while (clone.firstElementChild) {
+          marqueeContent.appendChild(clone.firstElementChild);
+        }
+        marqueeContent.dataset.duplicated = 'true';
+      }
+
+      let isDown = false, startX = 0, scrollLeft = 0;
+
+      function pauseAnim() { marqueeContent.style.animationPlayState = 'paused'; }
+      function resumeAnim() { marqueeContent.style.animationPlayState = 'running'; }
+
+      marqueeWrapper.addEventListener('mousedown', (e) => {
+        isDown = true;
+        marqueeWrapper.style.cursor = 'grabbing';
+        startX = e.pageX - marqueeWrapper.offsetLeft;
+        scrollLeft = marqueeWrapper.scrollLeft;
+        pauseAnim();
+      });
+      marqueeWrapper.addEventListener('mouseleave', () => {
+        isDown = false;
+        marqueeWrapper.style.cursor = 'grab';
+        resumeAnim();
+      });
+      marqueeWrapper.addEventListener('mouseup', () => {
+        isDown = false;
+        marqueeWrapper.style.cursor = 'grab';
+        resumeAnim();
+      });
+      marqueeWrapper.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - marqueeWrapper.offsetLeft;
+        const walk = (x - startX);
+        marqueeWrapper.scrollLeft = scrollLeft - walk;
+      });
+
+      marqueeWrapper.addEventListener('touchstart', (e) => {
+        isDown = true;
+        startX = e.touches[0].pageX;
+        scrollLeft = marqueeWrapper.scrollLeft;
+        pauseAnim();
+      }, { passive: true });
+      marqueeWrapper.addEventListener('touchend', () => {
+        isDown = false;
+        resumeAnim();
+      });
+      marqueeWrapper.addEventListener('touchmove', (e) => {
+        if (!isDown) return;
+        const x = e.touches[0].pageX;
+        const walk = (x - startX);
+        marqueeWrapper.scrollLeft = scrollLeft - walk;
+      }, { passive: true });
+
+      // A copied carousel photo opens the corresponding original picture.
+      marqueeContent.querySelectorAll('img').forEach((img, i) => {
+        img.dataset.photoIndex = String(i % galleryPhotos.length);
+        if (i < galleryPhotos.length) {
+          img.tabIndex = 0;
+          img.setAttribute('role', 'button');
+          img.setAttribute('aria-label', 'Open image: ' + img.alt);
+        } else {
+          img.setAttribute('aria-hidden', 'true');
+          img.tabIndex = -1;
+        }
+      });
+
+      const lightbox = document.getElementById('galleryLightbox');
+      const lightboxImage = document.getElementById('galleryLightboxImage');
+      const lightboxCount = document.getElementById('galleryLightboxCount');
+      const lightboxClose = document.getElementById('galleryLightboxClose');
+      const lightboxPrev = document.getElementById('galleryLightboxPrev');
+      const lightboxNext = document.getElementById('galleryLightboxNext');
+      let currentPhoto = 0;
+      let focusBeforeViewer = null;
+      let scrollBeforeViewer = 0;
+      let swipeStart = null;
+      let pressStartX = 0;
+      let pressStartY = 0;
+      let galleryDragged = false;
+
+      marqueeWrapper.addEventListener('pointerdown', (e) => {
+        pressStartX = e.clientX;
+        pressStartY = e.clientY;
+        galleryDragged = false;
+      });
+      marqueeWrapper.addEventListener('pointermove', (e) => {
+        if (e.buttons === 1 || e.pointerType === 'touch') {
+          if (Math.abs(e.clientX - pressStartX) > 10 || Math.abs(e.clientY - pressStartY) > 10) {
+            galleryDragged = true;
+          }
+        }
+      });
+
+      function showGalleryPhoto(index) {
+        currentPhoto = (index + galleryPhotos.length) % galleryPhotos.length;
+        const photo = galleryPhotos[currentPhoto];
+        lightboxImage.src = photo.currentSrc || photo.src;
+        lightboxImage.alt = photo.alt;
+        lightboxCount.textContent = (currentPhoto + 1) + ' / ' + galleryPhotos.length;
+      }
+
+      function openGalleryPhoto(index) {
+        if (!galleryPhotos.length) return;
+        focusBeforeViewer = document.activeElement;
+        scrollBeforeViewer = window.scrollY;
+        showGalleryPhoto(index);
+        lightbox.classList.add('open');
+        lightbox.setAttribute('aria-hidden', 'false');
+        document.body.style.position = 'fixed';
+        document.body.style.top = '-' + scrollBeforeViewer + 'px';
+        document.body.style.width = '100%';
+        pauseAnim();
+        lightboxClose.focus({ preventScroll: true });
+      }
+
+      function closeGalleryPhoto() {
+        if (!lightbox.classList.contains('open')) return;
+        lightbox.classList.remove('open');
+        lightbox.setAttribute('aria-hidden', 'true');
+        lightboxImage.removeAttribute('src');
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+        window.scrollTo(0, scrollBeforeViewer);
+        resumeAnim();
+        if (focusBeforeViewer && focusBeforeViewer.isConnected && focusBeforeViewer.focus) {
+          focusBeforeViewer.focus({ preventScroll: true });
+        }
+      }
+
+      marqueeContent.addEventListener('click', (e) => {
+        const img = e.target.closest('img[data-photo-index]');
+        if (!img) return;
+        if (galleryDragged) return;
+        openGalleryPhoto(Number(img.dataset.photoIndex));
+      });
+      marqueeContent.addEventListener('keydown', (e) => {
+        if ((e.key === 'Enter' || e.key === ' ') && e.target.matches('img[data-photo-index]')) {
+          e.preventDefault();
+          openGalleryPhoto(Number(e.target.dataset.photoIndex));
+        }
+      });
+
+      lightboxClose.addEventListener('click', closeGalleryPhoto);
+      lightboxPrev.addEventListener('click', () => showGalleryPhoto(currentPhoto - 1));
+      lightboxNext.addEventListener('click', () => showGalleryPhoto(currentPhoto + 1));
+      lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) closeGalleryPhoto();
+      });
+      document.addEventListener('keydown', (e) => {
+        if (!lightbox.classList.contains('open')) return;
+        if (e.key === 'Escape') { e.preventDefault(); closeGalleryPhoto(); }
+        if (e.key === 'ArrowLeft') { e.preventDefault(); showGalleryPhoto(currentPhoto - 1); }
+        if (e.key === 'ArrowRight') { e.preventDefault(); showGalleryPhoto(currentPhoto + 1); }
+        if (e.key === 'Tab') {
+          const controls = [lightboxClose, lightboxPrev, lightboxNext];
+          const current = controls.indexOf(document.activeElement);
+          if (e.shiftKey && current <= 0) {
+            e.preventDefault();
+            lightboxNext.focus();
+          } else if (!e.shiftKey && current === controls.length - 1) {
+            e.preventDefault();
+            lightboxClose.focus();
+          }
+        }
+      });
+
+      lightbox.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 1) {
+          swipeStart = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        }
+      }, { passive: true });
+      lightbox.addEventListener('touchend', (e) => {
+        if (!swipeStart || !e.changedTouches.length) return;
+        const dx = e.changedTouches[0].clientX - swipeStart.x;
+        const dy = e.changedTouches[0].clientY - swipeStart.y;
+        swipeStart = null;
+        if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.2) {
+          showGalleryPhoto(currentPhoto + (dx < 0 ? 1 : -1));
+        }
+      }, { passive: true });
+      lightbox.addEventListener('touchcancel', () => { swipeStart = null; });
+
+      const scrollBtn = document.getElementById('scrollToTop');
+      window.addEventListener('scroll', function() {
+        if (window.scrollY > 500) {
+          scrollBtn.classList.add('visible');
+        } else {
+          scrollBtn.classList.remove('visible');
+        }
+      });
+      scrollBtn.addEventListener('click', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    });
+
+  </script>
+</body>
+</html>
