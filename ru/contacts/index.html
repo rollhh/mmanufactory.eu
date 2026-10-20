@@ -47,8 +47,8 @@
     .side-menu { position: fixed; top: var(--menu-top, 104px); left: 0; height: calc(100vh - var(--menu-top, 104px)); height: calc(100dvh - var(--menu-top, 104px)); width: 256px; max-width: 85vw; padding: 24px; background: #000; color: #fff; transform: translateX(-100%); transition: transform .3s ease; z-index: 60; overflow-y: auto; }
     .side-menu.open { transform: translateX(0); }
         .side-menu ul { padding: 0; margin: 0; list-style: none; }
-    .side-menu li { margin-bottom: 20px; }
-    .side-menu a { color: white; font-size: 18px; text-decoration: none; }
+    .side-menu li { margin-bottom: 24px; }
+    .side-menu a { color: white; font-size: 22px; font-weight: 700; line-height: 1.35; text-decoration: none; }
     .side-menu a:hover, .side-menu a[aria-current="page"] { text-decoration: underline; }
     .overlay { position: fixed; inset: var(--menu-top, 104px) 0 0; display: none; z-index: 55; background: rgba(0,0,0,.5); }
     .overlay.show { display: block; }
