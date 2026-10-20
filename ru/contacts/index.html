@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="/consent.js"></script>
+  <script src="/language-switch.js" defer></script>
+  <title>Mmanufactory.eu – Контакты</title>
+  <meta name="description" content="Контакты M Manufactory: мебель на заказ, кухни, встроенные шкафы и гардеробные в Риге и по всей Латвии.">
+  <link rel="canonical" href="https://mmanufactory.eu/ru/contacts/">
+  <link rel="alternate" hreflang="lv" href="https://mmanufactory.eu/contacts/">
+  <link rel="alternate" hreflang="en" href="https://mmanufactory.eu/en/contacts/">
+  <link rel="alternate" hreflang="ru" href="https://mmanufactory.eu/ru/contacts/">
+  <link rel="alternate" hreflang="x-default" href="https://mmanufactory.eu/contacts/">
+  <meta property="og:title" content="Mmanufactory.eu – Контакты">
+  <meta property="og:description" content="Контакты M Manufactory: мебель на заказ, кухни, встроенные шкафы и гардеробные в Риге и по всей Латвии.">
+  <meta property="og:image" content="https://mmanufactory.eu/android-chrome-512x512.png">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: #EAE8E2; color: #111827; font-family: Arial, Helvetica, sans-serif; }
+    a { color: inherit; }
+    button { font: inherit; }
+    .site-header { position: relative; z-index: 20; display: grid; grid-template-columns: auto minmax(48px,1fr) auto; align-items: center; gap: 6px; padding: 16px 12px; background: #000; color: #fff; }
+    .header-left, .social-links { display: flex; align-items: center; }
+    .header-left { gap: 8px; }
+    .header-logo { display: block; height: 72px; width: auto; filter: invert(1); }
+    .menu-button { display: flex; flex-direction: column; justify-content: space-between; width: 32px; height: 24px; padding: 8px; border: 0; background: transparent; cursor: pointer; }
+    .menu-button span { height: 2px; width: 100%; background: white; border-radius: 2px; }
+    .social-links { justify-self: end; gap: 4px; }
+    .social-icon { display: block; width: 40px; height: 40px; object-fit: contain; }
+    .language-picker { position: relative; justify-self: end; margin-right: 18px; }
+    .language-picker summary { display: inline-flex; align-items: center; justify-content: center; gap: 3px; min-height: 40px; padding: 0 6px; list-style: none; cursor: pointer; border: 1px solid rgba(255,255,255,.45); border-radius: 8px; color: #fff; font-size: 13px; font-weight: 600; }
+    .language-picker summary::-webkit-details-marker { display: none; }
+    .language-chevron { width: 12px; height: 12px; transition: transform .2s ease; }
+    .language-picker[open] .language-chevron { transform: rotate(180deg); }
+    .language-options { position: absolute; top: calc(100% + 8px); left: 50%; transform: translateX(-50%); min-width: 78px; padding: 4px; border: 1px solid #ddd; border-radius: 10px; background: #fff; color: #111; box-shadow: 0 8px 22px rgba(0,0,0,.18); z-index: 50; }
+    .language-options a { display: block; padding: 9px 12px; border-radius: 6px; font-size: 14px; font-weight: 600; text-align: center; text-decoration: none; }
+    .language-options a:hover, .language-options a[aria-current="page"] { background: #eeeae4; }
+    :focus-visible { outline: 2px solid #555; outline-offset: 3px; }
+    .side-menu { position: fixed; top: 0; left: 0; height: 100vh; width: 256px; max-width: 85vw; padding: 24px; background: #000; color: #fff; transform: translateX(-100%); transition: transform .3s ease; z-index: 60; }
+    .side-menu.open { transform: translateX(0); }
+    .side-menu button { display: block; border: 0; background: transparent; color: white; font-size: 32px; cursor: pointer; margin-bottom: 24px; }
+    .side-menu ul { padding: 0; margin: 0; list-style: none; }
+    .side-menu li { margin-bottom: 20px; }
+    .side-menu a { color: white; font-size: 18px; text-decoration: none; }
+    .side-menu a:hover, .side-menu a[aria-current="page"] { text-decoration: underline; }
+    .overlay { position: fixed; inset: 0; display: none; z-index: 55; background: rgba(0,0,0,.5); }
+    .overlay.show { display: block; }
+    main { max-width: 1140px; margin: 0 auto; padding: 52px 20px 70px; }
+    .intro { text-align: center; max-width: 680px; margin: 0 auto 38px; }
+    .eyebrow { margin: 0 0 14px; font-size: 12px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: #555; }
+    h1 { font-size: clamp(36px, 6vw, 56px); line-height: 1.1; margin: 0 0 20px; letter-spacing: -.04em; color: #111; }
+    .intro p:last-child { margin: 0 auto; max-width: 560px; font-size: 17px; line-height: 1.65; }
+    .contact-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; }
+    .contact-card { display: flex; position: relative; flex-direction: column; align-items: flex-start; min-width: 0; min-height: 250px; padding: 27px; background: #f7f7f7; border: 1px solid #dddcd8; border-radius: 16px; text-decoration: none; transition: transform .18s ease,box-shadow .18s ease; }
+    .contact-card:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(0,0,0,.07); }
+    .contact-icon { display: flex; width: 48px; height: 48px; align-items: center; justify-content: center; background: #eae8e2; border-radius: 12px; margin-bottom: 28px; }
+    .contact-icon svg { width: 25px; height: 25px; }
+    .card-arrow { position: absolute; top: 25px; right: 25px; }
+    .card-arrow svg { width: 19px; height: 19px; }
+    .card-label { color: #5b5b5b; font-size: 13px; margin-bottom: 8px; }
+    .card-value { font-size: clamp(17px, 2vw, 21px); overflow-wrap: anywhere; letter-spacing: -.02em; }
+    .card-help { color: #606060; font-size: 14px; line-height: 1.5; margin-top: 12px; }
+    .cta-section { margin: 45px auto 0; text-align: center; }
+    .cta-section p { font-size: 15px; color: #444; margin: 0 0 18px; }
+    .cta-button { display: inline-flex; justify-content: center; align-items: center; min-height: 55px; padding: 16px 27px; border-radius: 12px; background: #000; color: white; font-weight: 700; text-decoration: none; box-shadow: 0 3px 8px rgba(0,0,0,.12); }
+    .cta-button:hover { background: #242424; }
+    .back-home { display: inline-block; margin-top: 28px; font-size: 14px; text-decoration: underline; text-underline-offset: 3px; }
+    footer { padding: 25px 15px; text-align: center; border-top: 1px solid #d2d0cb; font-size: 13px; color: #333; }
+    footer a { margin-left: 8px; text-underline-offset: 3px; }
+    #cookieConsent { display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 100; background: #000; color: white; padding: 16px; border-top: 1px solid #333; }
+    .cookie-content { max-width: 1200px; margin: auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .cookie-content p { margin: 0; font-size: 14px; }
+    .cookie-buttons { display: flex; gap: 10px; flex-shrink: 0; }
+    .cookie-buttons button { border-radius: 8px; padding: 10px 16px; font-weight: 600; cursor: pointer; }
+    .btn-cookie-accept { border: 0; background: white; color: black; }
+    .btn-cookie-decline { border: 1px solid white; background: black; color: white; }
+    @media(min-width:640px) { .site-header { padding: 20px 24px; } .header-logo { height: 88px; } .social-links { gap: 8px; } }
+    @media(max-width:767px) { main { padding: 38px 16px 55px; } .contact-grid { grid-template-columns: 1fr; gap: 12px; } .contact-card { min-height: 0; padding: 23px; } .contact-icon { margin-bottom: 20px; } .intro { margin-bottom: 28px; } .intro p:last-child { font-size: 16px; } .cookie-content { flex-direction: column; text-align: center; } }
+    @media(min-width:375px) and (max-width:389px) { .social-icon { width: 36px; height: 36px; } }
+    @media(max-width:374px) { .site-header { padding-left: 8px; padding-right: 8px; } .social-icon { width: 32px; height: 32px; } .header-logo { height: 64px; } .language-picker summary { font-size: 12px; min-height: 36px; padding: 0 4px; } }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-left">
+      <button type="button" class="menu-button" id="menuButton" aria-label="Открыть меню" aria-expanded="false" aria-controls="sideMenu"><span></span><span></span><span></span></button>
+      <a href="/ru/" aria-label="На главную" style="line-height:0"><img src="https://mmanufactory.eu/android-chrome-512x512.png" alt="Mmanufactory.eu logo" class="header-logo" width="88" height="88"></a>
+    </div>
+    <details class="language-picker">
+      <summary aria-label="Выбрать язык">RU <svg class="language-chevron" aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m3 6 5 5 5-5"/></svg></summary>
+      <div class="language-options"><a href="/contacts/" data-switch-language="lv">LV</a>
+          <a href="/en/contacts/" data-switch-language="en">EN</a>
+          <a href="/ru/contacts/" data-switch-language="ru" aria-current="page">RU</a></div>
+    </details>
+    <div class="social-links"><a href="https://www.tiktok.com/@mmanufactory.eu" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Tiktok_icon.svg" alt="TikTok" class="social-icon" width="40" height="40"></a>
+        <a href="https://www.instagram.com/mmanufactory.eu/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram" class="social-icon" width="40" height="40"></a>
+        <a href="https://t.me/rollhh" target="_blank" rel="noopener noreferrer" aria-label="Telegram"><img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram" class="social-icon" width="40" height="40"></a>
+        <a href="https://wa.me/37129914716" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" class="social-icon" width="40" height="40"></a></div>
+    <nav id="sideMenu" class="side-menu" aria-label="Контакты">
+      <button type="button" id="closeMenu" aria-label="Закрыть меню">×</button>
+      <ul>
+        <li><a href="/ru/">Главная</a></li>
+        <li><a href="/ru/#gallery">Галерея</a></li>
+        <li><a href="/ru/contacts/" aria-current="page">Контакты</a></li>
+      </ul>
+    </nav>
+    <div id="overlay" class="overlay"></div>
+  </header>
+  <main>
+    <div class="intro">
+      <p class="eyebrow">M Manufactory.eu</p>
+      <h1>Контакты</h1>
+      <p>Планируете кухню, шкаф или другую мебель на заказ? Свяжитесь с нами удобным для вас способом.</p>
+    </div>
+    <section class="contact-grid" aria-label="Контакты">
+      <a class="contact-card" href="tel:+37129914716" aria-label="Телефон: +371 29914716">
+  <span class="contact-icon"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72l.49 3.13a2 2 0 0 1-.57 1.72L7.1 10.5a16 16 0 0 0 6.4 6.4l1.93-1.93a2 2 0 0 1 1.72-.57l3.13.49a2 2 0 0 1 1.72 2.01z"/></svg></span><span class="card-arrow"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></span>
+  <span class="card-label">Телефон</span>
+  <strong class="card-value">+371 29914716</strong>
+  <span class="card-help">Позвоните, чтобы обсудить ваш проект.</span>
+</a>
+      <a class="contact-card" href="mailto:mmanufactory.eu@gmail.com" aria-label="Электронная почта: mmanufactory.eu@gmail.com">
+  <span class="contact-icon"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg></span><span class="card-arrow"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></span>
+  <span class="card-label">Электронная почта</span>
+  <strong class="card-value">mmanufactory.eu@gmail.com</strong>
+  <span class="card-help">Напишите нам о вашей идее.</span>
+</a>
+      <a class="contact-card" href="https://maps.app.goo.gl/hsJ2jmYDYM8ywueC8" target="_blank" rel="noopener noreferrer" aria-label="Google Business: Google Maps">
+  <span class="contact-icon"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10V4a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v6"/><path d="M3 10a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0"/><path d="M5 13v8h14v-8"/><path d="M10 21v-6h4v6"/></svg></span><span class="card-arrow"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></span>
+  <span class="card-label">Google Business</span>
+  <strong class="card-value">Google Maps</strong>
+  <span class="card-help">Посмотрите наш профиль и отзывы клиентов в Google.</span>
+</a>
+    </section>
+    <div class="cta-section">
+      <p>Или отправьте заявку прямо через наш сайт.</p>
+      <a class="cta-button" href="/ru/lead/">Оставить заявку за 1 минуту</a>
+      <div><a class="back-home" href="/ru/">← Вернуться на главную</a></div>
+    </div>
+  </main>
+  <footer>© 2026 Mmanufactory.eu <a href="/ru/">Главная</a> · <a href="/ru/contacts/">Контакты</a> · <button type="button" onclick="openCookieSettings()" style="background:none;border:0;text-decoration:underline;cursor:pointer;font:inherit">Настройки cookie</button></footer>
+  <div id="cookieConsent">
+    <div class="cookie-content">
+      <p>Мы используем аналитические и рекламные cookie (Google и Meta) только с вашего согласия. Вы можете изменить выбор в любое время.</p>
+      <div class="cookie-buttons">
+        <button type="button" class="btn-cookie-accept" onclick="acceptCookies()">Принять</button>
+        <button type="button" class="btn-cookie-decline" onclick="declineCookies()">Отклонить</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      const menuButton = document.getElementById('menuButton');
+      const sideMenu = document.getElementById('sideMenu');
+      const overlay = document.getElementById('overlay');
+      const closeMenu = document.getElementById('closeMenu');
+      function toggleMenu(open) {
+        sideMenu.classList.toggle('open', open);
+        overlay.classList.toggle('show', open);
+        menuButton.setAttribute('aria-expanded', String(open));
+      }
+      menuButton.addEventListener('click', () => toggleMenu(true));
+      closeMenu.addEventListener('click', () => toggleMenu(false));
+      overlay.addEventListener('click', () => toggleMenu(false));
+      document.addEventListener('keydown', (event) => { if (event.key === 'Escape') toggleMenu(false); });
+    })();
+  </script>
+</body>
+</html>

@@ -21,4 +21,25 @@
     <xhtml:link rel="alternate" hreflang="ru" href="https://mmanufactory.eu/ru/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://mmanufactory.eu/" />
   </url>
+  <url>
+    <loc>https://mmanufactory.eu/contacts/</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://mmanufactory.eu/contacts/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://mmanufactory.eu/en/contacts/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://mmanufactory.eu/ru/contacts/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mmanufactory.eu/contacts/" />
+  </url>
+  <url>
+    <loc>https://mmanufactory.eu/en/contacts/</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://mmanufactory.eu/contacts/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://mmanufactory.eu/en/contacts/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://mmanufactory.eu/ru/contacts/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mmanufactory.eu/contacts/" />
+  </url>
+  <url>
+    <loc>https://mmanufactory.eu/ru/contacts/</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://mmanufactory.eu/contacts/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://mmanufactory.eu/en/contacts/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://mmanufactory.eu/ru/contacts/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mmanufactory.eu/contacts/" />
+  </url>
 </urlset>
