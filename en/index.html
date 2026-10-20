@@ -333,7 +333,16 @@
 }
 
     /* One compact, keyboard-accessible language selector for all languages. */
-    .site-header { padding-left: 12px; padding-right: 12px; }
+    .site-header {
+      display: grid;
+      grid-template-columns: auto minmax(48px, 1fr) auto;
+      align-items: center;
+      column-gap: 6px;
+      padding-left: 12px;
+      padding-right: 12px;
+    }
+    .site-header .language-picker { justify-self: center; }
+    .site-header .social-links { justify-self: end; }
     .site-header .social-links { gap: 4px; }
     .language-picker { position: relative; flex: 0 0 auto; font-family: inherit; }
     .language-picker > summary {
@@ -344,8 +353,15 @@
       -webkit-tap-highlight-color: transparent;
     }
     .language-picker > summary::-webkit-details-marker { display: none; }
+    .language-chevron {
+      display: block; width: 12px; height: 12px; flex: 0 0 12px;
+      transition: transform .2s ease;
+    }
+    .language-picker[open] .language-chevron { transform: rotate(180deg); }
+
     .language-picker .language-options {
-      position: absolute; top: calc(100% + 8px); right: 0;
+      position: absolute; top: calc(100% + 8px); left: 50%;
+      transform: translateX(-50%);
       min-width: 78px; padding: 4px; border-radius: 10px;
       border: 1px solid #ddd; background: #fff; color: #111;
       box-shadow: 0 8px 22px rgba(0,0,0,.18); z-index: 90;
@@ -359,6 +375,9 @@
     .language-picker > summary:focus-visible,
     .language-picker .language-options a:focus-visible { outline: 2px solid #888; outline-offset: 2px; }
     .site-header .social-icon { width: 40px; height: 40px; }
+    @media (min-width: 375px) and (max-width: 389px) {
+      .site-header .social-icon { width: 36px; height: 36px; }
+    }
     @media (max-width: 374px) {
       .site-header { padding-left: 8px; padding-right: 8px; }
       .site-header .social-icon { width: 32px; height: 32px; }
@@ -381,6 +400,15 @@
       <img src="https://mmanufactory.eu/android-chrome-512x512.png" alt="Mmanufactory.eu logo" class="header-logo" style="filter: invert(1);" loading="eager" />
     </div>
 
+      <details class="language-picker">
+        <summary aria-label="Choose language">EN <svg class="language-chevron" aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m3 6 5 5 5-5"/></svg></summary>
+        <div class="language-options">
+          <a href="/" data-switch-language="lv">LV</a>
+          <a href="/en/" data-switch-language="en" aria-current="page">EN</a>
+          <a href="/ru/" data-switch-language="ru">RU</a>
+        </div>
+      </details>
+
     <div class="social-links flex items-center gap-2">
       <a href="https://www.tiktok.com/@mmanufactory.eu" target="_blank" rel="noopener" aria-label="TikTok" class="hover:opacity-80 transition">
       <img src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Tiktok_icon.svg" alt="TikTok" class="social-icon h-10 w-10">
@@ -394,14 +422,6 @@
       <a href="https://wa.me/37129914716" target="_blank" rel="noopener" aria-label="WhatsApp" class="hover:opacity-80 transition">
         <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" class="social-icon h-10 w-10" loading="lazy" />
       </a>
-      <details class="language-picker">
-        <summary aria-label="Choose language">EN <span aria-hidden="true">⌄</span></summary>
-        <div class="language-options">
-          <a href="/" data-switch-language="lv">LV</a>
-          <a href="/en/" data-switch-language="en" aria-current="page">EN</a>
-          <a href="/ru/" data-switch-language="ru">RU</a>
-        </div>
-      </details>
     </div>
 
     <nav id="sideMenu" aria-label="Site navigation">
