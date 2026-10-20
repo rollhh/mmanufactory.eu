@@ -50,26 +50,26 @@
     .side-menu a:hover, .side-menu a[aria-current="page"] { text-decoration: underline; }
     .overlay { position: fixed; inset: 0; display: none; z-index: 55; background: rgba(0,0,0,.5); }
     .overlay.show { display: block; }
-    main { max-width: 1140px; margin: 0 auto; padding: 52px 20px 70px; }
-    .intro { text-align: center; max-width: 680px; margin: 0 auto 38px; }
-    .eyebrow { margin: 0 0 14px; font-size: 12px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: #555; }
-    h1 { font-size: clamp(36px, 6vw, 56px); line-height: 1.1; margin: 0 0 20px; letter-spacing: -.04em; color: #111; }
-    .intro p:last-child { margin: 0 auto; max-width: 560px; font-size: 17px; line-height: 1.65; }
-    .contact-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; }
-    .contact-card { display: flex; position: relative; flex-direction: column; align-items: flex-start; min-width: 0; min-height: 250px; padding: 27px; background: #f7f7f7; border: 1px solid #dddcd8; border-radius: 16px; text-decoration: none; transition: transform .18s ease,box-shadow .18s ease; }
+    main { max-width: 1140px; margin: 0 auto; padding: 30px 20px 42px; }
+    .intro { text-align: center; max-width: 680px; margin: 0 auto 22px; }
+    
+    h1 { font-size: clamp(30px, 5vw, 44px); line-height: 1.1; margin: 0 0 10px; letter-spacing: -.035em; color: #111; }
+    .intro p:last-child { margin: 0 auto; max-width: 560px; font-size: 15px; line-height: 1.45; }
+    .contact-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 12px; }
+    .contact-card { display: grid; position: relative; grid-template-columns: 46px minmax(0,1fr) 16px; grid-template-rows: auto auto; align-content: center; column-gap: 13px; min-width: 0; min-height: 94px; padding: 18px; background: #f7f7f7; border: 1px solid #dddcd8; border-radius: 14px; text-decoration: none; transition: transform .18s ease,box-shadow .18s ease; }
     .contact-card:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(0,0,0,.07); }
-    .contact-icon { display: flex; width: 48px; height: 48px; align-items: center; justify-content: center; background: #eae8e2; border-radius: 12px; margin-bottom: 28px; }
-    .contact-icon svg { width: 25px; height: 25px; }
-    .card-arrow { position: absolute; top: 25px; right: 25px; }
-    .card-arrow svg { width: 19px; height: 19px; }
-    .card-label { color: #5b5b5b; font-size: 13px; margin-bottom: 8px; }
-    .card-value { font-size: clamp(17px, 2vw, 21px); overflow-wrap: anywhere; letter-spacing: -.02em; }
-    .card-help { color: #606060; font-size: 14px; line-height: 1.5; margin-top: 12px; }
-    .cta-section { margin: 45px auto 0; text-align: center; }
-    .cta-section p { font-size: 15px; color: #444; margin: 0 0 18px; }
+    .contact-icon { display: flex; grid-column: 1; grid-row: 1 / 3; width: 46px; height: 46px; align-items: center; justify-content: center; align-self: center; background: #eae8e2; border-radius: 12px; }
+    .contact-icon svg { width: 23px; height: 23px; }
+    .card-arrow { grid-column: 3; grid-row: 1 / 3; align-self: center; justify-self: end; }
+    .card-arrow svg { width: 16px; height: 16px; }
+    .card-label { grid-column: 2; grid-row: 1; color: #5b5b5b; font-size: 12px; margin-bottom: 3px; }
+    .card-value { grid-column: 2; grid-row: 2; font-size: clamp(14px, 1.55vw, 19px); overflow-wrap: anywhere; letter-spacing: -.02em; line-height: 1.25; }
+    
+    .cta-section { margin: 26px auto 0; text-align: center; }
+    .cta-section p { font-size: 14px; color: #444; margin: 0 0 12px; }
     .cta-button { display: inline-flex; justify-content: center; align-items: center; min-height: 55px; padding: 16px 27px; border-radius: 12px; background: #000; color: white; font-weight: 700; text-decoration: none; box-shadow: 0 3px 8px rgba(0,0,0,.12); }
     .cta-button:hover { background: #242424; }
-    .back-home { display: inline-block; margin-top: 28px; font-size: 14px; text-decoration: underline; text-underline-offset: 3px; }
+    .back-home { display: inline-block; margin-top: 18px; font-size: 14px; text-decoration: underline; text-underline-offset: 3px; }
     footer { padding: 25px 15px; text-align: center; border-top: 1px solid #d2d0cb; font-size: 13px; color: #333; }
     footer a { margin-left: 8px; text-underline-offset: 3px; }
     #cookieConsent { display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 100; background: #000; color: white; padding: 16px; border-top: 1px solid #333; }
@@ -80,7 +80,7 @@
     .btn-cookie-accept { border: 0; background: white; color: black; }
     .btn-cookie-decline { border: 1px solid white; background: black; color: white; }
     @media(min-width:640px) { .site-header { padding: 20px 24px; } .header-logo { height: 88px; } .social-links { gap: 8px; } }
-    @media(max-width:767px) { main { padding: 38px 16px 55px; } .contact-grid { grid-template-columns: 1fr; gap: 12px; } .contact-card { min-height: 0; padding: 23px; } .contact-icon { margin-bottom: 20px; } .intro { margin-bottom: 28px; } .intro p:last-child { font-size: 16px; } .cookie-content { flex-direction: column; text-align: center; } }
+    @media(max-width:767px) { main { padding: 24px 16px 40px; } .contact-grid { grid-template-columns: 1fr; gap: 10px; } .contact-card { min-height: 78px; padding: 14px 15px; } .intro { margin-bottom: 20px; } .intro p:last-child { font-size: 14px; } .cookie-content { flex-direction: column; text-align: center; } }
     @media(min-width:375px) and (max-width:389px) { .social-icon { width: 36px; height: 36px; } }
     @media(max-width:374px) { .site-header { padding-left: 8px; padding-right: 8px; } .social-icon { width: 32px; height: 32px; } .header-logo { height: 64px; } .language-picker summary { font-size: 12px; min-height: 36px; padding: 0 4px; } }
   </style>
@@ -113,7 +113,6 @@
   </header>
   <main>
     <div class="intro">
-      <p class="eyebrow">M Manufactory.eu</p>
       <h1>Contacts</h1>
       <p>Planning a kitchen, wardrobe or another furniture project? Get in touch in whichever way works best for you.</p>
     </div>
@@ -122,19 +121,16 @@
   <span class="contact-icon"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72l.49 3.13a2 2 0 0 1-.57 1.72L7.1 10.5a16 16 0 0 0 6.4 6.4l1.93-1.93a2 2 0 0 1 1.72-.57l3.13.49a2 2 0 0 1 1.72 2.01z"/></svg></span><span class="card-arrow"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></span>
   <span class="card-label">Phone</span>
   <strong class="card-value">+371 29914716</strong>
-  <span class="card-help">Call us to discuss your project.</span>
 </a>
       <a class="contact-card" href="mailto:mmanufactory.eu@gmail.com" aria-label="Email: mmanufactory.eu@gmail.com">
   <span class="contact-icon"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg></span><span class="card-arrow"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></span>
   <span class="card-label">Email</span>
   <strong class="card-value">mmanufactory.eu@gmail.com</strong>
-  <span class="card-help">Send us a message about your plans.</span>
 </a>
       <a class="contact-card" href="https://maps.app.goo.gl/hsJ2jmYDYM8ywueC8" target="_blank" rel="noopener noreferrer" aria-label="Google Business: Google Maps">
   <span class="contact-icon"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10V4a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v6"/><path d="M3 10a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0"/><path d="M5 13v8h14v-8"/><path d="M10 21v-6h4v6"/></svg></span><span class="card-arrow"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></span>
   <span class="card-label">Google Business</span>
   <strong class="card-value">Google Maps</strong>
-  <span class="card-help">View our business profile and customer reviews on Google.</span>
 </a>
     </section>
     <div class="cta-section">
