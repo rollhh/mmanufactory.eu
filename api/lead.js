@@ -20,7 +20,7 @@ export default async function handler(req, res) {
     }
 
     const locale = ['lv', 'en', 'ru'].includes(String(language).toLowerCase()) ? String(language).toUpperCase() : 'LV';
-    const text = '🌐 ' + locale + '\\n📌 ' + String(request).slice(0, 2000) +
+    const text = '🌐 ' + locale + '\n📌 ' + String(request).slice(0, 2000) +
                  '\n\n📞 ' + String(contact).slice(0, 500);
 
     const list = Array.isArray(photos) ? photos.slice(0, 10) : [];
